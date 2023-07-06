@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sneakermarket.domain.member.MemberMapper">
+
+    <!-- tb_member 테이블 전체 컬럼 -->
+    <sql id="memberColumns">
+        id
+        , email
+        , password
+        , nickname
+        , delete_yn
+        , created_date
+        , modified_date
+    </sql>
+
+    <!-- 회원 정보 저장 (회원가입) -->
+    <insert id="save" parameterType="com.sneakermarket.domain.member.MemberDto" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_member (
+        <include refid="memberColumns" />
+        ) VALUES (
+        #{id}
+        , #{email}
+        , #{password}
+        , #{nickname}
+        , 0
+        , NOW()
+        , NULL
+        )
+    </insert>
+
+    <!-- 회원 상세정보 조회 by email -->
+    <select id="findByEmail" parameterType="string" resultType="com.sneakermarket.domain.member.Member">
+        SELECT
+        <include refid="memberColumns" />
+        FROM
+        tb_member
+        WHERE
+        delete_yn = 0
+        AND email = #{email}
+    </select>
+
+
+</mapper>
