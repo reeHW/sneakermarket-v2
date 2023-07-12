@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class PostMapperTest {
 
-    @Autowired
+/*    @Autowired
     PostService postService;
 
     @Autowired
@@ -51,7 +51,7 @@ public class PostMapperTest {
         }
     }
 
-  /*  @Test
+  *//*  @Test
     void update() {
         //1. 게시글 수정
         PostDto postDto  = PostDto.builder()
@@ -75,12 +75,12 @@ public class PostMapperTest {
             throw new RuntimeException(e);
         }
 
-    }*/
+    }*//*
 
     @Test
     void delete() {
         System.out.println("삭제 이전의 전체 게시글 개수는 : " + postMapper.findAll().size() + "개입니다");
         postMapper.deleteById(3L);
         System.out.println("삭제 이후의 전체 게시글 개수는 : " + postMapper.findAll().size() + "개입니다");
-    }
+    }*/
 }

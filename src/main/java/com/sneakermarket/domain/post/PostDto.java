@@ -48,37 +48,6 @@ public class PostDto {
 
     }
 
-/*
-
-    public PostDto(Post post) {
-        this.title = post.getTitle();
-        this.content = post.getContent();
-        this.price = post.getPrice();
-        this.size = post.getSize();
-        this.saleStatus = post.getSaleStatus();
-    }
-
-    public Post toEntity(PostDto dto){
-        return Post.builder()
-                .title(dto.title)
-                .content(dto.content)
-                .price(dto.price)
-                .size(dto.size)
-                .saleStatus(dto.saleStatus)
-                .build();
-    }
-*/
-
- /*   public PostDto of(Post post){
-        return PostDto.builder()
-                .title(post.getTitle())
-                .content(post.getContent())
-                .price(post.getPrice())
-                .size(post.getSize())
-                .saleStatus(post.getSaleStatus())
-                .build();
-    }*/
-
 
     @Data
     @NoArgsConstructor
@@ -96,15 +65,15 @@ public class PostDto {
         private int viewCnt;
         private SaleStatus saleStatus;
 
-        public Response(Post entity){
-            this.id = entity.getId();
-            this.title = entity.getTitle();
-            this.content = entity.getContent();
-            this.price = entity.getPrice();
-            this.size = entity.getSize();
-            this.createdDate = entity.getCreatedDate();
-            this.viewCnt = entity.getViewCnt();
-            this.saleStatus = entity.getSaleStatus();
+        public Response(Post post){
+            this.id = post.getId();
+            this.title = post.getTitle();
+            this.content = post.getContent();
+            this.price = post.getPrice();
+            this.size = post.getSize();
+            this.createdDate = post.getCreatedDate();
+            this.viewCnt = post.getViewCnt();
+            this.saleStatus = post.getSaleStatus();
         }
         
 

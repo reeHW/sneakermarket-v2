@@ -32,11 +32,4 @@ public class Post {
         this.saleStatus = saleStatus;
     }
 
-/*    public void updatePost(PostDto.Response postDto){
-       this.title = postDto.getTitle();
-       this.content = postDto.getContent();
-       this.price = postDto.getPrice();
-       this.size = postDto.getSize();
-       this.saleStatus = postDto.getSaleStatus();
-    }*/
 }

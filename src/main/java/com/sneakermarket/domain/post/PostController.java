@@ -1,15 +1,16 @@
 package com.sneakermarket.domain.post;
 
 import com.sneakermarket.common.dto.MessageDto;
+import com.sneakermarket.common.dto.SearchDto;
+import com.sneakermarket.common.paging.PagingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,6 +22,16 @@ public class PostController {
     private String showMessageAndRedirect(final MessageDto params, Model model){
         model.addAttribute("params", params);
         return "common/messageRedirect";
+    }
+
+    private Map<String, Object> queryParamsToMap(SearchDto queryParams) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("page", queryParams.getPage());
+        data.put("recordSize", queryParams.getRecordSize());
+        data.put("pageSize", queryParams.getPageSize());
+        data.put("keyword", queryParams.getKeyword());
+        data.put("searchType", queryParams.getSearchType());
+        return data;
     }
 
     //게시글 작성 페이지
@@ -35,9 +46,9 @@ public class PostController {
 
     //게시글 리스트 페이지
     @GetMapping("/post/list.do")
-    public String openPostList(Model model){
-        List<PostDto.Response> posts = postService.findAllPost();
-        model.addAttribute("posts", posts);
+    public String openPostList(@ModelAttribute("params") final SearchDto params, Model model){
+        PagingResponse<PostDto.Response> response = postService.findAllPost(params);
+        model.addAttribute("response", response);
         return "post/list";
     }
 
@@ -67,10 +78,11 @@ public class PostController {
 
     //게시글 삭제
     @PostMapping("/post/delete.do")
-    public String deletePost(@RequestParam final Long id, Model model){
+    public String deletePost(@RequestParam final Long id, final SearchDto queryParams, Model model){
         postService.deletePost(id);
-        MessageDto message = new MessageDto("게시글 삭제가 완료되었습니다.", "/post/list.do", RequestMethod.GET, null);
+        MessageDto message = new MessageDto("게시글 삭제가 완료되었습니다.", "/post/list.do", RequestMethod.GET, queryParamsToMap(queryParams));
         return showMessageAndRedirect(message,model);
     }
+
 
 }

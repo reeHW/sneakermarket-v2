@@ -1,5 +1,6 @@
 package com.sneakermarket.domain.post;
 
+import com.sneakermarket.common.dto.SearchDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -40,11 +41,11 @@ public interface PostMapper {
      * 게시글 리스트 조회
      * @return 게시글 리스트
      */
-    List<Post> findAll();
+    List<Post> findAll(SearchDto searchDto);
 
     /**
      * 게시글 수 카운팅
      * @return 게시글 수
      */
-    int count();
+    int count(SearchDto searchDto);
 }
