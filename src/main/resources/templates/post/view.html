@@ -109,6 +109,7 @@
 
 <th:block layout:fragment="script">
   <script th:inline="javascript">
+    /*<![CDATA[*/
 
     window.onload = () => {
       findAllComment();
@@ -117,8 +118,9 @@
 
     // 전체 댓글 조회
     function findAllComment(page) {
-      const currentPage = document.querySelector('.paging a.on')
-      page = (page) ? page : (currentPage ? Number(currentPage) : 1);
+
+      const uriPage = new URLSearchParams(location.search).get('page');
+      page = (page) ? page : (uriPage ? Number(uriPage) : 1);
 
       const postId = [[ ${post.id}]];
       const uri = `/posts/${postId}/comments`;
@@ -134,6 +136,8 @@
       drawComments(response.list);
       drawPage(pagination, page);
     }
+
+
     // 게시글 삭제
     function deletePost() {
       const id = [[ ${post.id} ]];
@@ -332,8 +336,14 @@
       const currentPage = Array.from(paging.querySelectorAll('a')).find(a => (Number(a.text) === page || Number(a.text) === pagination.totalPageCount));
       currentPage.classList.add('on');
       currentPage.removeAttribute('onclick');
+
+      //8. 페이지 URI 강제 변경
+      const postId = new URLSearchParams(location.search).get('id');
+      history.replaceState({}, '', location.pathname + `?id=${postId}&page=${currentPage.text}`);
+
     }
 
+    /*]]>*/
   </script>
 </th:block>
 </html>
