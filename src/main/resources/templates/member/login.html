@@ -90,7 +90,7 @@
 
   // Enter 로그인 이벤트 바인딩
   window.onload = () => {
-    document.querySelectorAll('#loginId, #password').forEach(element => {
+    document.querySelectorAll('#email, #password').forEach(element => {
       element.addEventListener('keyup', (e) => {
         if (e.keyCode === 13) {
           login();
@@ -105,9 +105,9 @@
 
     const form = document.getElementById('loginForm');
 
-    if ( !form.loginId.value || !form.password.value ) {
+    if ( !form.email.value || !form.password.value ) {
       alert('아이디와 비밀번호를 모두 입력해 주세요.');
-      form.loginId.focus();
+      form.email.focus();
       return false;
     }
 
@@ -116,7 +116,7 @@
       type : 'POST',
       dataType : 'json',
       data : {
-        loginId: form.loginId.value,
+        email: form.email.value,
         password: form.password.value
       },
       async : false,

@@ -35,9 +35,9 @@ public class MemberService {
 
         //1. 회원 정보 및 비밀번호 조회
         Member member = findByEmail(email);
-        String encodePassword = (member == null) ? "" : encodingPassword(member.getPassword());
+        String encodePassword = (member == null) ? "" : member.getPassword();
 
-        //2. 회원 정보 및 비밀번호 체크
+         //2. 회원 정보 및 비밀번호 체크
         if(member == null || passwordEncoder.matches(password, encodePassword) == false){
             return null;
         }
