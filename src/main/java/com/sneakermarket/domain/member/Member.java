@@ -1,14 +1,11 @@
 package com.sneakermarket.domain.member;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     private Long id;                        // PK
@@ -21,22 +18,10 @@ public class Member {
 
 
     @Builder
-    public Member(Long id, String nickname, String email, String password, Boolean deleteYn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
-        this.id = id;
+    public Member(String nickname, String email, String password) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
-        this.deleteYn = deleteYn;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
     }
 
-    public static Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder){
-        Member member = Member.builder()
-                .email(memberDto.getEmail())
-                .password(passwordEncoder.encode(memberDto.getPassword())) // 암호화 처리
-                .nickname(memberDto.getNickname())
-                .build();
-        return member;
-    }
 }

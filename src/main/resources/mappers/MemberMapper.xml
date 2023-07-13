@@ -40,5 +40,25 @@
         AND email = #{email}
     </select>
 
+    <!-- 회원 정보 수정 -->
+    <update id="update" parameterType="com.sneakermarket.domain.member.Member">
+        UPDATE tb_member
+        SET
+            modified_date = NOW()
+            ,nickname = #{nickname}
+            <if test="password != null and password != ''">
+            , password = #{password}
+            </if>
+        WHERE
+            email = #{email}
+    </update>
+
+    <!-- 회원 정보 삭제 (회원 탈퇴) -->
+    <delete id="deleteByEmail" parameterType="String">
+        UPDATE tb_member
+        SET delete_yn = 1
+        WHERE
+            email = #{email}
+    </delete>
 
 </mapper>

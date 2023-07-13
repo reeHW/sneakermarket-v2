@@ -1,44 +1,83 @@
 package com.sneakermarket.domain.member;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-@RequiredArgsConstructor
-@RequestMapping(value="/members")
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
-    private final PasswordEncoder passwordEncoder;
 
-    @GetMapping(value="/new")
-    public String memberFrom(Model model){
-        model.addAttribute("memberRequestDto", new MemberDto());
-        return "member/memberForm";
-
+    // 로그인 페이지
+    @GetMapping("/login.do")
+    public String openLogin() {
+        return "member/login";
     }
 
-    @PostMapping("/new")
-    public String memberForm(@Valid MemberDto memberRequestDto, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
-            return "member/memberForm";
-        }
-        try{
-            Member member = Member.createMember(memberRequestDto, passwordEncoder);
-            memberService.saveMember(member);
-        }catch (IllegalStateException e){
-            model.addAttribute("errorMessage", e.getMessage());
-            return "member/memberFOrm";
-        }
+    //로그인
+    @PostMapping("/login")
+    @ResponseBody
+    public MemberDto.FindForm login(HttpServletRequest request){
 
-        return "redirect:/";
+        // 1. 회원 정보 조회
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        MemberDto.FindForm member = memberService.login(email, password);
+
+        //2. 세션에 회원 정보 저장 & 세션 유지 시간 설정
+        if(member != null){
+            HttpSession session = request.getSession();
+            session.setAttribute("loginMember", member);
+            session.setMaxInactiveInterval(60*30);
+        }
+        return member;
     }
+
+    // 로그아웃
+    @PostMapping("/login")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/login.do";
+    }
+
+    // 회원 정보 저장 (회원가입)
+    @PostMapping("/members")
+    @ResponseBody
+    public void saveMember(@RequestBody final MemberDto.RegisterForm params) {
+        memberService.saveMember(params);
+    }
+
+    // 회원 상세정보 조회
+    @GetMapping("/members/{email}")
+    @ResponseBody
+    public Member findMemberEmail(@PathVariable final String email) {
+        return memberService.findByEmail(email);
+    }
+
+    // 회원 정보 수정
+    @PatchMapping("/members/{id}")
+    @ResponseBody
+    public String updateMember(@PathVariable final Long id, @RequestBody final MemberDto.UpdateForm params) {
+        return memberService.updateMember(params);
+    }
+
+    // 회원 정보 삭제 (회원 탈퇴)
+    @DeleteMapping("/members/{email}")
+    @ResponseBody
+    public String deleteMemberByEmail(final String email) {
+        return memberService.deleteMemberByEmail(email);
+    }
+
 }
