@@ -32,4 +32,17 @@ public interface MemberMapper {
 
 
 
+    /**
+     * 회원 수 카운팅 (email 중복 체크)
+     * @param param
+     * @return 회원 수
+     */
+    int countMemberByEmail(String param);
+
+    /**
+     * 회원 수 카운팅 (닉네임 중복 체크)
+     * @param param
+     * @return 회원 수
+     */
+    int countMemberByNickname(String param);
 }

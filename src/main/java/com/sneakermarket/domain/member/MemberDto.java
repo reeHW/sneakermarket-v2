@@ -18,7 +18,7 @@ public class MemberDto {
     public static class RegisterForm{
 
         @NotBlank(message = "이메일을 입력해주세요!")
-        @Email(message = "이메일 형식으로 입력새주세요.")
+        @Email(message = "이메일 형식에 맞지 않습니다.")
         private String email;
 
         @NotBlank(message = "비밀번호를 입력해주세요!")
@@ -30,13 +30,6 @@ public class MemberDto {
         @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_]*$", message = "특수문자는 불가능합니다")
         private String nickname;
 
-//
-//        public void encodingPassword(PasswordEncoder passwordEncoder) {
-//            if (StringUtils.isEmpty(password)) {
-//                return;
-//            }
-//            password = passwordEncoder.encode(password);
-//        }
     }
 
     @Data

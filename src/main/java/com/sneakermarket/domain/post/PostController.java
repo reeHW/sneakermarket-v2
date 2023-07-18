@@ -2,12 +2,16 @@ package com.sneakermarket.domain.post;
 
 import com.sneakermarket.common.dto.MessageDto;
 import com.sneakermarket.common.dto.SearchDto;
+import com.sneakermarket.common.file.FileUtils;
 import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.file.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,8 @@ import java.util.Map;
 public class PostController {
 
     private final PostService postService;
+    private final FileService fileService;
+    private final FileUtils fileUtils;
 
     //사용자에게 메시지 전달하고, 페이지를 리다이렉트함.
     private String showMessageAndRedirect(final MessageDto params, Model model){
@@ -62,8 +68,10 @@ public class PostController {
 
     //신규 게시글 생성
     @PostMapping("/post/save.do")
-    public String savePost(final PostDto.EditForm editForm, Model model){
-        postService.savePost(editForm);
+    public String savePost(final PostDto.EditForm editForm, Model model, HttpSession session){
+        Long id = postService.savePost(session, editForm);
+        List<File> files = fileUtils.uploadFiles(editForm.getFiles());
+        fileService.saveFile(id, files);
         MessageDto message = new MessageDto("게시글이 저장되었습니다.", "/post/list.do", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }

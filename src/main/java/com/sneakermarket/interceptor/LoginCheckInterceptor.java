@@ -1,5 +1,6 @@
 package com.sneakermarket.interceptor;
 
+import com.sneakermarket.config.SessionConstants;
 import com.sneakermarket.domain.member.MemberDto;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -14,10 +15,10 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         //1. 세션에서 회원 정보 조회
         HttpSession session = request.getSession();
-        MemberDto.FindForm member = (MemberDto.FindForm) session.getAttribute("loginMember");
+        MemberDto.FindForm loginMember = (MemberDto.FindForm) session.getAttribute(SessionConstants.LOGIN_MEMBER);
 
         //2. 회원 정보 체크
-        if(member == null){
+        if(loginMember == null){
             response.sendRedirect("/login.do");
             return false;
         }

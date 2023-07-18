@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Post {
 
     private Long id;
-    private String writer = "테스트";
+    private String writer;
     private String title;
     private String content;
     private int price;
@@ -23,8 +23,9 @@ public class Post {
     private SaleStatus saleStatus;
 
     @Builder
-    public Post(Long id, String title, String content, int price, int size, SaleStatus saleStatus) {
+    public Post(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
         this.id = id;
+        this.writer = writer;
         this.title = title;
         this.content = content;
         this.price = price;

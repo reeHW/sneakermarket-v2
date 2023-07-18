@@ -53,10 +53,17 @@
         </colgroup>
         <tbody>
         <tr>
-          <th scope="row">애메일<span class="es">필수 입력</span></th>
+          <th scope="row">이메일<span class="es">필수 입력</span></th>
           <td>
             <input type="email" name="email" placeholder="이메일" maxlength="20" style="width: 80%;" />
-            <button type="button" id="idCheckBtn" class="btns btn_st5" onclick="checkLoginEmail();" style="width: 20%; float: right;">중복 확인</button>
+            <button type="button" id="emailCheckBtn" class="btns btn_st5" onclick="checkLoginEmail();" style="width: 20%; float: right;">중복 확인</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">닉네임<span class="es">필수 입력</span></th>
+          <td>
+            <input type="text" name="nickname" placeholder="닉네임" maxlength="20" style="width: 80%;" />
+            <button type="button" id="nicknameCheckBtn" class="btns btn_st5" onclick="checkLoginNickname();" style="width: 20%; float: right;">중복 확인</button>
           </td>
         </tr>
         <tr>
@@ -66,10 +73,6 @@
         <tr>
           <th scope="row">비밀번호 재입력<span class="es">필수 입력</span></th>
           <td><input type="password" name="passwordCheck" placeholder="비밀번호 재입력" maxlength="30" /></td>
-        </tr>
-        <tr>
-          <th scope="row">닉네임<span class="es">필수 입력</span></th>
-          <td><input type="text" name="nickname" placeholder="닉네임" maxlength="10" /></td>
         </tr>
         </tbody>
       </table>
@@ -139,27 +142,46 @@
   function closeSignupPopup() {
     const form = document.getElementById('signupForm');
     form.email.readOnly = false;
-    form.querySelector('#idCheckBtn').disabled = false;
+    form.querySelector('#emailCheckBtn').disabled = false;
+    form.querySelector('#nicknameCheckBtn').disabled = false;
     form.reset();
     layerPopClose();
   }
 
 
-  // 아이디 중복 체크
+  // 이메일 중복 체크
   function checkLoginEmail() {
     const email = document.querySelector('#signupForm input[name="email"]');
     isValid(email, '이메일');
-    const count = getJson(`/member-count`, { email : email.value });
+    const count = getJson(`/member-email-count`, { email : email.value });
 
     if (count > 0) {
-      alert('이미 가입된 아이디가 있습니다.');
+      alert('이미 가입된 이메일이 있습니다.');
       email.focus();
       return false;
     }
 
-    if (confirm('사용 가능한 아이디입니다.\n입력하신 아이디로 결정하시겠어요?')) {
+    if (confirm('사용 가능한 이메일입니다.\n입력하신 이메일로 결정하시겠어요?')) {
       email.readOnly = true;
-      document.getElementById('idCheckBtn').disabled = true;
+      document.getElementById('emailCheckBtn').disabled = true;
+    }
+  }
+
+  // 닉네임 중복 체크
+  function checkLoginNickname() {
+    const nickname = document.querySelector('#signupForm input[name="nickname"]');
+    isValid(nickname, '닉네임');
+    const count = getJson(`/member-nickname-count`, { nickname : nickname.value });
+
+    if (count > 0) {
+      alert('이미 가입된 닉네임이 있습니다.');
+      nickname.focus();
+      return false;
+    }
+
+    if (confirm('사용 가능한 닉네임입니다.\n입력하신 닉네임으로 결정하시겠어요?')) {
+      nickname.readOnly = true;
+      document.getElementById('nicknameCheckBtn').disabled = true;
     }
   }
 
@@ -168,7 +190,7 @@
   function validationMemberInfo(form) {
 
     const fields = form.querySelectorAll('input');
-    const fieldNames = ['이메일', '비밀번호', '비밀번호 재입력', '닉네임'];
+    const fieldNames = ['이메일', '닉네임', '비밀번호', '비밀번호 재입력'];
 
     for (let i = 0, len = fields.length; i < len; i++) {
       isValid(fields[i], fieldNames[i]);

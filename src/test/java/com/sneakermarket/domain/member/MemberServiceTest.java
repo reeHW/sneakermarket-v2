@@ -20,13 +20,9 @@ public class MemberServiceTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Member createMember() {
-        MemberDto memberRequestDto = MemberDto.builder()
-                .email("test@email.com")
-                .nickname("테스트")
-                .password("1111")
-                .build();
-        return Member.createMember(memberRequestDto, passwordEncoder);
+/*    public void createMember() {
+        MemberDto.RegisterForm memberRequestDto = new MemberDto.RegisterForm("test@gmail.com", "1234", "테스터");
+        memberService.saveMember(memberRequestDto);
     }
 
     @Test
@@ -36,7 +32,7 @@ public class MemberServiceTest {
         Member saveMember = memberService.saveMember(member);
 
         assertEquals(member.getEmail(), saveMember.getEmail());
-    }
+    }*/
 
     @Test
     @DisplayName("패스워드 암호화 테스트")

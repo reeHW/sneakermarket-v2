@@ -1,21 +1,18 @@
 package com.sneakermarket.domain.member;
 
+import com.sneakermarket.config.SessionConstants;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -39,7 +36,7 @@ public class MemberController {
         //2. 세션에 회원 정보 저장 & 세션 유지 시간 설정
         if(member != null){
             HttpSession session = request.getSession();
-            session.setAttribute("loginMember", member);
+            session.setAttribute(SessionConstants.LOGIN_MEMBER, member);
             session.setMaxInactiveInterval(60*30);
         }
         return member;
@@ -51,11 +48,17 @@ public class MemberController {
         session.invalidate();
         return "redirect:/login.do";
     }
+/*
+    // 회원 가입 실패시 입력값 유지
+    @GetMapping(value ="/members")
+    public void joinGet(MemberDto.RegisterForm params){
+        log.info("Controller joinGet");
+    }*/
 
     // 회원 정보 저장 (회원가입)
     @PostMapping("/members")
     @ResponseBody
-    public void saveMember(@RequestBody final MemberDto.RegisterForm params) {
+    public void saveMember(@Valid @RequestBody final MemberDto.RegisterForm params) {
         memberService.saveMember(params);
     }
 
@@ -78,6 +81,20 @@ public class MemberController {
     @ResponseBody
     public String deleteMemberByEmail(final String email) {
         return memberService.deleteMemberByEmail(email);
+    }
+
+    // 회원 수 카운팅 (email 중복 체크)
+    @GetMapping("/member-email-count")
+    @ResponseBody
+    public int countMemberByEmail(@RequestParam final String email) {
+        return memberService.countMemberByEmail(email);
+    }
+
+    // 회원 수 카운팅 (닉네임 중복 체크)
+    @GetMapping("/member-nickname-count")
+    @ResponseBody
+    public int countMemberByNickname(@RequestParam final String nickname) {
+        return memberService.countMemberByNickname(nickname);
     }
 
 }

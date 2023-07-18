@@ -105,4 +105,22 @@ public class MemberService {
     }
 
 
+    /**
+     * 회원 수 카운팅 (email 중복 체크)
+     * @param param - UK
+     * @return 회원 수
+     */
+    public int countMemberByEmail(final String param) {
+        return memberMapper.countMemberByEmail(param);
+    }
+
+    /**
+     * 회원 수 카운팅 (닉네임 중복 체크)
+     * @param param - UK
+     * @return 회원 수
+     */
+    public int countMemberByNickname(final String param) {
+        return memberMapper.countMemberByNickname(param);
+    }
+
 }

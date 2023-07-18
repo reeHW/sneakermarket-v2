@@ -61,4 +61,26 @@
             email = #{email}
     </delete>
 
+    <!-- 회원 수 카운팅 (ID 중복 체크) -->
+    <select id="countMemberByEmail" parameterType="string" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_member
+        WHERE
+            email = #{value}
+    </select>
+
+
+    <!-- 회원 수 카운팅 (닉네임 중복 체크) -->
+    <select id="countMemberByNickname" parameterType="string" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_member
+        WHERE
+            nickname = #{value}
+    </select>
+
+
 </mapper>

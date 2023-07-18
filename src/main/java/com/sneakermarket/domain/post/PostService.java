@@ -3,11 +3,14 @@ package com.sneakermarket.domain.post;
 import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.paging.Pagination;
 import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.config.SessionConstants;
+import com.sneakermarket.domain.member.Member;
+import com.sneakermarket.domain.member.MemberDto;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,10 +29,13 @@ public class PostService {
      */
 
     @Transactional
-    public Long savePost(final PostDto.EditForm editForm) {
+    public Long savePost(final HttpSession session, final PostDto.EditForm editForm) {
+
+        MemberDto.FindForm loginMember = (MemberDto.FindForm) session.getAttribute(SessionConstants.LOGIN_MEMBER);
 
         Post post = Post.builder()
                 .id(editForm.getId())
+                .writer(loginMember.getNickname())
                 .title(editForm.getTitle())
                 .saleStatus(editForm.getSaleStatus())
                 .content(editForm.getContent())
