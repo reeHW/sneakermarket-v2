@@ -2,7 +2,7 @@ package com.sneakermarket.domain.member;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 @Getter

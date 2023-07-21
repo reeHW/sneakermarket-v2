@@ -3,7 +3,11 @@ package com.sneakermarket.domain.member;
 import com.sneakermarket.config.SessionConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,8 +62,27 @@ public class MemberController {
     // 회원 정보 저장 (회원가입)
     @PostMapping("/members")
     @ResponseBody
-    public void saveMember(@Valid @RequestBody final MemberDto.RegisterForm params) {
+    public ResponseEntity saveMember(@Valid @RequestBody final MemberDto.RegisterForm params, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()){
+            StringBuilder sb = new StringBuilder();
+            bindingResult.getAllErrors().forEach(objectError -> {
+                FieldError fieldError = (FieldError) objectError;
+                String message = objectError.getDefaultMessage();
+
+                System.out.println("field : "+ fieldError.getField()+ ", ");
+                System.out.println("message : " + message);
+
+                sb.append("field : ").append(fieldError.getField());
+                sb.append("message : ").append(message);
+            });
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(sb.toString());
+        }
         memberService.saveMember(params);
+        return ResponseEntity.ok(params);
+
+
     }
 
     // 회원 상세정보 조회
@@ -70,9 +93,9 @@ public class MemberController {
     }
 
     // 회원 정보 수정
-    @PatchMapping("/members/{id}")
+    @PatchMapping("/members/{email}")
     @ResponseBody
-    public String updateMember(@PathVariable final Long id, @RequestBody final MemberDto.UpdateForm params) {
+    public String updateMember(@PathVariable final Long email, @RequestBody final MemberDto.UpdateForm params) {
         return memberService.updateMember(params);
     }
 

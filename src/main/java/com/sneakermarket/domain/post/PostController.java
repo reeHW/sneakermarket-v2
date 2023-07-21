@@ -80,6 +80,21 @@ public class PostController {
     @PostMapping("/post/update.do")
     public String updatePost(final PostDto.EditForm editForm, Model model) {
         postService.updatePost(editForm);
+        // 파일 업로드
+        List<File> uploadFiles = fileUtils.uploadFiles(editForm.getFiles());
+
+        // 파일 정보 저장 (to database)
+        fileService.saveFile(editForm.getId(), uploadFiles);
+
+        // 삭제할 파일 정보 조회 (from database)
+        List<File> deleteFiles = fileService.findAllFileByIds(editForm.getRemoveFileIds());
+
+        //파일 삭제 (from disk)
+        fileUtils.deleteFiles(deleteFiles);
+
+        //파일 삭제 (from database)
+        fileService.deleteAllFileByIds(editForm.getRemoveFileIds());
+
         MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/post/list.do", RequestMethod.GET,null);
         return showMessageAndRedirect(message, model);
     }

@@ -41,6 +41,7 @@ public class PostDto {
         private SaleStatus saleStatus;
 
         private List<MultipartFile> files = new ArrayList<>();
+        private List<Long> removeFileIds = new ArrayList<>(); // 삭제할 첨부파일 id List
 
         @Builder
         public EditForm(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {

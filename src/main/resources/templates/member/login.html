@@ -18,7 +18,7 @@
   <div id="login_box">
     <div class="login_con">
       <div class="login_tit">
-        <h2>게시판 프로젝트</h2>
+        <h2>스니커 마켓</h2>
         <p>LOG<i>IN</i></p>
       </div>
 
@@ -31,7 +31,7 @@
             </li>
             <li>
               <label for="password" class="skip_info">비밀번호</label>
-              <input type="password" id="password" name="password" title="비밀번호" placeholder="비밀번호" />
+              <input type="password" name="password" title="비밀번호" placeholder="비밀번호" />
             </li>
           </ul>
           <button type="button" onclick="login();" class="login_btn">로그인</button>
@@ -55,8 +55,9 @@
         <tr>
           <th scope="row">이메일<span class="es">필수 입력</span></th>
           <td>
-            <input type="email" name="email" placeholder="이메일" maxlength="20" style="width: 80%;" />
+            <input type="text" name="email" placeholder="이메일" maxlength="20" style="width: 80%;" />
             <button type="button" id="emailCheckBtn" class="btns btn_st5" onclick="checkLoginEmail();" style="width: 20%; float: right;">중복 확인</button>
+            <div><span id="emailErrorMessage" class="error-message"></span></div>
           </td>
         </tr>
         <tr>
@@ -68,7 +69,10 @@
         </tr>
         <tr>
           <th scope="row">비밀번호<span class="es">필수 입력</span></th>
-          <td><input type="password" name="password" placeholder="비밀번호" maxlength="30" /></td>
+          <td>
+            <input type="password" name="password" id="password" placeholder="비밀번호" maxlength="30" />
+            <div><span id="passwordErrorMessage" class="error-message"></span></div>
+          </td>
         </tr>
         <tr>
           <th scope="row">비밀번호 재입력<span class="es">필수 입력</span></th>
@@ -127,7 +131,7 @@
         location.href = '/post/list.do';
       },
       error : function (request, status, error) {
-        alert('아이디와 비밀번호를 확인해 주세요.');
+        alert('이메일과 비밀번호를 확인해주세요');
       }
     })
   }
@@ -142,11 +146,61 @@
   function closeSignupPopup() {
     const form = document.getElementById('signupForm');
     form.email.readOnly = false;
+    form.nickname.readOnly = false;
     form.querySelector('#emailCheckBtn').disabled = false;
     form.querySelector('#nicknameCheckBtn').disabled = false;
     form.reset();
     layerPopClose();
   }
+
+
+  // 이메일 형식이 올바른지 확인하는 함수
+  function isValidEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  }
+
+  // 이메일 형식 체크를 수행하는 함수
+  function checkEmailFormat() {
+    const emailInput = document.querySelector('#signupForm input[name="email"]');
+    const emailErrorMessage = document.getElementById("emailErrorMessage");
+
+    const emailValue = emailInput.value.trim();
+    if (!isValidEmail(emailValue)) {
+      emailErrorMessage.textContent = "올바른 이메일 형식이 아닙니다.";
+      emailErrorMessage.style.color = "red";
+    } else {
+      emailErrorMessage.textContent = "올바른 메일 형식입니다.";
+      emailErrorMessage.style.color = "blue";
+    }
+  }
+
+  // 이메일 입력란에 input 이벤트 리스너 추가
+    document.querySelector('#signupForm input[name="email"]').addEventListener("input", function () {
+    // 여기서 실시간으로 이메일 형식 체크를 수행.
+    checkEmailFormat();
+  });
+
+  // 비밀번호 길이를 체크하는 함수
+  function checkPasswordLength() {
+    const passwordInput = document.querySelector('#signupForm input[name="password"]');
+    const passwordErrorMessage = document.getElementById("passwordErrorMessage");
+
+    const passwordValue = passwordInput.value.trim();
+    if (passwordValue.length < 4 || passwordValue.length > 16) {
+      passwordErrorMessage.textContent = "비밀번호는 4자 이상, 16자 이하로 입력해주세요.";
+      passwordErrorMessage.style.color = "red";
+    } else {
+      passwordErrorMessage.textContent = "올바른 비밀번호 형식입니다.";
+      passwordErrorMessage.style.color = "blue";
+    }
+  }
+
+  // 비밀번호 입력란에 input 이벤트 리스너 추가
+  document.querySelector('#signupForm input[name="password"]').addEventListener("input", function () {
+    checkPasswordLength();
+  });
+
 
 
   // 이메일 중복 체크
@@ -166,6 +220,7 @@
       document.getElementById('emailCheckBtn').disabled = true;
     }
   }
+
 
   // 닉네임 중복 체크
   function checkLoginNickname() {
