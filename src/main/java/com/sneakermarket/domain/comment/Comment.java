@@ -16,8 +16,9 @@ public class Comment {
     private LocalDateTime createdDate;     // 생성일시
     private LocalDateTime modifiedDate;    // 최종 수정일시
 
+
     @Builder
-    public Comment(Long id, Long postId, String content, String writer) {
+    public Comment(Long id, Long postId, String content, String writer, Long loginUserId) {
         this.id = id;
         this.postId = postId;
         this.content = content;

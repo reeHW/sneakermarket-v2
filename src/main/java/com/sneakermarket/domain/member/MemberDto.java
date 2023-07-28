@@ -17,6 +17,8 @@ public class MemberDto {
     @AllArgsConstructor
     public static class RegisterForm{
 
+        private Long id;
+
         @NotBlank(message = "이메일을 입력해주세요!")
         @Email(message = "이메일 형식에 맞지 않습니다.")
         private String email;
@@ -32,19 +34,23 @@ public class MemberDto {
 
     }
 
-    @Data
+    @Getter
+    @Setter
     public static class FindForm {
+        private Long id;
         private String email;
         private String nickname;
         //private Boolean deleteYn;
 
-        public FindForm(String email, String nickname) {
+        public FindForm(Long id, String email, String nickname) {
+            this.id = id;
             this.email = email;
             this.nickname = nickname;
         }
     }
 
-    @Data
+    @Getter
+    @Setter
     public static class UpdateForm{
 
         @Email(message = "이메일 형식으로 입력새주세요.")

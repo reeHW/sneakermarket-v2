@@ -1,5 +1,6 @@
 package com.sneakermarket.domain.post;
 
+import com.sneakermarket.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 public class Post {
 
     private Long id;
+    private Long userId;
     private String writer;
     private String title;
     private String content;
@@ -23,8 +25,9 @@ public class Post {
     private SaleStatus saleStatus;
 
     @Builder
-    public Post(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
+    public Post(Long id, Long userId, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
         this.id = id;
+        this.userId = userId;
         this.writer = writer;
         this.title = title;
         this.content = content;

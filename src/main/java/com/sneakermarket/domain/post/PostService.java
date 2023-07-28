@@ -36,6 +36,7 @@ public class PostService {
         Post post = Post.builder()
                 .id(editForm.getId())
                 .writer(loginMember.getNickname())
+                .userId(loginMember.getId())
                 .title(editForm.getTitle())
                 .saleStatus(editForm.getSaleStatus())
                 .content(editForm.getContent())

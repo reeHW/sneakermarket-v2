@@ -2,16 +2,19 @@ package com.sneakermarket.domain.file;
 
 import com.sneakermarket.common.file.FileUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -27,32 +30,36 @@ public class FileApiController {
         return fileService.findAllFileByPostId(postId);
     }
 
-    // 첨부파일 다운로드
-    @GetMapping("/posts/{postId}/files/{fileId}/download")
-    public ResponseEntity<Resource> downloadFile(@PathVariable final Long postId, @PathVariable final Long fileId) {
-        File file = fileService.findFileById(fileId);
-        Resource resource = fileUtils.readFileAsResource(file);
-        try {
-            String filename = URLEncoder.encode(file.getOriginalName(), "UTF-8");
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; fileName=\"" + filename + "\";")
-                    .header(HttpHeaders.CONTENT_LENGTH, file.getSize() + "")
-                    .body(resource);
-
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("filename encoding failed : " + file.getOriginalName());
-        }
-    }
-/*
     // 이미지 파일 보여주기
     @GetMapping("/posts/{postId}/files/{fileId}/img")
-    public ResponseEntity<Resource> displayImg(@PathVariable final long postId, @PathVariable final Long fileId){
+    public ResponseEntity<Resource> displayImg(@PathVariable final long postId, @PathVariable final Long fileId) {
         File file = fileService.findFileById(fileId);
-        Resource resource = fileUtils.readFileAsResource(file);
 
-        resource.
-    }*/
+        // 파일이 존재하는지 확인
+        if (file != null) {
+            Resource resource = fileUtils.readFileAsResource(file);
+            String contentType = getContentType(file.getOriginalName());
+            return ResponseEntity.ok()
+                    .header("Content-Type", contentType)
+                    .body(resource);
+        } else {
+            // 파일이 존재하지 않으면 404 Not Found 응답
+            return ResponseEntity.notFound().build();
+        }
+    }
 
+    // 파일 확장자에 따라 Content-Type 결정
+    private String getContentType(String fileName) {
+        String extension = StringUtils.getFilenameExtension(fileName);
+        switch (extension.toLowerCase()) {
+            case "jpg":
+            case "jpeg":
+                return "image/jpeg";
+            case "png":
+                return "image/png";
+            default:
+                return "application/octet-stream"; // 기본적으로 binary 형식으로 처리
+        }
+    }
 
 }

@@ -44,6 +44,7 @@ public class MemberService {
 
         //3. 회원 정보 리턴
         return new MemberDto.FindForm(
+                member.getId(),
                 member.getEmail(),
                 member.getNickname()
         );

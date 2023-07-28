@@ -35,15 +35,19 @@ public class MemberController {
         // 1. 회원 정보 조회
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        MemberDto.FindForm member = memberService.login(email, password);
+
+        Member member = memberService.findByEmail(email);
+        MemberDto.FindForm loginMember = memberService.login(email, password);
+        loginMember.setId(member.getId());
+
 
         //2. 세션에 회원 정보 저장 & 세션 유지 시간 설정
         if(member != null){
             HttpSession session = request.getSession();
-            session.setAttribute(SessionConstants.LOGIN_MEMBER, member);
+            session.setAttribute(SessionConstants.LOGIN_MEMBER, loginMember);
             session.setMaxInactiveInterval(60*30);
         }
-        return member;
+        return loginMember;
     }
 
     // 로그아웃
