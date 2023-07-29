@@ -54,6 +54,17 @@ public class PostDto {
             this.saleStatus = saleStatus;
 
         }
+        public Post toEntity(){
+            return Post.builder()
+                    .writer(writer)
+                    .title(title)
+                    .content(content)
+                    .price(price)
+                    .size(size)
+                    .saleStatus(saleStatus)
+                    .build();
+
+        }
 
     }
 
@@ -74,16 +85,16 @@ public class PostDto {
         private int viewCnt;
         private SaleStatus saleStatus;
 
-        public Response(Post post){
-            this.id = post.getId();
-            this.writer = post.getWriter();
-            this.title = post.getTitle();
-            this.content = post.getContent();
-            this.price = post.getPrice();
-            this.size = post.getSize();
-            this.createdDate = post.getCreatedDate();
-            this.viewCnt = post.getViewCnt();
-            this.saleStatus = post.getSaleStatus();
+        public Response(Post entity){
+            this.id = entity.getId();
+            this.writer = entity.getWriter();
+            this.title = entity.getTitle();
+            this.content = entity.getContent();
+            this.price = entity.getPrice();
+            this.size = entity.getSize();
+            this.createdDate = entity.getCreatedDate();
+            this.viewCnt = entity.getViewCnt();
+            this.saleStatus = entity.getSaleStatus();
         }
         
 
@@ -91,6 +102,29 @@ public class PostDto {
             return posts.stream()
                     .map(post -> new PostDto.Response(post)).collect(Collectors.toList());
         }
+    }
+
+    @Getter
+    @ToString
+    public static class ListResponse{
+        private Long id;
+        private String writer; // member 테이블의 nickname 참조.
+        private String title;
+        private LocalDateTime createdDate;
+        private int viewCnt;
+        private SaleStatus saleStatus;
+
+    }
+
+    public static PostDto.ListResponse entityToDtoListResponse(Post post){
+        ListResponse listResponse = new ListResponse();
+        listResponse.id = post.getId();
+        listResponse.writer = post.getWriter();
+        listResponse.title = post.getTitle();
+        listResponse.saleStatus = post.getSaleStatus();
+        listResponse.viewCnt = post.getViewCnt();
+        listResponse.createdDate = post.getCreatedDate();
+        return listResponse;
     }
 
 

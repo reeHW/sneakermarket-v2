@@ -1,26 +1,25 @@
 package com.sneakermarket.domain.post;
 
 import com.sneakermarket.common.dto.SearchDto;
-import com.sneakermarket.common.paging.Pagination;
-import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.config.SessionConstants;
-import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
+import java.awt.print.Pageable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import static com.sneakermarket.domain.post.PostDto.Response.PostListToDto;
-
-@Service
 @RequiredArgsConstructor
+@Service
 public class PostService {
 
-    private final PostMapper postMapper;
+    private final PostRepository postRepository;
 
     /**
      * 게시글 저장
@@ -34,7 +33,6 @@ public class PostService {
         MemberDto.FindForm loginMember = (MemberDto.FindForm) session.getAttribute(SessionConstants.LOGIN_MEMBER);
 
         Post post = Post.builder()
-                .id(editForm.getId())
                 .writer(loginMember.getNickname())
                 .userId(loginMember.getId())
                 .title(editForm.getTitle())
@@ -43,7 +41,7 @@ public class PostService {
                 .price(editForm.getPrice())
                 .size(editForm.getSize())
                 .build();
-        postMapper.save(post);
+        postRepository.save(post);
         return post.getId();
     }
 
@@ -54,16 +52,10 @@ public class PostService {
      */
     @Transactional
     public Long updatePost(final PostDto.EditForm editForm){
-        Post post = Post.builder()
-                .id(editForm.getId())
-                .title(editForm.getTitle())
-                .saleStatus(editForm.getSaleStatus())
-                .content(editForm.getContent())
-                .price(editForm.getPrice())
-                .size(editForm.getSize())
-                .build();
+        Post post = postRepository.findById(editForm.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        postMapper.update(post);
+        post.update(editForm);
         return post.getId();
     }
 
@@ -74,7 +66,7 @@ public class PostService {
      */
     @Transactional
     public Long deletePost(final Long id){
-        postMapper.deleteById(id);
+        postRepository.deleteById(id);
         return id;
     }
 
@@ -84,8 +76,9 @@ public class PostService {
      * @return 게시글 상세정보
      */
     public PostDto.Response findPostById(final Long id) {
-        Post post = postMapper.findById(id);
-        return new PostDto.Response(post);
+        Post entity = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
+        return new PostDto.Response(entity);
     }
 
     /**
@@ -93,24 +86,32 @@ public class PostService {
      * @param params - search conditions
      * @return list & pagination information
      */
-    public PagingResponse<PostDto.Response> findAllPost(final SearchDto params){
+//    public PagingResponse<PostDto.Response> findAllPost(final SearchDto params){
+//
+//        // 조건에 해당하는 데이터가 없는 경우, 응답 데이터에 비어있는 리스트와 null을 담아 반환
+//        int count = postMapper.count(params);
+//        if (count < 1) {
+//            return new PagingResponse<>(Collections.emptyList(), null);
+//        }
+//
+//        // Pagination 객체를 생성해서 페이지 정보 계산 후 SearchDto 타입의 객체인 params에 계산된 페이지 정보 저장
+//        Pagination pagination = new Pagination(count, params);
+//        //params.setPagination(pagination);
+//
+//
+//        // 계산된 페이지 정보의 일부(limitStart, recordSize)를 기준으로 리스트 데이터 조회 후 응답 데이터 반환
+//        List<Post> entity = postMapper.findAll(params);
+//        List<PostDto.Response> list = PostListToDto(entity);
+//        return new PagingResponse<>(list, pagination);
+//
+//    }
 
-        // 조건에 해당하는 데이터가 없는 경우, 응답 데이터에 비어있는 리스트와 null을 담아 반환
-        int count = postMapper.count(params);
-        if (count < 1) {
-            return new PagingResponse<>(Collections.emptyList(), null);
-        }
+    public List<PostDto.ListResponse> list(SearchDto params) {
 
-        // Pagination 객체를 생성해서 페이지 정보 계산 후 SearchDto 타입의 객체인 params에 계산된 페이지 정보 저장
-        Pagination pagination = new Pagination(count, params);
-        //params.setPagination(pagination);
+        return postRepository.findAllDesc().stream()
+                .map(post -> PostDto.entityToDtoListResponse(post))
+                .collect(Collectors.toList());
 
-
-        // 계산된 페이지 정보의 일부(limitStart, recordSize)를 기준으로 리스트 데이터 조회 후 응답 데이터 반환
-        List<Post> entity = postMapper.findAll(params);
-        List<PostDto.Response> list = PostListToDto(entity);
-        return new PagingResponse<>(list, pagination);
 
     }
-
 }

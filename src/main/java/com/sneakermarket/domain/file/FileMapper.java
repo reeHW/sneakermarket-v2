@@ -39,5 +39,5 @@ public interface FileMapper {
      * @param id - PK
      * @return 파일 상세정보
      */
-    File findById(Long id);
+    File findBlyId(Long id);
 }

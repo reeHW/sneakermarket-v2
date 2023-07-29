@@ -3,7 +3,6 @@ package com.sneakermarket.domain.post;
 import com.sneakermarket.common.dto.MessageDto;
 import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.file.FileUtils;
-import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileService;
 import lombok.RequiredArgsConstructor;
@@ -50,13 +49,13 @@ public class PostController {
        return "post/write";
     }
 
-    //게시글 리스트 페이지
-    @GetMapping("/post/list.do")
-    public String openPostList(@ModelAttribute("params") final SearchDto params, Model model){
-        PagingResponse<PostDto.Response> response = postService.findAllPost(params);
-        model.addAttribute("response", response);
-        return "post/list";
-    }
+//    //게시글 리스트 페이지
+//    @GetMapping("/post/list.do")
+//    public String openPostList(@ModelAttribute("params") final SearchDto params, Model model){
+//        PagingResponse<PostDto.Response> response = postService.findAllPost(params);
+//        model.addAttribute("response", response);
+//        return "post/list";
+//    }
 
     //게시글 상세 페이지
     @GetMapping("/post/view.do")

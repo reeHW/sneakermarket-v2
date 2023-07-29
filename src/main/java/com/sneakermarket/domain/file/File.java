@@ -1,5 +1,6 @@
 package com.sneakermarket.domain.file;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,8 +8,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class File {
+
     private Long id; // 파일 번호 (PK)
     private Long postId; // 게시글 번호 (FK)
     private String originalName; //원본 파일명

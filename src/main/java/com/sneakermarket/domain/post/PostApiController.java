@@ -3,7 +3,6 @@ package com.sneakermarket.domain.post;
 import com.sneakermarket.common.dto.MessageDto;
 import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.file.FileUtils;
-import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileService;
 import lombok.RequiredArgsConstructor;
@@ -41,9 +40,12 @@ public class PostApiController {
 
     // 게시글 리스트 페이지
     @GetMapping("/list")
-    public ResponseEntity<PagingResponse<PostDto.Response>> openPostList(@ModelAttribute("params") SearchDto params) {
-        PagingResponse<PostDto.Response> response = postService.findAllPost(params);
-        return ResponseEntity.ok(response);
+    public ResponseEntity openPostList(@ModelAttribute("params") SearchDto params
+            /*,@PageableDefault(size = 10, sort = "createdDate", direction = Sort.Direction.DESC) Pageable pageable*/ ) {
+
+        List<PostDto.ListResponse> posts = postService.list(params);
+        //PagingResponse<PostDto.Response> response = postService.findAllPost(params);
+        return ResponseEntity.ok(posts);
     }
 
     // 게시글 상세 페이지

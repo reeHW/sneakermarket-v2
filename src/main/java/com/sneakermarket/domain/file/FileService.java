@@ -52,7 +52,7 @@ public class FileService {
      * @return 파일 상세정보
      */
     public File findFileById(final Long id) {
-        return fileMapper.findById(id);
+        return fileMapper.findBlyId(id);
     }
 
     /**

@@ -40,6 +40,7 @@
                     <th scope="col">번호</th>
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
+                    <th scope="col">판매상태</th>
                     <th scope="col">등록일</th>
                     <th scope="col">조회</th>
                 </tr>
@@ -47,11 +48,12 @@
 
                 <!--/* 리스트 데이터 렌더링 영역 */-->
                 <tbody id ="list">
-<!--                <tr th:if="${not #lists.isEmpty( posts )}" th:each="row, status : ${posts}">
+                <tr th:if="${not #lists.isEmpty( posts )}" th:each="row, status : ${posts}">
                     <td><input type="checkbox"/></td>
                     <td th:text="${status.size - status.index}"></td>
                     <td class="tl"><a th:href="@{/post/view.do( id=${row.id} )}" th:text="${row.title}"></a></td>
                     <td th:text="${row.writer}"></td>
+                    <td th:text="${row.saleStatus}"
                     <td th:text="${#temporals.format( row.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
                     <td th:text="${row.viewCnt}"></td>
                 </tr>
@@ -60,15 +62,15 @@
                     <td colspan="5">
                         <div class="no_data_msg">검색된 결과가 없습니다.</div>
                     </td>
-                </tr>-->
+                </tr>
                 </tbody>
             </table>
 
             <!--/* 페이지네이션 렌더링 영역*/-->
             <div class="paging">
-<!--                <a href="#" class="page_bt first">첫 페이지</a><a href="#" class="page_bt prev">이전 페이지 그룹</a>
+                <a href="#" class="page_bt first">첫 페이지</a><a href="#" class="page_bt prev">이전 페이지 그룹</a>
                 <p><span class="on">1</span><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">9</a><a href="#">10</a></p>
-                <a href="#" class="page_bt next">다음 페이지 그룹</a><a href="#" class="page_bt last">마지막 페이지</a>-->
+                <a href="#" class="page_bt next">다음 페이지 그룹</a><a href="#" class="page_bt last">마지막 페이지</a>
             </div>
 
             <!--/* 버튼 */-->
@@ -79,7 +81,7 @@
     </div> <!--/* .content */-->
 </th:block>
 <th:block layout:fragment="script">
-    <script th:inline="javascript">
+<!--    <script th:inline="javascript">
         /*<![CDATA[*/
 
         window.onload = () => {
@@ -131,7 +133,7 @@
                 html += `
                         <tr>
                             <td><input type="checkbox" /></td>
-                            <td>${num--}</td>
+                            <td>${num&#45;&#45;}</td>
                             <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a></td>
                             <td>${row.writer}</td>
                             <td>${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</td>
@@ -246,6 +248,6 @@
         }
 
         /*]]>*/
-    </script>
+    </script>-->
 </th:block>
 </html>

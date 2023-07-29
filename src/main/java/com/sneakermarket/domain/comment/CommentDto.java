@@ -37,13 +37,13 @@ public class CommentDto {
         private LocalDateTime createdDate;     // 생성일시
 
 
-       public Response(Comment comment){
-           this.id = comment.getId();
-           this.postId = comment.getPostId();
-           this.content = comment.getContent();
-           this.writer = comment.getWriter();
-           this.createdDate = comment.getCreatedDate();
-       }
+        public Response(Comment comment){
+            this.id = comment.getId();
+            this.postId = comment.getPostId();
+            this.content = comment.getContent();
+            this.writer = comment.getWriter();
+            this.createdDate = comment.getCreatedDate();
+        }
     }
 
     public static List<CommentDto.Response> CommentListToDto(List<Comment> comments){
