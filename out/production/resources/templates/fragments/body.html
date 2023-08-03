@@ -5,29 +5,23 @@
   <header>
     <div class="head">
       <h1>Sneaker Market</h1>
-      <div th:if="${session.loginMember != null}" class="top_menu">
-        <div class="login_user"><strong><i class="far fa-user-circle"></i> [[ ${session.loginMember.nickname} ]]</strong>님 반갑습니다.</div>
-        <div class="logout">
-          <form action="/logout" method="post">
-            <button type="submit"><span class="skip_info">로그아웃</span><i class="fas fa-sign-out-alt"></i></button>
-          </form>
-        </div>
+      <div class="top_menu">
+        <div class="login_user"><strong><i class="far fa-user-circle"></i> 회원</strong>님 반갑습니다.</div>
+        <div class="logout"><button type="button"><span class="skip_info">로그아웃</span><i class="fas fa-sign-out-alt"></i></button></div>
       </div>
     </div>
   </header>
 
   <div id="container">
-<!--    <div class="menu_toggle"><span></span></div>
-    &lt;!&ndash;/* 좌측 영역 */&ndash;&gt;
-
-
-<div class="lcontent">
-      &lt;!&ndash;/* 메뉴 */&ndash;&gt;
+    <div class="menu_toggle"><span></span></div>
+    <!--/* 좌측 영역 */-->
+    <div class="lcontent">
+      <!--/* 메뉴 */-->
       <nav>
         <ul>
           <li class="has_sub"><a href="javascript: void(0);" class="on"><span>게시판 관리</span></a>
             <ul>
-              <li><a href="/post/list.do" class="on">리스트형</a></li>
+              <li><a href="/post/list" class="on">리스트형</a></li>
               <li><a href="javascript: alert('준비 중입니다.');">갤러리형</a></li>
               <li><a href="javascript: alert('준비 중입니다.');">캘린더형</a></li>
             </ul>
@@ -35,7 +29,7 @@
           <li><a href="javascript: alert('준비 중입니다.');"><span>회원 관리</span></a></li>
         </ul>
       </nav>
-    </div>-->
+    </div>
 
     <!--/* 우측 영역 */-->
     <div class="rcontent">
@@ -45,7 +39,7 @@
 
     </div>
   </div> <!--/* // #container */-->
-  <footer>Copyright(c)sneaker market.All rights reserved.</footer>
+  <footer>Copyright(c)스니커마켓.All rights reserved.</footer>
 </div>
 
 <script th:src="@{/js/function.js}"></script>

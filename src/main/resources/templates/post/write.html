@@ -12,9 +12,9 @@
         </div>
         <div class="content">
             <section>
-                <form id="saveForm" method="post" autocomplete="off" enctype="multipart/form-data">
+                <form id="saveForm" autocomplete="off" enctype="multipart/form-data">
                     <!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
-                    <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.id}"/>
+                    <input type="hidden" id="id" name="id"/>
 
                     <!--/* 삭제 처리할 파일 번호 */-->
                     <input type="hidden" id="removeFileIds" name="removeFileIds" />
@@ -48,7 +48,7 @@
 
                         <tr>
                             <th>작성자</th>
-                            <td colspan="3"> [[ ${session.loginMember.nickname} ]]</td>
+                            <td colspan="3">테스터</td>
                         </tr>
                         <tr>
                             <th>가격 <span class="es">필수 입력</span></th>
@@ -65,7 +65,7 @@
                             <td colspan="3"><textarea id="content" name="content" cols="50" rows="10"
                                                       placeholder="내용을 입력해 주세요."></textarea></td>
                         </tr>
-                        <tr>
+<!--                        <tr>
                             <th>첨부파일</th>
                             <td colspan="3">
                                 <div class="file_list">
@@ -81,13 +81,13 @@
                                     </div>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
                         </tbody>
                     </table>
                 </form>
                 <p class="btn_set">
                     <button type="button" id="saveBtn" onclick="savePost();" class="btns btn_st3 btn_mid">저장</button>
-                    <a th:href="@{/post/list.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
+                    <a th:href="@{/post/list}" class="btns btn_bdr3 btn_mid">뒤로</a>
                 </p>
             </section>
         </div> <!--/* .content */-->
@@ -95,176 +95,217 @@
     <th:block layout:fragment="script">
         <script th:inline="javascript">
             /*<![CDATA[*/
-
-            window.onload = () => {
-                renderPostInfo();
-
-                findAllFile();
-            }
-
-
-            // 전체 파일 조회
-            function findAllFile() {
-
-                // 1. 신규 등록/수정 체크
-                const post = [[ ${post}]];
-                if ( !post ) {
-                    return false;
-                }
-
-                // 2. API 호출
-                const response = getJson(`/posts/${post.id}/files`);
-
-                // 3. 로직 종료
-                if ( !response.length ) {
-                    return false;
-                }
-
-                // 4. 업로드 영역 추가
-                for (let i = 0, len = (response.length - 1); i < len; i++) {
-                    addFile();
-                }
-
-                // 5. 파일 선택 & 삭제 이벤트 재선언 & 파일명 세팅
-                const filenameInputs = document.querySelectorAll('.file_list input[type="text"]');
-                filenameInputs.forEach((input, i) => {
-                    const fileInput = input.nextElementSibling.firstElementChild;
-                    const fileRemoveBtn = input.parentElement.nextElementSibling;
-                    fileInput.setAttribute('onchange', `selectFile(this, ${response[i].id})`);
-                    fileRemoveBtn.setAttribute('onclick', `removeFile(this, ${response[i].id})`);
-                    input.value = response[i].originalName;
-                })
-            }
-
-
-            // 게시글 상세정보 렌더링
-            function renderPostInfo() {
-                const post = [[ ${post} ]];
-
-                if ( !post ) {
-                    initCreatedDate();
-                    return false;
-                }
-
-                const form = document.getElementById('saveForm');
-                const fields = ['id', 'saleStatus', 'title', 'content', 'price','size'];
-                form.createdDate.value = dayjs(post.createdDate).format('YYYY-MM-DD HH:mm');
-
-                fields.forEach(field => {
-                    form[field].value = post[field];
-                })
-
-
-            }
-
-
-            // 등록일 초기화
-            function initCreatedDate() {
-                document.getElementById('createdDate').value = dayjs().format('YYYY-MM-DD');
-            }
-
-
             // 게시글 저장(수정)
             function savePost() {
                 const form = document.getElementById('saveForm');
                 const fields = [form.saleStatus, form.title, form.price, form.size, form.content];
                 const fieldNames = ['판매상태', '제목', '가격', '사이즈', '내용'];
+                const params ={
+                    saleStatus: form.saleStatus.value,
+                    title: form.title.value,
+                    price: form.price.value,
+                    size: form.size.value,
+                    write: form.writer.value,
+                    content: form.content.value,
+                    deleteYn: 'N'
+
+                }
 
                 for (let i = 0, len = fields.length; i < len; i++) {
                     isValid(fields[i], fieldNames[i]);
                 }
 
-                document.getElementById('saveBtn').disabled = true;
-                form.removeFileIds.value = removeFileId.getAll().join(); // 추가
-                form.action = [[ ${post == null}]] ? '/post/save.do' : '/post/update.do';
-
-                form.submit();
-            }
-
-
-            // 파일 삭제 처리용 익명 함수
-            const removeFileId = (function() {
-                // 첨부파일이 변경 또는 삭제되었을 때, 삭제 처리할 첨부파일의 id를 저장하는 배열.
-                const ids = [];
-                return {
-                    add(id) {
-                        // 배열 안에 중복되는 값 체크.
-                        if (ids.includes(id)) {
-                            return false;
-                        }
-                        ids.push(id);
+                fetch('/api/boards',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
-                    getAll() {
-                        return ids;
+                    body: JSON.stringify(params)
+                }).then(response =>{
+                    if(!response.ok){
+                        throw new Error('Request failed....');
                     }
-                }
-            }());
+                    alert('저장되었습니다.');
+                    location.href = '/post/list';
+                }).catch(error =>{
+                    alert('오류가 발생하였습니다.');
+                });
 
-            // 파일 선택
-            function selectFile(element, id) {
-
-                const file = element.files[0];
-                const filename = element.closest('.file_input').firstElementChild;
-
-                // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
-                if ( !file ) {
-                    filename.value = '';
-                    return false;
-                }
-
-                // 2. 파일 크기가 10MB를 초과하는 경우
-                const fileSize = Math.floor(file.size / 1024 / 1024);
-                if (fileSize > 10) {
-                    alert('10MB 이하의 파일로 업로드해 주세요.');
-                    filename.value = '';
-                    element.value = '';
-                    return false;
-                }
-
-                // 3. 파일명 지정
-                filename.value = file.name;
-
-                // 4. 삭제할 파일 id 추가
-                if (id) {
-                    removeFileId.add(id);
-                }
-            }
-
-
-            // 파일 추가
-            function addFile() {
-                const fileDiv = document.createElement('div');
-                fileDiv.innerHTML =`
-            <div class="file_input">
-                <input type="text" readonly />
-                <label> 첨부파일
-                    <input type="file" name="files" onchange="selectFile(this);" />
-                </label>
-            </div>
-            <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
-        `;
-                document.querySelector('.file_list').appendChild(fileDiv);
-            }
-
-            // 파일 삭제
-            function removeFile(element, id) {
-
-                // 1. 삭제할 파일 id 추가
-                if (id) {
-                    removeFileId.add(id);
-                }
-
-                // 2. 파일 영역 초기화 & 삭제
-                const fileAddBtn = element.nextElementSibling;
-                if (fileAddBtn) {
-                    const inputs = element.previousElementSibling.querySelectorAll('input');
-                    inputs.forEach(input => input.value = '')
-                    return false;
-                }
-                element.parentElement.remove();
+                document.getElementById('saveBtn').disabled = true;
+                //form.removeFileIds.value = removeFileId.getAll().join(); // 추가
             }
 
             /*]]>*/
         </script>
     </th:block>
 </html>
+
+
+<!--
+window.onload = () => {
+renderPostInfo();
+
+findAllFile();
+}
+
+
+// 전체 파일 조회
+function findAllFile() {
+
+// 1. 신규 등록/수정 체크
+const post = [[ ${post}]];
+if ( !post ) {
+return false;
+}
+
+// 2. API 호출
+const response = getJson(`/posts/${post.id}/files`);
+
+// 3. 로직 종료
+if ( !response.length ) {
+return false;
+}
+
+// 4. 업로드 영역 추가
+for (let i = 0, len = (response.length - 1); i < len; i++) {
+addFile();
+}
+
+// 5. 파일 선택 & 삭제 이벤트 재선언 & 파일명 세팅
+const filenameInputs = document.querySelectorAll('.file_list input[type="text"]');
+filenameInputs.forEach((input, i) => {
+const fileInput = input.nextElementSibling.firstElementChild;
+const fileRemoveBtn = input.parentElement.nextElementSibling;
+fileInput.setAttribute('onchange', `selectFile(this, ${response[i].id})`);
+fileRemoveBtn.setAttribute('onclick', `removeFile(this, ${response[i].id})`);
+input.value = response[i].originalName;
+})
+}
+
+
+// 게시글 상세정보 렌더링
+function renderPostInfo() {
+const post = [[ ${post} ]];
+
+if ( !post ) {
+initCreatedDate();
+return false;
+}
+
+const form = document.getElementById('saveForm');
+const fields = ['id', 'saleStatus', 'title', 'content', 'price','size'];
+form.createdDate.value = dayjs(post.createdDate).format('YYYY-MM-DD HH:mm');
+
+fields.forEach(field => {
+form[field].value = post[field];
+})
+
+
+}
+
+
+// 등록일 초기화
+function initCreatedDate() {
+document.getElementById('createdDate').value = dayjs().format('YYYY-MM-DD');
+}
+
+
+// 게시글 저장(수정)
+function savePost() {
+const form = document.getElementById('saveForm');
+const fields = [form.saleStatus, form.title, form.price, form.size, form.content];
+const fieldNames = ['판매상태', '제목', '가격', '사이즈', '내용'];
+
+for (let i = 0, len = fields.length; i < len; i++) {
+isValid(fields[i], fieldNames[i]);
+}
+
+document.getElementById('saveBtn').disabled = true;
+form.removeFileIds.value = removeFileId.getAll().join(); // 추가
+form.action = [[ ${post == null}]] ? '/post/save.do' : '/post/update.do';
+
+form.submit();
+}
+
+
+// 파일 삭제 처리용 익명 함수
+const removeFileId = (function() {
+// 첨부파일이 변경 또는 삭제되었을 때, 삭제 처리할 첨부파일의 id를 저장하는 배열.
+const ids = [];
+return {
+add(id) {
+// 배열 안에 중복되는 값 체크.
+if (ids.includes(id)) {
+return false;
+}
+ids.push(id);
+},
+getAll() {
+return ids;
+}
+}
+}());
+
+// 파일 선택
+function selectFile(element, id) {
+
+const file = element.files[0];
+const filename = element.closest('.file_input').firstElementChild;
+
+// 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
+if ( !file ) {
+filename.value = '';
+return false;
+}
+
+// 2. 파일 크기가 10MB를 초과하는 경우
+const fileSize = Math.floor(file.size / 1024 / 1024);
+if (fileSize > 10) {
+alert('10MB 이하의 파일로 업로드해 주세요.');
+filename.value = '';
+element.value = '';
+return false;
+}
+
+// 3. 파일명 지정
+filename.value = file.name;
+
+// 4. 삭제할 파일 id 추가
+if (id) {
+removeFileId.add(id);
+}
+}
+
+
+// 파일 추가
+function addFile() {
+const fileDiv = document.createElement('div');
+fileDiv.innerHTML =`
+<div class="file_input">
+    <input type="text" readonly />
+    <label> 첨부파일
+        <input type="file" name="files" onchange="selectFile(this);" />
+    </label>
+</div>
+<button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+`;
+document.querySelector('.file_list').appendChild(fileDiv);
+}
+
+// 파일 삭제
+function removeFile(element, id) {
+
+// 1. 삭제할 파일 id 추가
+if (id) {
+removeFileId.add(id);
+}
+
+// 2. 파일 영역 초기화 & 삭제
+const fileAddBtn = element.nextElementSibling;
+if (fileAddBtn) {
+const inputs = element.previousElementSibling.querySelectorAll('input');
+inputs.forEach(input => input.value = '')
+return false;
+}
+element.parentElement.remove();
+}-->

@@ -1,12 +1,6 @@
 {
   "groups": [
     {
-      "name": "mybatis.configuration",
-      "type": "org.apache.ibatis.session.Configuration",
-      "sourceType": "com.sneakermarket.config.DatabaseConfig",
-      "sourceMethod": "mybatisConfig()"
-    },
-    {
       "name": "spring.datasource.hikari",
       "type": "com.zaxxer.hikari.HikariConfig",
       "sourceType": "com.sneakermarket.config.DatabaseConfig",

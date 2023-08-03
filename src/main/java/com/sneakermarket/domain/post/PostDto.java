@@ -1,6 +1,7 @@
 package com.sneakermarket.domain.post;
 
 
+import com.sneakermarket.domain.post.entity.Post;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +18,7 @@ public class PostDto {
 
     @Getter
     @Setter
-    @NoArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class EditForm{
 
         private Long id;
@@ -54,25 +55,14 @@ public class PostDto {
             this.saleStatus = saleStatus;
 
         }
-        public Post toEntity(){
-            return Post.builder()
-                    .writer(writer)
-                    .title(title)
-                    .content(content)
-                    .price(price)
-                    .size(size)
-                    .saleStatus(saleStatus)
-                    .build();
-
-        }
 
     }
 
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Response{
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class Response {
         private Long id;
         private String writer; // member 테이블의 nickname 참조.
         private String title;
@@ -81,52 +71,26 @@ public class PostDto {
         private int size;
         private boolean deleteYn;
         private LocalDateTime createdDate;
-        private LocalDateTime modifiedDate;
         private int viewCnt;
-        private SaleStatus saleStatus;
+        private String saleStatus;
 
-        public Response(Post entity){
+        public Response(Post entity) {
             this.id = entity.getId();
             this.writer = entity.getWriter();
             this.title = entity.getTitle();
             this.content = entity.getContent();
             this.price = entity.getPrice();
             this.size = entity.getSize();
+            this.deleteYn = entity.isDeleteYn();
             this.createdDate = entity.getCreatedDate();
             this.viewCnt = entity.getViewCnt();
-            this.saleStatus = entity.getSaleStatus();
+            this.saleStatus = entity.getSaleStatus().getValue();
         }
-        
-
-        public static List<PostDto.Response> PostListToDto(List<Post> posts){
-            return posts.stream()
-                    .map(post -> new PostDto.Response(post)).collect(Collectors.toList());
-        }
-    }
-
-    @Getter
-    @ToString
-    public static class ListResponse{
-        private Long id;
-        private String writer; // member 테이블의 nickname 참조.
-        private String title;
-        private LocalDateTime createdDate;
-        private int viewCnt;
-        private SaleStatus saleStatus;
 
     }
 
-    public static PostDto.ListResponse entityToDtoListResponse(Post post){
-        ListResponse listResponse = new ListResponse();
-        listResponse.id = post.getId();
-        listResponse.writer = post.getWriter();
-        listResponse.title = post.getTitle();
-        listResponse.saleStatus = post.getSaleStatus();
-        listResponse.viewCnt = post.getViewCnt();
-        listResponse.createdDate = post.getCreatedDate();
-        return listResponse;
+    public static List<PostDto.Response> PostListToDto(List<Post> posts){
+        return posts.stream()
+                .map(post -> new PostDto.Response(post)).collect(Collectors.toList());
     }
-
-
-
 }

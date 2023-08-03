@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class PostServiceTest {
 
-/*
     @Autowired
     PostService postService;
     @Test
@@ -16,15 +15,15 @@ public class PostServiceTest {
             PostDto.EditForm postDto = new PostDto.EditForm().builder()
                     .title(i + "번 게시글 제목")
                     .content(i + "번 게시글 내용")
+                    .writer("테스터")
                     .size(270)
                     .price(300000)
                     .saleStatus(SaleStatus.READY)
                     .build();
 
-            postService.savePost(postDto);
+            postService.save(postDto);
 
         }
     }
-*/
 
 }

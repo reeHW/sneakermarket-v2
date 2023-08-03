@@ -1,6 +1,8 @@
 package com.sneakermarket.domain.post;
 
 import com.sneakermarket.MarketApplication;
+import com.sneakermarket.domain.post.entity.Post;
+import com.sneakermarket.domain.post.entity.PostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,16 +39,17 @@ public class PostRepositoryTest {
                 .title(title)
                 .content(content)
                 .saleStatus(SaleStatus.READY)
-                .userId(1L)
+                //.userId(1L)
                 .build());
         //when
         List<Post> postsList = postRepository.findAll();
 
         //then
-        Post post = postsList.get(0);
+        Post post = postsList.get(1);
         assertThat(post.getTitle()).isEqualTo(title);
         assertThat(post.getContent()).isEqualTo(content);
 
     }
+
 
 }
