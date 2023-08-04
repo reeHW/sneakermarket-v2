@@ -20,7 +20,7 @@
     <!-- WHERE 조건 -->
     <sql id="conditions">
         <where>
-            delete_yn = 'N'
+            delete_yn = 0
             <if test="keyword != null and keyword.equals('') == false">
                 <choose>
                     <when test="searchType == null or searchType.equals('')">

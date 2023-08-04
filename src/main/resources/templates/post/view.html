@@ -41,7 +41,7 @@
         </tr>
         <tr>
           <th scope="row">판매상태</th>
-          <td colspan="3" th:text="${post.saleStatus.value}"></td>
+          <td colspan="3" th:text="${post.saleStatus}"></td>
         </tr>
         <tr>
           <th scope="row">상품사진</th>
@@ -51,8 +51,8 @@
         </tbody>
       </table>
       <p class="btn_set">
-        <button type="button" onclick="goWritePage();" class="btns btn_bdr4 btn_mid">수정</button>
-        <button type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>
+          <button type="button" onclick="goWritePage();" class="btns btn_bdr4 btn_mid">수정</button>
+          <button type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>
         <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">뒤로</button>
       </p>
       <!--/* 댓글 작성 */-->
@@ -167,9 +167,9 @@
     function deletePost() {
       const id = [[ ${post.id} ]];
 
-        if ( !confirm(id + '번 게시글을 삭제할까요?') ) {
-          return false;
-        }
+      if ( !confirm(id + '번 게시글을 삭제할까요?') ) {
+        return false;
+      }
       let inputHtml = '';
 
       new URLSearchParams(location.search).forEach((value, key) => {
@@ -177,7 +177,7 @@
       })
 
       const formHtml = `
-            <form id="deleteForm" action="/post/delete.do" method="post">
+            <form id="deleteForm" action="/post/delete" method="post">
                 ${inputHtml}
             </form>
         `;
@@ -189,14 +189,14 @@
     }
     // 게시글 수정 페이지로 이동
     function goWritePage() {
-      location.href = '/post/write.do' + location.search;
+      location.href = '/post/write' + location.search;
     }
 
     // 게시글 리스트 페이지로 이동
     function goListPage() {
       const queryString = new URLSearchParams(location.search);
       queryString.delete('id');
-      location.href = '/post/list.do' + '?' + queryString.toString();
+      location.href = '/post/list' + '?' + queryString.toString();
     }
 
     // 댓글 길이 카운팅
@@ -221,7 +221,7 @@
       const params = {
         postId : postId,
         content : content.value,
-        writer : [[ ${session.loginMember.nickname} ]]
+        writer : "테스터"
       }
 
       callApi(uri, 'post', params)

@@ -1,11 +1,9 @@
 package com.sneakermarket.domain.post;
 
 import com.sneakermarket.common.dto.SearchDto;
+import com.sneakermarket.common.paging.PagingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -27,7 +25,7 @@ public class PostApiController {
      */
 
     @GetMapping("/posts")
-    public Map<String, Object> findAll(final SearchDto params) {
+    public PagingResponse<PostDto.Response> findAll(final SearchDto params) {
         return postService.findAll(params);
     }
 
@@ -36,7 +34,7 @@ public class PostApiController {
      */
     @PatchMapping("/posts/{id}")
     public Long save(@PathVariable final Long id, @RequestBody final PostDto.EditForm params){
-        return postService.update(id, params);
+        return postService.update(params);
     }
 
 }

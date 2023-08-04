@@ -18,7 +18,7 @@ public class PostServiceTest {
                     .writer("테스터")
                     .size(270)
                     .price(300000)
-                    .saleStatus(SaleStatus.READY)
+                    .saleStatus(SaleStatus.판매중)
                     .build();
 
             postService.save(postDto);

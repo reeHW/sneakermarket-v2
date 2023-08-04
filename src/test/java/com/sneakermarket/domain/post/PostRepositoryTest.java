@@ -38,7 +38,7 @@ public class PostRepositoryTest {
                 .size(240)
                 .title(title)
                 .content(content)
-                .saleStatus(SaleStatus.READY)
+                .saleStatus(SaleStatus.판매중)
                 //.userId(1L)
                 .build());
         //when

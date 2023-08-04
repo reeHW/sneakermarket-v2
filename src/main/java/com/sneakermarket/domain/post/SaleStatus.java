@@ -1,9 +1,9 @@
 package com.sneakermarket.domain.post;
 
 public enum SaleStatus {
-    READY("판매중"),
-    RESERVATION("예약중"),
-    COMPLETE("판매완료");
+    판매중("판매중"),
+    예약중("예약중"),
+    판매완료("판매완료");
 
     private final String value;
 
