@@ -2,6 +2,10 @@ package com.sneakermarket.domain.comment;
 
 import com.sneakermarket.common.paging.Pagination;
 import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.domain.post.entity.Post;
+import com.sneakermarket.domain.post.entity.PostRepository;
+import com.sneakermarket.exception.CustomException;
+import com.sneakermarket.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,40 +13,35 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 
-import static com.sneakermarket.domain.comment.CommentDto.CommentListToDto;
-
 @Service
 @RequiredArgsConstructor
 public class CommentService {
+
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
 
+
     /**
-     * 댓글 저장
+     *
+     * @param postId - post PK
      * @param editForm - 댓글 정보
-     * @return Generated PK
+     * @return
      */
     @Transactional
-    public Long saveComment(final CommentDto.EditForm editForm){
-        Comment comment = Comment.builder()
-                .postId(editForm.getPostId())
-                .writer(editForm.getWriter())
-                .id(editForm.getId())
+    public Long saveComment(final Long postId, final CommentDto.EditForm editForm){
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+
+        Comment entity = Comment.builder()
+                .post(post)
+                .writer("테스터")
                 .content(editForm.getContent())
                 .build();
-        commentMapper.save(comment);
-        return comment.getId();
+        
+        commentRepository.save(entity);
+        return entity.getId();
     }
 
-    /**
-     * 댓글 상세정보 조회
-     * @param id - PK
-     * @return 댓글 상세정보
-     */
-
-    public CommentDto.Response findCommentById(final Long id){
-        Comment comment = commentMapper.findById(id);
-        return new CommentDto.Response(comment);
-    }
 
     /**
      * 댓글 수정
@@ -50,15 +49,10 @@ public class CommentService {
      * @return PK
      */
     @Transactional
-    public Long updateComment(final CommentDto.EditForm editForm){
-        Comment comment = Comment.builder()
-                .postId(editForm.getPostId())
-                .writer(editForm.getWriter())
-                .id(editForm.getId())
-                .content(editForm.getContent())
-                .build();
-        commentMapper.update(comment);
-        return comment.getId();
+    public Long updateComment(final Long id, final CommentDto.EditForm editForm){
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENTS_NOT_FOUND));
+        entity.update(editForm);
+        return entity.getId();
     }
 
     /**
@@ -68,9 +62,23 @@ public class CommentService {
      */
     @Transactional
     public Long deleteComment(final Long id){
-        commentMapper.deleteById(id);
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENTS_NOT_FOUND));
+        entity.delete();
         return id;
     }
+
+    /**
+     * 댓글 상세정보 조회
+     * @param id - PK
+     * @return 댓글 상세정보
+     */
+
+    public CommentDto.Response findCommentById(final Long id){
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENTS_NOT_FOUND));
+        return new CommentDto.Response(entity);
+    }
+
+
     /**
      * 댓글 리스트 조회
      * @param params - search condition
@@ -84,8 +92,8 @@ public class CommentService {
         }
 
         Pagination pagination = new Pagination(count, params);
-        List<Comment> entity = commentMapper.findAll(params);
-        List<CommentDto.Response> list = CommentListToDto(entity);
+        //List<Comment> entity =
+        List<CommentDto.Response> list = commentMapper.findAll(params);
         return new PagingResponse<>(list, pagination);
     }
 }

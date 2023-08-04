@@ -1,5 +1,6 @@
 package com.sneakermarket.domain.comment;
 
+import com.sneakermarket.domain.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +19,10 @@ public class CommentDto {
     public static class EditForm{
 
         private Long id;                       // 댓글 번호 (PK)
-        private Long postId;                   // 게시글 번호 (FK)
+        private Post post;                   // 게시글 번호 (FK)
         @NotBlank(message = "댓글 내용을 입력해주세요")
         private String content;                // 내용
         private String writer;                 // 작성자
-        private LocalDateTime createdDate;     // 생성일시
 
     }
 
@@ -31,18 +31,20 @@ public class CommentDto {
     @AllArgsConstructor
     public static class Response{
         private Long id;                       // 댓글 번호 (PK)
-        private Long postId;                   // 게시글 번호 (FK)
+        private Post post;                   // 게시글 번호 (FK)
         private String content;                // 내용
         private String writer;                 // 작성자
         private LocalDateTime createdDate;     // 생성일시
+        private Boolean deleteYn;              // 삭제 여부
 
 
-        public Response(Comment comment){
-            this.id = comment.getId();
-            this.postId = comment.getPostId();
-            this.content = comment.getContent();
-            this.writer = comment.getWriter();
-            this.createdDate = comment.getCreatedDate();
+        public Response(Comment entity){
+            this.id = entity.getId();
+            this.post = entity.getPost();
+            this.content = entity.getContent();
+            this.writer = entity.getWriter();
+            this.createdDate = entity.getCreatedDate();
+            this.deleteYn = entity.getDeleteYn();
         }
     }
 

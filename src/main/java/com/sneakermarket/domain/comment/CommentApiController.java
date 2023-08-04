@@ -13,7 +13,7 @@ public class CommentApiController {
     //신규 댓글 생성
     @PostMapping("/posts/{postId}/comments")
     public CommentDto.Response saveComment(@PathVariable final Long postId, @RequestBody final CommentDto.EditForm params){
-        Long id = commentService.saveComment(params);
+        Long id = commentService.saveComment(postId, params);
         return commentService.findCommentById(id);
     }
 
@@ -21,7 +21,7 @@ public class CommentApiController {
     // 기존 댓글 수정
     @PatchMapping("/posts/{postId}/comments/{id}")
     public CommentDto.Response updateComment(@PathVariable final Long postId, @PathVariable final Long id, @RequestBody final CommentDto.EditForm params) {
-        commentService.updateComment(params);
+        commentService.updateComment(id, params);
         return commentService.findCommentById(id);
     }
 
