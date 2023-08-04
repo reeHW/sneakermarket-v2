@@ -1,5 +1,6 @@
 package com.sneakermarket.domain.post.entity;
 
+import com.sneakermarket.domain.comment.Comment;
 import com.sneakermarket.domain.post.PostDto;
 import com.sneakermarket.domain.post.SaleStatus;
 import lombok.AccessLevel;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,15 +30,15 @@ public class Post {
     private String content;
     private int price;
     private int size;
-    private boolean deleteYn;
+    private boolean deleteYn = false; // 게시글 삭제 유무. 삭제되면 true.
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private int viewCnt;
     @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus;
 
-/*    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Comment> comments = new ArrayList<>();*/
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
 
    /* @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<PostFile> postFiles = new ArrayList<>();
@@ -58,6 +61,10 @@ public class Post {
     }
 
 
+    /**
+     * 게시글 수정
+     * @param editForm
+     */
     public void update(PostDto.EditForm editForm) {
         this.title = editForm.getTitle();
         this.size = editForm.getSize();
@@ -66,4 +73,21 @@ public class Post {
         this.saleStatus = editForm.getSaleStatus();
         this.modifiedDate = LocalDateTime.now();
     }
+
+    /**
+     * 조회수 증가
+     */
+
+    public void increaseViewCnt(){
+        this.viewCnt++;
+    }
+
+
+    /**
+     * 게시글 삭제
+     */
+    public void delete(){
+        this.deleteYn = true;
+    }
+
 }
