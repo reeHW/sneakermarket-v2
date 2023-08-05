@@ -71,6 +71,7 @@ public class PostService {
      * @return 게시글 상세정보
      */
 
+    @Transactional
     public PostDto.Response findPostById(final Long id) {
         Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.POSTS_NOT_FOUND));
         entity.increaseViewCnt();

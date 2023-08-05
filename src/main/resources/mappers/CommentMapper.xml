@@ -3,9 +3,20 @@
 
 <mapper namespace="com.sneakermarket.domain.comment.CommentMapper">
 
+
+    <!-- SELECT 결과 Map -->
+    <resultMap id="CommentResultMap" type="com.sneakermarket.domain.comment.CommentDto$Response">
+        <result property="id"            column="comment_id" />
+        <result property="content"       column="content" />
+        <result property="writer"        column="writer" />
+        <result property="deleteYn"      column="delete_yn" />
+        <result property="createdDate"   column="created_date" />
+        <result property="postId"   column="post_id" />
+    </resultMap>
+
     <!-- tb_comment 테이블 전체 컬럼 -->
     <sql id="commentColumns">
-        id
+        comment_id
         , post_id
         , content
         , writer
@@ -15,16 +26,16 @@
 
 
     <!-- 댓글 리스트 조회 -->
-    <select id="findAll" parameterType="com.sneakermarket.domain.comment.CommentSearchDto" resultType="com.sneakermarket.domain.comment.CommentDto$Response">
+    <select id="findAll" parameterType="com.sneakermarket.domain.comment.CommentSearchDto" resultType="com.sneakermarket.domain.comment.CommentDto$Response" resultMap="CommentResultMap">
         SELECT
             <include refid="commentColumns" />
         FROM
             comment
         WHERE
-        delete_yn = 0
+        delete_yn = 'N'
         AND post_id = #{postId}
         ORDER BY
-        id DESC
+        comment_id DESC
         LIMIT #{pagination.limitStart}, #{recordSize}
     </select>
 
@@ -35,7 +46,7 @@
         FROM
             comment
         WHERE
-            delete_yn = 0
+            delete_yn = 'N'
             AND post_id = #{postId}
     </select>
 </mapper>

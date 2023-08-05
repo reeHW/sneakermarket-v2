@@ -69,7 +69,7 @@ public class PostDto {
         private String content;
         private int price;
         private int size;
-        private boolean deleteYn;
+        private char deleteYn;
         private LocalDateTime createdDate;
         private int viewCnt;
         private String saleStatus;
@@ -81,7 +81,7 @@ public class PostDto {
             this.content = entity.getContent();
             this.price = entity.getPrice();
             this.size = entity.getSize();
-            this.deleteYn = entity.isDeleteYn();
+            this.deleteYn = entity.getDeleteYn();
             this.createdDate = entity.getCreatedDate();
             this.viewCnt = entity.getViewCnt();
             this.saleStatus = entity.getSaleStatus().getValue();

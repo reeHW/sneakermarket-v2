@@ -9,6 +9,7 @@ public  interface CommentMapper {
 
     /**
      * 댓글 리스트 조회
+     * @param postId - post PK
      * @param params - search conditions
      * @return 댓글 리스트
      */

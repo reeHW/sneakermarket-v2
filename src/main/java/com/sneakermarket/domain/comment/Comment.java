@@ -21,19 +21,17 @@ public class Comment {
     private Post post;                   // 게시글 번호 (FK)
     private String content;                // 내용
     private String writer;                 // 작성자
-    private Boolean deleteYn = false;      // 삭제 여부
+    private char deleteYn = 'N';      // 삭제 여부
     private LocalDateTime createdDate;     // 생성일시
     private LocalDateTime modifiedDate;    // 최종 수정일시
 
-
     @Builder
-    public Comment(Post post, String content, String writer, Boolean deleteYn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public Comment(Post post, String content, String writer) {
         this.post = post;
         this.content = content;
         this.writer = writer;
-        this.deleteYn = deleteYn;
-
     }
+
 
     @PrePersist //최초 Persist될 때 수행
     public void setCreateTime() {
@@ -52,7 +50,7 @@ public class Comment {
 
 
     public void delete(){
-        this.deleteYn = true;
+        this.deleteYn = 'Y';
     }
 
 }

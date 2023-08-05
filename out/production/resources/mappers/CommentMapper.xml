@@ -3,78 +3,39 @@
 
 <mapper namespace="com.sneakermarket.domain.comment.CommentMapper">
 
+
+    <!-- SELECT 결과 Map -->
+    <resultMap id="CommentResultMap" type="com.sneakermarket.domain.comment.CommentDto$Response">
+        <result property="id"            column="comment_id" />
+        <result property="content"       column="content" />
+        <result property="writer"        column="writer" />
+        <result property="deleteYn"      column="delete_yn" />
+        <result property="createdDate"   column="created_date" />
+        <result property="postId"   column="post_id" />
+    </resultMap>
+
     <!-- tb_comment 테이블 전체 컬럼 -->
     <sql id="commentColumns">
-        id
+        comment_id
         , post_id
         , content
         , writer
         , delete_yn
         , created_date
-        , modified_date
     </sql>
 
 
-    <!-- 댓글 저장 -->
-    <insert id="save" parameterType="com.sneakermarket.domain.comment.Comment" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO tb_comment (
-        <include refid="commentColumns" />
-        ) VALUES (
-        #{id}
-        , #{postId}
-        , #{content}
-        , #{writer}
-        , 0
-        , NOW()
-        , NULL
-        )
-    </insert>
-
-
-    <!-- 댓글 상세정보 조회 -->
-    <select id="findById" parameterType="long" resultType="com.sneakermarket.domain.comment.Comment">
-        SELECT
-        <include refid="commentColumns" />
-        FROM
-        tb_comment
-        WHERE
-        id = #{value}
-    </select>
-
-
-    <!-- 댓글 수정 -->
-    <update id="update" parameterType="com.sneakermarket.domain.comment.Comment">
-        UPDATE tb_comment
-        SET
-            modified_date = NOW()
-          , content = #{content}
-          , writer = #{writer}
-        WHERE
-            id = #{id}
-    </update>
-
-
-    <!-- 댓글 삭제 -->
-    <delete id="deleteById" parameterType="long">
-        UPDATE tb_comment
-        SET
-            delete_yn = 1
-        WHERE
-            id = #{id}
-    </delete>
-
-
     <!-- 댓글 리스트 조회 -->
-    <select id="findAll" parameterType="com.sneakermarket.domain.comment.CommentSearchDto" resultType="com.sneakermarket.domain.comment.Comment">
+    <select id="findAll" parameterType="com.sneakermarket.domain.comment.CommentSearchDto" resultType="com.sneakermarket.domain.comment.CommentDto$Response" resultMap="CommentResultMap">
         SELECT
-        <include refid="commentColumns" />
+            <include refid="commentColumns" />
         FROM
-        tb_comment
+            comment
         WHERE
-        delete_yn = 0
+        delete_yn = 'N'
         AND post_id = #{postId}
         ORDER BY
-        id DESC
+        comment_id DESC
         LIMIT #{pagination.limitStart}, #{recordSize}
     </select>
 
@@ -83,9 +44,9 @@
         SELECT
             COUNT(*)
         FROM
-            tb_comment
+            comment
         WHERE
-            delete_yn = 0
+            delete_yn = 'N'
             AND post_id = #{postId}
     </select>
 </mapper>

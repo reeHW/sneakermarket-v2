@@ -1,5 +1,6 @@
 package com.sneakermarket.domain.comment;
 
+import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.paging.Pagination;
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.post.entity.Post;
@@ -92,7 +93,6 @@ public class CommentService {
         }
 
         Pagination pagination = new Pagination(count, params);
-        //List<Comment> entity =
         List<CommentDto.Response> list = commentMapper.findAll(params);
         return new PagingResponse<>(list, pagination);
     }

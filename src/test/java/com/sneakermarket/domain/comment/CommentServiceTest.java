@@ -39,8 +39,7 @@ public class CommentServiceTest {
         int count = commentMapper.count(params);
 
         Pagination pagination = new Pagination(count, params);
-        List<Comment> entity = commentMapper.findAll(params);
-        List<CommentDto.Response> list = CommentListToDto(entity);
+        List<CommentDto.Response> list = commentMapper.findAll(params);
         PagingResponse<CommentDto.Response> response = new PagingResponse<>(list, pagination);
 
         System.out.println(response.getList());
