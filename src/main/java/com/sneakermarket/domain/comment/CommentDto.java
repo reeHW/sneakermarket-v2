@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 
 public class CommentDto {
 
-    @Data
+    @Getter
+    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class EditForm{

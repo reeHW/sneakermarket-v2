@@ -5,13 +5,13 @@ import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.file.FileUtils;
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.file.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

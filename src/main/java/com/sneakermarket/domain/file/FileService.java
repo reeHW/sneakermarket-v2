@@ -1,5 +1,9 @@
 package com.sneakermarket.domain.file;
 
+import com.sneakermarket.domain.post.entity.Post;
+import com.sneakermarket.domain.post.entity.PostRepository;
+import com.sneakermarket.exception.CustomException;
+import com.sneakermarket.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,18 +15,27 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FileService {
-    private final FileMapper fileMapper;
+    private final FileRepository fileRepository;
+    private final PostRepository postRepository;
+
 
     @Transactional
     public void saveFile(final Long postId, final List<File> files){
+
         if(CollectionUtils.isEmpty(files)){
             return;
         }
-        for(File file : files){
-            file.setPostId(postId);
+
+        List<FileDto> dtos = FileDto.entityListToDto(files);
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+
+        for(FileDto file : dtos) {
+            file.setPost(post);
         }
 
-        fileMapper.saveAll(files);
+        List<File> entity = FileDto.toEntityList(dtos);
+
+        fileRepository.saveAll(entity);
     }
 
     /**
@@ -31,7 +44,7 @@ public class FileService {
      * @return 파일 리스트
      */
     public List<File> findAllFileByPostId(final Long postId) {
-        return fileMapper.findAllByPostId(postId);
+        return fileRepository.findAllByPostId(postId);
     }
 
     /**
@@ -43,7 +56,7 @@ public class FileService {
         if (CollectionUtils.isEmpty(ids)) {
             return Collections.emptyList();
         }
-        return fileMapper.findAllByIds(ids);
+        return fileRepository.findAllById(ids);
     }
 
     /**
@@ -52,7 +65,7 @@ public class FileService {
      * @return 파일 상세정보
      */
     public File findFileById(final Long id) {
-        return fileMapper.findBlyId(id);
+        return fileRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.POSTS_NOT_FOUND));
     }
 
     /**
@@ -64,6 +77,6 @@ public class FileService {
         if (CollectionUtils.isEmpty(ids)) {
             return;
         }
-        fileMapper.deleteAllByIds(ids);
+        fileRepository.deleteAllById(ids);
     }
 }

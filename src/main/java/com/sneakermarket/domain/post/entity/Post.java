@@ -1,6 +1,7 @@
 package com.sneakermarket.domain.post.entity;
 
 import com.sneakermarket.domain.comment.Comment;
+import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.post.PostDto;
 import com.sneakermarket.domain.post.SaleStatus;
 import lombok.AccessLevel;
@@ -26,26 +27,30 @@ public class Post {
 //    @JoinColumn(name = "user_id")
 //    private Long userId;
     private String writer;
+
     @Column(length = 500, nullable = false)
     private String title;
+
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+
     private int price;
     private int size;
     private char deleteYn = 'N'; // 게시글 삭제 유무. 삭제되면 'Y'
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private int viewCnt;
+
     @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus;
 
+    // post의 외래키는 comment가 관리함.
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-   /* @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<PostFile> postFiles = new ArrayList<>();
-    //files는 단순히 파일을 가져오기만 할 것이다. item의 외래키는 file이 관리할 것이다. cascade로 item이 삭제될 때 함께 삭제되도록 한다.
-*/
+    // post의 외래키는 file이 관리함.
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<File> files = new ArrayList<>();
 
     @Builder
     public Post(String writer, String title, String content, int price, int size, int viewCnt, SaleStatus saleStatus, List<Comment> comments) {
