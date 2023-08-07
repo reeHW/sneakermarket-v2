@@ -17,14 +17,14 @@ nav > ul > li.has_sub > a::after, .menu_toggle > span,
 
 header * {box-sizing:border-box;}
 header {position:relative; z-index:1;}
-header .head {overflow:hidden; border-bottom:3px solid rgba(67,75,83,1); padding:10px 15px; background:#fff;}
+header .head {overflow:hidden; border-bottom:3px solid rgba(67,75,83,1); padding:10px 30px; background:#fff;}
 header .head h1 {color:#111; font-size:17px; font-weight:500; letter-spacing:0; float:left;}
 header .head h1 i {color:#e3e3e3; font-size:12px; font-weight:400;}
 header .head .top_menu {float:right;}
 header .head .top_menu > div {display:inline-block; font-size:13px;}
 header .head .top_menu > div i {font-size:12px; color:#fff;}
 header .head .top_menu > div button {background:#434b53; border:0; border-radius:3px; width:28px; height:28px; padding:0;}
-header .head .top_menu > div.login_user {margin-right:20px;}
+header .head .top_menu > div.login_user {margin-right:50px;}
 header .head .top_menu > div.login_user strong, header .head .top_menu > div.login_user strong i {color:#333;}
 header .head .top_menu > div.login_user strong i {font-size:16px; vertical-align:bottom;}
 

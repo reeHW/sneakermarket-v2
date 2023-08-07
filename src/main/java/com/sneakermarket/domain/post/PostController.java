@@ -4,10 +4,12 @@ import com.sneakermarket.common.dto.MessageDto;
 import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.file.FileUtils;
 import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.config.auth.CustomUserDetails;
 import com.sneakermarket.domain.file.File;
-import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.file.FileService;
+import com.sneakermarket.domain.member.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +44,20 @@ public class PostController {
         return data;
     }
 
+
+    //게시글 리스트 페이지
+    @GetMapping("/post/list")
+    public String openPostList(@ModelAttribute("params") final SearchDto params, Model model, Authentication authentication){
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            Member loggedInMember = userDetails.getMember();
+            model.addAttribute("loggedInMember", loggedInMember);
+        }
+        PagingResponse<PostDto.Response> response = postService.findAll(params);
+        model.addAttribute("response", response);
+        return "post/list";
+    }
+
     //게시글 작성 페이지
     @GetMapping("/post/write")
     public String openPostWrite(@RequestParam(value="id", required = false) final Long id, Model model){
@@ -52,13 +68,6 @@ public class PostController {
         return "post/write";
     }
 
-    //게시글 리스트 페이지
-    @GetMapping("/post/list")
-    public String openPostList(@ModelAttribute("params") final SearchDto params, Model model){
-        PagingResponse<PostDto.Response> response = postService.findAll(params);
-        model.addAttribute("response", response);
-        return "post/list";
-    }
 
     //게시글 상세 페이지
     @GetMapping("/post/view")

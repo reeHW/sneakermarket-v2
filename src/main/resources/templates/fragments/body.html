@@ -5,10 +5,19 @@
   <header>
     <div class="head">
       <h1>Sneaker Market</h1>
-      <div class="top_menu">
-        <div class="login_user"><strong><i class="far fa-user-circle"></i> 회원</strong>님 반갑습니다.</div>
-        <div class="logout"><button type="button"><span class="skip_info">로그아웃</span><i class="fas fa-sign-out-alt"></i></button></div>
+      <div class="top_menu" th:if="${loggedInMember}">
+        <div style="display: flex; align-items: center;">
+          <div class="login_user"><strong><i class="far fa-user-circle"></i>[[ ${loggedInMember.nickname} ]]</strong>님 반갑습니다!</div>
+            <form action="/logout" method="post" style="margin-left: 20px;">
+              <button type="submit"><span class="skip_info">로그아웃</span><i class="fas fa-sign-out-alt"></i></button>
+            </form>
+        </div>
       </div>
+        <div class="top_menu" th:unless="${loggedInMember}">
+        <div class="text-right" >
+          <a href="/auth/login" class="btns btn_st4 btn_mid"> 로그인</a>
+        </div>
+        </div>
     </div>
   </header>
 
