@@ -1,8 +1,6 @@
 package com.sneakermarket.domain.post;
 
 import com.sneakermarket.MarketApplication;
-import com.sneakermarket.domain.post.entity.Post;
-import com.sneakermarket.domain.post.entity.PostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

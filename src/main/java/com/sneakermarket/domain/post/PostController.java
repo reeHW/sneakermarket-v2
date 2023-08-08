@@ -78,10 +78,9 @@ public class PostController {
         if(member != null){
             model.addAttribute("loggedInMember", member.getNickname());
 
-            /*게시글 작성자 본인인지 확인*/
-            if(post.getMemberId().equals(member.getId())){
-                model.addAttribute("writer", true);
-            }
+            /*작성자 본인인지 확인*/
+            boolean isWriter = post.getMemberId().equals(member.getId());
+            model.addAttribute("writer", isWriter);
         }
 
         postService.updateView(id);

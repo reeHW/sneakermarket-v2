@@ -5,8 +5,6 @@ import com.sneakermarket.common.paging.Pagination;
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberRepository;
-import com.sneakermarket.domain.post.entity.Post;
-import com.sneakermarket.domain.post.entity.PostRepository;
 import com.sneakermarket.exception.CustomException;
 import com.sneakermarket.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;

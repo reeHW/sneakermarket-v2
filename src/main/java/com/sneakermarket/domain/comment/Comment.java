@@ -1,6 +1,7 @@
 package com.sneakermarket.domain.comment;
 
-import com.sneakermarket.domain.post.entity.Post;
+import com.sneakermarket.domain.member.Member;
+import com.sneakermarket.domain.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,8 +26,14 @@ public class Comment {
     private LocalDateTime createdDate;     // 생성일시
     private LocalDateTime modifiedDate;    // 최종 수정일시
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+
     @Builder
-    public Comment(Post post, String content, String writer) {
+    public Comment(Post post, Member member, String content, String writer) {
+        this.member = member;
         this.post = post;
         this.content = content;
         this.writer = writer;

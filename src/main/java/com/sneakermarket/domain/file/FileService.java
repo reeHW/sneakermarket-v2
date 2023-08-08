@@ -1,7 +1,7 @@
 package com.sneakermarket.domain.file;
 
-import com.sneakermarket.domain.post.entity.Post;
-import com.sneakermarket.domain.post.entity.PostRepository;
+import com.sneakermarket.domain.post.Post;
+import com.sneakermarket.domain.post.PostRepository;
 import com.sneakermarket.exception.CustomException;
 import com.sneakermarket.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;

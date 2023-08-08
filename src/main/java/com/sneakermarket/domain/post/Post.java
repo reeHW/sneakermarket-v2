@@ -1,4 +1,4 @@
-package com.sneakermarket.domain.post.entity;
+package com.sneakermarket.domain.post;
 
 import com.sneakermarket.domain.comment.Comment;
 import com.sneakermarket.domain.file.File;
@@ -57,7 +57,7 @@ public class Post {
 
 
     @Builder
-    public Post(Long id, Member member, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
+    public Post(Member member, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
         this.member = member;
         this.writer = writer;
         this.title = title;

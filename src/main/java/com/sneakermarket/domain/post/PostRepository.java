@@ -1,4 +1,4 @@
-package com.sneakermarket.domain.post.entity;
+package com.sneakermarket.domain.post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -12,6 +12,7 @@
         <result property="deleteYn"      column="delete_yn" />
         <result property="createdDate"   column="created_date" />
         <result property="postId"   column="post_id" />
+        <result property="memberId"   column="member_id" />
     </resultMap>
 
     <!-- tb_comment 테이블 전체 컬럼 -->
@@ -22,6 +23,7 @@
         , writer
         , delete_yn
         , created_date
+        , member_id
     </sql>
 
 

@@ -187,6 +187,7 @@
       document.body.append(form);
       document.getElementById('deleteForm').submit();
     }
+
     // 게시글 수정 페이지로 이동
     function goWritePage() {
       location.href = '/post/write' + location.search;
@@ -220,8 +221,7 @@
       const uri = `/posts/${postId}/comments`;
       const params = {
         postId : postId,
-        content : content.value,
-        writer : "테스터"
+        content : content.value
       }
 
       callApi(uri, 'post', params)
@@ -308,8 +308,8 @@
                             </p>
                             <div class="cont"><div class="txt_con">${row.content}</div></div>
                             <p class="func_btns">
-                                <button type="button" onclick="openCommentUpdatePopup(${row.id});" class="btns"><span class="icons icon_modify">수정</span></button>
-                                <button type="button" onclick="deleteComment(${row.id});" class="btns"><span class="icons icon_del">삭제</span></button>
+                               ${row.isWriter ? `<button type="button" onclick="openCommentUpdatePopup(${row.id});" class="btns"><span class="icons icon_modify">수정</span></button>` : ''}
+                               ${row.isWriter ? `<button type="button" onclick="deleteComment(${row.id});" class="btns"><span class="icons icon_del">삭제</span></button>` : ''}
                             </p>
                         </div>
                     `;

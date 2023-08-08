@@ -1,6 +1,8 @@
 package com.sneakermarket.domain.comment;
 
-import com.sneakermarket.domain.post.entity.Post;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sneakermarket.domain.member.Member;
+import com.sneakermarket.domain.post.Post;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -13,8 +15,7 @@ public class CommentDto {
 
     @Getter
     @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class EditForm{
 
         private Long id;                       // 댓글 번호 (PK)
@@ -22,13 +23,15 @@ public class CommentDto {
         @NotBlank(message = "댓글 내용을 입력해주세요")
         private String content;                // 내용
         private String writer;                 // 작성자
+        private Member member;
 
 
         public Comment toEntity(){
             return Comment.builder()
                     .post(post)
                     .content(content)
-                    .writer(writer)
+                    .writer(member.getNickname())
+                    .member(member)
                     .build();
         }
 
@@ -45,7 +48,9 @@ public class CommentDto {
         private String writer;                 // 작성자
         private LocalDateTime createdDate;     // 생성일시
         private char deleteYn;              // 삭제 여부
-
+        private Long memberId;
+        @JsonProperty("isWriter")
+        private boolean isWriter;
 
         public Response(Comment entity){
             this.id = entity.getId();
@@ -54,6 +59,13 @@ public class CommentDto {
             this.writer = entity.getWriter();
             this.createdDate = entity.getCreatedDate();
             this.deleteYn = entity.getDeleteYn();
+            this.memberId = entity.getMember().getId();
+        }
+
+        //댓글 작성자인지 확인
+        public void setIsWriter(boolean isWriter) {
+            this.isWriter = isWriter;
+
         }
     }
 

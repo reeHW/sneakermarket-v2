@@ -2,7 +2,6 @@ package com.sneakermarket.domain.post;
 
 
 import com.sneakermarket.domain.member.Member;
-import com.sneakermarket.domain.post.entity.Post;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,7 +60,6 @@ public class PostDto {
 
         public Post toEntity(){
             return Post.builder()
-                    .id(id)
                     .writer(writer)
                     .title(title)
                     .content(content)

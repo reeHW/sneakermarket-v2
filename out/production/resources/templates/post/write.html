@@ -48,7 +48,7 @@
 
                     <tr>
                         <th>작성자</th>
-                        <td colspan="3">테스터</td>
+                        <td colspan="3"><input id="writer" name="writer" type="text" th:value="${loggedInMember}" readonly/></td>
                     </tr>
                     <tr>
                         <th>가격 <span class="es">필수 입력</span></th>
@@ -167,8 +167,8 @@
         // 게시글 저장(수정)
         function savePost() {
             const form = document.getElementById('saveForm');
-            const fields = [form.saleStatus, form.title, form.price, form.size, form.content];
-            const fieldNames = ['판매상태', '제목', '가격', '사이즈', '내용'];
+            const fields = [form.saleStatus, form.writer, form.title, form.price, form.size, form.content];
+            const fieldNames = ['판매상태', '작성자', '제목', '가격', '사이즈', '내용'];
 
             for (let i = 0, len = fields.length; i < len; i++) {
                 isValid(fields[i], fieldNames[i]);

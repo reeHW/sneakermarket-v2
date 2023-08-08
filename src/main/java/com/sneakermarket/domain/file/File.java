@@ -1,6 +1,6 @@
 package com.sneakermarket.domain.file;
 
-import com.sneakermarket.domain.post.entity.Post;
+import com.sneakermarket.domain.post.Post;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
