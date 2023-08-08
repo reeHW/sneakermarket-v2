@@ -15,6 +15,7 @@
         <result property="deleteYn"      column="delete_yn" />
         <result property="createdDate"   column="created_date" />
         <result property="saleStatus"  column="sale_status" />
+        <result property="memberId"    column="member_id"/>
     </resultMap>
 
     <!-- WHERE 조건 -->

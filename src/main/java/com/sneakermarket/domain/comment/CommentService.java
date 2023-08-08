@@ -32,12 +32,9 @@ public class CommentService {
     @Transactional
     public Long saveComment(final Long postId, final CommentDto.EditForm editForm){
         Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        editForm.setPost(post);
 
-        Comment entity = Comment.builder()
-                .post(post)
-                .writer("테스터")
-                .content(editForm.getContent())
-                .build();
+        Comment entity = editForm.toEntity();
         
         commentRepository.save(entity);
         return entity.getId();

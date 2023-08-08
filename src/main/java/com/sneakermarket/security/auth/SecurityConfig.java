@@ -1,4 +1,4 @@
-package com.sneakermarket.config.auth;
+package com.sneakermarket.security.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

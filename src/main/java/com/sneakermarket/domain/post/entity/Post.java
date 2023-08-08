@@ -2,6 +2,7 @@ package com.sneakermarket.domain.post.entity;
 
 import com.sneakermarket.domain.comment.Comment;
 import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.post.PostDto;
 import com.sneakermarket.domain.post.SaleStatus;
 import lombok.AccessLevel;
@@ -24,8 +25,6 @@ public class Post {
     @Column(name = "post_id")
     private Long id;
 
-//    @JoinColumn(name = "user_id")
-//    private Long userId;
     private String writer;
 
     @Column(length = 500, nullable = false)
@@ -44,16 +43,22 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus;
 
-    // post의 외래키는 comment가 관리함.
+    // 단순히 읽어옴, post의 외래키는 comment가 관리함.
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    // post의 외래키는 file이 관리함.
+    // 단순히 읽어옴, post의 외래키는 file이 관리함.
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<File> files = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+
     @Builder
-    public Post(String writer, String title, String content, int price, int size, int viewCnt, SaleStatus saleStatus, List<Comment> comments) {
+    public Post(Long id, Member member, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
+        this.member = member;
         this.writer = writer;
         this.title = title;
         this.content = content;

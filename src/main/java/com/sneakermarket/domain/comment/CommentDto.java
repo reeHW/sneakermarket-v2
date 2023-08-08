@@ -23,6 +23,15 @@ public class CommentDto {
         private String content;                // 내용
         private String writer;                 // 작성자
 
+
+        public Comment toEntity(){
+            return Comment.builder()
+                    .post(post)
+                    .content(content)
+                    .writer(writer)
+                    .build();
+        }
+
     }
 
     @Getter

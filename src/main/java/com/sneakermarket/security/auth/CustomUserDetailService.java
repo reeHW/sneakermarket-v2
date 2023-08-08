@@ -1,8 +1,8 @@
-package com.sneakermarket.config.auth;
+package com.sneakermarket.security.auth;
 
 
-import com.sneakermarket.config.auth.dto.UserSessionDto;
 import com.sneakermarket.domain.member.Member;
+import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +28,7 @@ public class CustomUserDetailService implements UserDetailsService {
         Member member = memberRepository.findByUsername(username).orElseThrow(() ->
                 new UsernameNotFoundException("해당 사용자가 존재하지 않습니다. : " + username));
 
-        //session.setAttribute("member", new UserSessionDto(member));
+        session.setAttribute("member", new MemberDto.Response(member));
 
         /* 시큐리티 세션에 유저 정보 저장 */
         return new CustomUserDetails(member);

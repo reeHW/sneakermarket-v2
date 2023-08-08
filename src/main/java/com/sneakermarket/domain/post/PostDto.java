@@ -1,6 +1,7 @@
 package com.sneakermarket.domain.post;
 
 
+import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.post.entity.Post;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,8 +45,10 @@ public class PostDto {
         private List<MultipartFile> files = new ArrayList<>();
         private List<Long> removeFileIds = new ArrayList<>(); // 삭제할 첨부파일 id List
 
+        private Member member;
+
         @Builder
-        public EditForm(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
+        public EditForm(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus, Member member) {
             this.id = id;
             this.writer = writer;
             this.title = title;
@@ -53,6 +56,20 @@ public class PostDto {
             this.price = price;
             this.size = size;
             this.saleStatus = saleStatus;
+
+        }
+
+        public Post toEntity(){
+            return Post.builder()
+                    .id(id)
+                    .writer(writer)
+                    .title(title)
+                    .content(content)
+                    .price(price)
+                    .size(size)
+                    .saleStatus(saleStatus)
+                    .member(member)
+                    .build();
 
         }
 
@@ -64,7 +81,7 @@ public class PostDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Response {
         private Long id;
-        private String writer; // member 테이블의 nickname 참조.
+        private String writer; // member 테이블의 nickname
         private String title;
         private String content;
         private int price;
@@ -73,6 +90,7 @@ public class PostDto {
         private LocalDateTime createdDate;
         private int viewCnt;
         private String saleStatus;
+        private Long memberId;
 
         public Response(Post entity) {
             this.id = entity.getId();
@@ -85,7 +103,9 @@ public class PostDto {
             this.createdDate = entity.getCreatedDate();
             this.viewCnt = entity.getViewCnt();
             this.saleStatus = entity.getSaleStatus().getValue();
+            this.memberId = entity.getMember().getId();
         }
+
 
     }
 

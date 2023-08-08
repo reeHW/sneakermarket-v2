@@ -4,12 +4,11 @@ import com.sneakermarket.common.dto.MessageDto;
 import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.file.FileUtils;
 import com.sneakermarket.common.paging.PagingResponse;
-import com.sneakermarket.config.auth.CustomUserDetails;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileService;
-import com.sneakermarket.domain.member.Member;
+import com.sneakermarket.domain.member.MemberDto;
+import com.sneakermarket.security.auth.LoggedInMember;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +26,6 @@ public class PostController {
     private final FileUtils fileUtils;
 
     //사용자에게 메시지 전달하고, 페이지를 리다이렉트함.
-
-
     private String showMessageAndRedirect(final MessageDto params, Model model){
         model.addAttribute("params", params);
         return "common/messageRedirect";
@@ -47,12 +44,12 @@ public class PostController {
 
     //게시글 리스트 페이지
     @GetMapping("/post/list")
-    public String openPostList(@ModelAttribute("params") final SearchDto params, Model model, Authentication authentication){
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            Member loggedInMember = userDetails.getMember();
-            model.addAttribute("loggedInMember", loggedInMember);
+    public String openPostList(@ModelAttribute("params") final SearchDto params, @LoggedInMember MemberDto.Response member, Model model){
+
+        if(member != null){
+            model.addAttribute("loggedInMember", member.getNickname());
         }
+
         PagingResponse<PostDto.Response> response = postService.findAll(params);
         model.addAttribute("response", response);
         return "post/list";
@@ -60,7 +57,11 @@ public class PostController {
 
     //게시글 작성 페이지
     @GetMapping("/post/write")
-    public String openPostWrite(@RequestParam(value="id", required = false) final Long id, Model model){
+    public String openPostWrite(@RequestParam(value="id", required = false) final Long id,  @LoggedInMember MemberDto.Response member, Model model){
+        if(member != null){
+            model.addAttribute("loggedInMember", member.getNickname());
+        }
+
         if(id != null){
             PostDto.Response response = postService.findPostById(id);
             model.addAttribute("post", response);
@@ -71,18 +72,35 @@ public class PostController {
 
     //게시글 상세 페이지
     @GetMapping("/post/view")
-    public String openPostView(@RequestParam final Long id, Model model){
+    public String openPostView(@RequestParam final Long id, @LoggedInMember MemberDto.Response member, Model model){
         PostDto.Response post = postService.findPostById(id);
+
+        if(member != null){
+            model.addAttribute("loggedInMember", member.getNickname());
+
+            /*게시글 작성자 본인인지 확인*/
+            if(post.getMemberId().equals(member.getId())){
+                model.addAttribute("writer", true);
+            }
+        }
+
+        postService.updateView(id);
         model.addAttribute("post", post);
+
         return "post/view";
     }
 
     //신규 게시글 생성
     @PostMapping("/post/save")
-    public String savePost(final PostDto.EditForm editForm, Model model){
-        Long id = postService.save(editForm);
-        List<File> files = fileUtils.uploadFiles(editForm.getFiles());
-        fileService.saveFile(id, files);
+    public String savePost(final PostDto.EditForm editForm, @LoggedInMember MemberDto.Response member, Model model){
+
+        if(member != null){
+            Long id = postService.save(member.getNickname(),editForm);
+
+            List<File> files = fileUtils.uploadFiles(editForm.getFiles());
+            fileService.saveFile(id, files);
+        }
+
         MessageDto message = new MessageDto("게시글이 저장되었습니다.", "/post/list", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }

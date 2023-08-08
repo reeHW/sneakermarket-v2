@@ -7,7 +7,7 @@
       <h1>Sneaker Market</h1>
       <div class="top_menu" th:if="${loggedInMember}">
         <div style="display: flex; align-items: center;">
-          <div class="login_user"><strong><i class="far fa-user-circle"></i>[[ ${loggedInMember.nickname} ]]</strong>님 반갑습니다!</div>
+          <div class="login_user"><strong><i class="far fa-user-circle"></i>[[ ${loggedInMember} ]]</strong>님 반갑습니다!</div>
             <form action="/logout" method="post" style="margin-left: 20px;">
               <button type="submit"><span class="skip_info">로그아웃</span><i class="fas fa-sign-out-alt"></i></button>
             </form>

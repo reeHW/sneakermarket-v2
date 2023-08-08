@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 
 public class MemberDto {
@@ -31,30 +32,39 @@ public class MemberDto {
         @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_]*$", message = "특수문자는 불가능합니다")
         private String nickname;
 
-
-
         public Member toEntity(){
             return Member.builder()
                     .username(username)
                     .password(password)
                     .nickname(nickname)
+
                     .build();
         }
 
     }
 
+
+    /**
+     * 인증된 사용자 정보를 세션에 저장하기 위한 클래스
+     * 세션을 저장하기 위해 User 엔티티 클래스를 직접 사용하게 되면 직렬화를 해야 하는데,
+     * 엔티티 클래스에 직렬화를 넣어주면 추후에 다른 엔티티와 연관관계를 맺을시
+     * 직렬화 대상에 다른 엔티티까지 포함될 수 있어 성능 이슈 우려가 있기 때문에
+     * 세션 저장용 Dto 클래스 생성
+     * */
     @Getter
-    @Setter
-    public static class FindForm {
+    public static class Response implements Serializable {
         private Long id;
         private String username;
         private String nickname;
+        private Role role;
 
 
-        public FindForm(Long id, String email, String nickname) {
-            this.id = id;
-            this.username = email;
-            this.nickname = nickname;
+       /* Entity -> Dto*/
+        public Response(Member member) {
+            this.id = member.getId();
+            this.username = member.getUsername();
+            this.nickname = member.getNickname();
+            this.role = member.getRole();
         }
     }
 

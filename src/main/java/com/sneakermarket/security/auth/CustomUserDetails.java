@@ -1,7 +1,8 @@
-package com.sneakermarket.config.auth;
+package com.sneakermarket.security.auth;
 
 import com.sneakermarket.domain.member.Member;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,10 +14,6 @@ import java.util.Collection;
 public class CustomUserDetails implements UserDetails {
 
     private final Member member;
-
-    public Member getMember(){
-        return member;
-    }
 
     @Override
     public String getPassword(){
