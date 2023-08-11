@@ -76,25 +76,25 @@ public class FileDto {
     @NoArgsConstructor
     public static class Response{
         private Long id;
-        private String saveName;
+        private String originalName;
         private Long postId;
 
-    }
+        public static FileDto.Response entityToDto(File file){
+            FileDto.Response response = new FileDto.Response();
+            response.id = file.getId();
+            response.originalName = file.getOriginalName();
+            response.postId = file.getPost().getId();
+            return response;
 
-    public static FileDto.Response entityToDto(File file){
-        FileDto.Response response = new FileDto.Response();
-        response.id = file.getId();
-        response.saveName = file.getSaveName();
-        response.postId = file.getPost().getId();
-        return response;
-
-    }
+        }
 
 
-    public static List<FileDto.Response> entityListToDtoList(List<File> fileList) {
-        return fileList.stream()
-                .map(file -> FileDto.entityToDto(file))
-                .collect(Collectors.toList());
+        public static List<FileDto.Response> entityListToDtoList(List<File> fileList) {
+            return fileList.stream()
+                    .map(file -> Response.entityToDto(file))
+                    .collect(Collectors.toList());
+        }
+
     }
 
 

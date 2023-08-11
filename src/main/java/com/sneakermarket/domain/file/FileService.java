@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileService {
     private final FileRepository fileRepository;
-    private final FileUtils fileUtils;
 
     @Transactional
     public void saveFile(final List<File> uploadFiles, final Post post){
@@ -70,7 +68,7 @@ public class FileService {
      * @return 파일 상세정보
      */
     public File findFileById(final Long id) {
-        return fileRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        return fileRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.FILE_NOT_FOUND));
     }
 
     /**

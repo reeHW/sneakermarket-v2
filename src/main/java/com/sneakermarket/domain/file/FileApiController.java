@@ -22,7 +22,7 @@ public class FileApiController {
     @GetMapping("/posts/{postId}/files")
     public List<FileDto.Response> findAllFileByPostId(@PathVariable final Long postId) {
         List<File> entity = fileService.findAllFileByPostId(postId);
-        return FileDto.entityListToDtoList(entity);
+        return FileDto.Response.entityListToDtoList(entity);
     }
 
     // 이미지 파일 보여주기
