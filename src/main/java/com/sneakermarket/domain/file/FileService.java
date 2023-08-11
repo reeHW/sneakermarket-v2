@@ -1,41 +1,46 @@
 package com.sneakermarket.domain.file;
 
+import com.sneakermarket.common.file.FileUtils;
 import com.sneakermarket.domain.post.Post;
-import com.sneakermarket.domain.post.PostRepository;
 import com.sneakermarket.exception.CustomException;
 import com.sneakermarket.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileService {
     private final FileRepository fileRepository;
-    private final PostRepository postRepository;
-
+    private final FileUtils fileUtils;
 
     @Transactional
-    public void saveFile(final Long postId, final List<File> files){
+    public void saveFile(final List<File> uploadFiles, final Post post){
 
-        if(CollectionUtils.isEmpty(files)){
+        if(CollectionUtils.isEmpty(uploadFiles)){
             return;
         }
 
-        List<FileDto> dtos = FileDto.entityListToDto(files);
-        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        // setPost를 위한 dto 변환
+        List<FileDto.Attachment> dtos = FileDto.Attachment.entityListToDto(uploadFiles);
 
-        for(FileDto file : dtos) {
-            file.setPost(post);
+        for(FileDto.Attachment dto : dtos) {
+            dto.setPost(post);
         }
 
-        List<File> entity = FileDto.toEntityList(dtos);
+        List<File> entity = FileDto.Attachment.toEntityList(dtos);
 
         fileRepository.saveAll(entity);
+        post.getFiles().addAll(entity);
+
+
     }
 
     /**

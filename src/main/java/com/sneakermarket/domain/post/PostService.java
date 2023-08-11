@@ -3,6 +3,8 @@ package com.sneakermarket.domain.post;
 import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.paging.Pagination;
 import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.file.FileService;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberRepository;
 import com.sneakermarket.exception.CustomException;
@@ -10,7 +12,9 @@ import com.sneakermarket.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,6 +25,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
     private final MemberRepository memberRepository;
+    private final FileService fileService;
 
     /**
      * 게시글 저장
@@ -28,15 +33,17 @@ public class PostService {
      * @return Generated PK
      */
     @Transactional
-    public Long save(final String nickname, final PostDto.EditForm editForm) {
+    public Long save(final String nickname, final PostDto.EditForm editForm, List<File> uploadFiles) {
 
         Member member = memberRepository.findByNickname(nickname);
         editForm.setMember(member);
 
-        Post entity = editForm.toEntity();
-        postRepository.save(entity);
+        Post post = editForm.toEntity();
+        postRepository.save(post);
 
-        return entity.getId();
+        fileService.saveFile(uploadFiles, post);
+
+        return post.getId();
     }
 
     /**
@@ -45,11 +52,11 @@ public class PostService {
      * @return PK
      */
     @Transactional
-    public Long update(final PostDto.EditForm editForm) {
+    public Post update(final PostDto.EditForm editForm) {
 
         Post entity = postRepository.findById(editForm.getId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         entity.update(editForm);
-        return entity.getId();
+        return entity;
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.sneakermarket.common.file;
 
 import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.post.Post;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;

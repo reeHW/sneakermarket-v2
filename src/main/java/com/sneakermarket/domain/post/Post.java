@@ -3,8 +3,6 @@ package com.sneakermarket.domain.post;
 import com.sneakermarket.domain.comment.Comment;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.member.Member;
-import com.sneakermarket.domain.post.PostDto;
-import com.sneakermarket.domain.post.SaleStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

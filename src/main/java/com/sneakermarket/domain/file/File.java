@@ -29,7 +29,7 @@ public class File {
     private LocalDateTime createdDate; //생성 일시
 
     @Builder
-    public File(Post post, String originalName, String saveName, long size, String filePath) {
+    public File(Post post, String originalName, String saveName, Long size, String filePath) {
         this.post = post;
         this.originalName = originalName;
         this.saveName = saveName;

@@ -94,10 +94,10 @@ public class PostController {
     public String savePost(final PostDto.EditForm editForm, @LoggedInMember MemberDto.Response member, Model model){
 
         if(member != null){
-            Long id = postService.save(member.getNickname(),editForm);
+            List<File> uploadFiles = fileUtils.uploadFiles(editForm.getFiles());
+            postService.save(member.getNickname(),editForm, uploadFiles);
 
-            List<File> files = fileUtils.uploadFiles(editForm.getFiles());
-            fileService.saveFile(id, files);
+
         }
 
         MessageDto message = new MessageDto("게시글이 저장되었습니다.", "/post/list", RequestMethod.GET, null);
@@ -107,12 +107,12 @@ public class PostController {
     //기존 게시글 수정
     @PostMapping("/post/update")
     public String updatePost(final PostDto.EditForm editForm, Model model) {
-        postService.update(editForm);
+        Post post = postService.update(editForm);
         // 파일 업로드
         List<File> uploadFiles = fileUtils.uploadFiles(editForm.getFiles());
 
         // 파일 정보 저장 (to database)
-        fileService.saveFile(editForm.getId(), uploadFiles);
+        fileService.saveFile(uploadFiles, post);
 
         // 삭제할 파일 정보 조회 (from database)
         List<File> deleteFiles = fileService.findAllFileByIds(editForm.getRemoveFileIds());

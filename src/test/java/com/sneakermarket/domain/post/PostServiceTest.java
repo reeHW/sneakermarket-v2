@@ -15,13 +15,13 @@ public class PostServiceTest {
             PostDto.EditForm postDto = new PostDto.EditForm().builder()
                     .title(i + "번 게시글 제목")
                     .content(i + "번 게시글 내용")
-                    .writer("테스터")
+                    .writer("테스터1")
                     .size(270)
                     .price(300000)
                     .saleStatus(SaleStatus.판매중)
                     .build();
 
-            postService.save(postDto);
+            postService.save("테스터2", postDto);
 
         }
     }

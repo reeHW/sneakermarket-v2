@@ -10,67 +10,93 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
 public class FileDto {
 
-    private Long id;
-    private Post post;
-    private Long postId;
-    private String originalName;
-    private String saveName;
-    private Long size;
-    private String filePath;
-    private LocalDateTime createdDate;
+    @Getter
+    @NoArgsConstructor
+    public static class Attachment {
+        private Post post;
+        private String originalName; //원본 파일명
+        private String saveName; // 저장 파일명
+        private long size; //파일 크기
+        private String filePath; // 파일 경로
 
-    @Builder
-    public FileDto(Long id, Post post, Long postId, String originalName, String saveName, Long size, String filePath, LocalDateTime createdDate) {
-        this.id = id;
-        this.post = post;
-        this.postId = postId;
-        this.originalName = originalName;
-        this.saveName = saveName;
-        this.size = size;
-        this.filePath = filePath;
-        this.createdDate = createdDate;
+
+        @Builder
+        public Attachment(Post post, java.lang.String originalName, java.lang.String saveName, long size, java.lang.String filePath) {
+            this.post = post;
+            this.originalName = originalName;
+            this.saveName = saveName;
+            this.size = size;
+            this.filePath = filePath;
+        }
+
+
+        public static FileDto.Attachment entityToDto(File entity) {
+            return Attachment.builder()
+                    .originalName(entity.getOriginalName())
+                    .filePath(entity.getFilePath())
+                    .saveName(entity.getSaveName())
+                    .size(entity.getSize())
+                    .build();
+        }
+
+
+        public static List<Attachment> entityListToDto(List<File> files) {
+            return files.stream()
+                    .map(file -> entityToDto(file)).collect(Collectors.toList());
+
+        }
+
+        public void setPost(Post post){
+            this.post = post;
+        }
+
+        public File toEntity() {
+            return File.builder()
+                    .post(post)
+                    .filePath(filePath)
+                    .originalName(originalName)
+                    .saveName(saveName)
+                    .size(size)
+                    .build();
+
+        }
+
+        public static List<File> toEntityList(List<Attachment> dtos) {
+            return dtos.stream()
+                    .map(dto -> dto.toEntity())
+                    .collect(Collectors.toList());
+
+        }
     }
 
-    public static FileDto from(File entity) {
-        return FileDto.builder()
-                .id(entity.getId())
-                .postId(entity.getPost().getId())
-                .originalName(entity.getOriginalName())
-                .filePath(entity.getFilePath())
-                .saveName(entity.getSaveName())
-                .size(entity.getSize())
-                .createdDate(entity.getCreatedDate())
-                .build();
+    @Getter
+    @NoArgsConstructor
+    public static class Response{
+        private Long id;
+        private String saveName;
+        private Long postId;
+
     }
 
-    public File toEntity(){
-        return File.builder()
-                .post(post)
-                .filePath(filePath)
-                .originalName(originalName)
-                .saveName(saveName)
-                .originalName(originalName)
-                .size(size)
-                .build();
+    public static FileDto.Response entityToDto(File file){
+        FileDto.Response response = new FileDto.Response();
+        response.id = file.getId();
+        response.saveName = file.getSaveName();
+        response.postId = file.getPost().getId();
+        return response;
 
     }
 
 
-    public static List<FileDto> entityListToDto(List<File> files) {
-        return files.stream()
-                .map(file -> FileDto.from(file)).collect(Collectors.toList());
-        
-    }
-
-    public static List<File> toEntityList(List<FileDto> dtos) {
-        return dtos.stream()
-                .map(dto -> dto.toEntity())
+    public static List<FileDto.Response> entityListToDtoList(List<File> fileList) {
+        return fileList.stream()
+                .map(file -> FileDto.entityToDto(file))
                 .collect(Collectors.toList());
     }
+
+
 
 }

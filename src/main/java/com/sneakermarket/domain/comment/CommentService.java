@@ -43,6 +43,7 @@ public class CommentService {
 
         Comment entity = editForm.toEntity();
         commentRepository.save(entity);
+        post.getComments().add(entity);
 
         return entity.getId();
     }
