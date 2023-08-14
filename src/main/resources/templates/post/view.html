@@ -30,14 +30,8 @@
           <td th:text="${#temporals.format( post.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
         </tr>
         <tr>
-          <th scope="row">사이즈</th>
-          <td>[[ ${post.size} ]]</td>
-          <th scope="row">가격</th>
-          <td th:text="${#numbers.formatInteger(post.price, 0, 'COMMA')}"></td>
-        </tr>
-        <tr>
           <th scope="row">내용</th>
-          <td colspan="3">[[ ${post.content} ]]</td>
+          <td colspan="3" >[[ ${post.content} ]]</td>
         </tr>
         <tr>
           <th scope="row">판매상태</th>
@@ -47,6 +41,12 @@
           <th scope="row">상품사진</th>
           <td id="files" colspan="3">
           </td>
+        </tr>
+        <tr>
+          <th scope="row">사이즈</th>
+          <td>[[ ${post.size} ]]</td>
+          <th scope="row">가격</th>
+          <td th:text="${#numbers.formatInteger(post.price, 0, 'COMMA')}"></td>
         </tr>
         </tbody>
       </table>
