@@ -6,8 +6,8 @@
 
 <th:block layout:fragment="content">
   <div class="page_tits">
-    <h3>게시판 관리</h3>
-    <p class="path"><strong>현재 위치 :</strong> <span>게시판 관리</span> <span>리스트형</span> <span>상세정보</span></p>
+    <h3>게시판</h3>
+    <p class="path"><strong>현재 위치 :</strong> <span>게시판</span> <span>리스트형</span> <span>상세정보</span></p>
   </div>
 
   <div class="content">
@@ -18,8 +18,8 @@
         </colgroup>
         <tbody>
         <tr>
-          <th scope="row">제목</th>
-          <td>[[ ${post.title} ]]</td>
+          <th scope="row">판매상태</th>
+          <td th:text="${post.saleStatus}"></td>
           <th scope="row">조회</th>
           <td>[[ ${post.viewCnt} ]]</td>
         </tr>
@@ -30,12 +30,12 @@
           <td th:text="${#temporals.format( post.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
         </tr>
         <tr>
-          <th scope="row">내용</th>
-          <td colspan="3" >[[ ${post.content} ]]</td>
+          <th scope="row">제목</th>
+          <td colspan="3">[[ ${post.title} ]]</td>
         </tr>
         <tr>
-          <th scope="row">판매상태</th>
-          <td colspan="3" th:text="${post.saleStatus}"></td>
+          <th scope="row">내용</th>
+          <td colspan="3" class="preserve-whitespace">[[ ${post.content} ]]</td>
         </tr>
         <tr>
           <th scope="row">상품사진</th>
@@ -132,7 +132,7 @@
       // 3. 파일 영역 추가
       let fileHtml = '<div class="file_img"><div class="cont">';
       response.forEach(row => {
-        fileHtml += `<img src="/posts/${postId}/files/${row.id}/img" alt="이미지" width="700px"/>`
+        fileHtml += `<img src="/posts/${postId}/files/${row.id}/img" alt="이미지" width="500px"/>`
       })
       fileHtml += '</div></div>';
 
@@ -197,7 +197,7 @@
     function goListPage() {
       const queryString = new URLSearchParams(location.search);
       queryString.delete('id');
-      location.href = '/post/list' + '?' + queryString.toString();
+      location.href = '/' + '?' + queryString.toString();
     }
 
     // 댓글 길이 카운팅

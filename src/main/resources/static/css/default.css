@@ -100,6 +100,9 @@ iframe {border:0;}
 .w95 {width:95% !important;}
 .w100 {width:100% !important;}
 
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
 /* input ------------------------------- */
 /* 모바일에서 스타일 제거 */
 input[type=text], input[type="password"], input[type="button"], input[type="image"], input[type="submit"], input[type="search"], input[type="email"], input[type="url"], input[type="number"], input[type="tel"], /* select, */ textarea {-webkit-appearance:none; -moz-appearance:none; appearance:none; -webkit-border-radius:0; -moz-box-size:border-box; box-sizing:border-box;}
