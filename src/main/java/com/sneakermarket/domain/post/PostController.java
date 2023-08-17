@@ -43,7 +43,7 @@ public class PostController {
 
 
     //게시글 리스트 페이지
-    @GetMapping("/post/list")
+    @GetMapping("/")
     public String openPostList(@ModelAttribute("params") final SearchDto params, @LoggedInMember MemberDto.Response member, Model model){
 
         if(member != null){
@@ -100,7 +100,7 @@ public class PostController {
 
         }
 
-        MessageDto message = new MessageDto("게시글이 저장되었습니다.", "/post/list", RequestMethod.GET, null);
+        MessageDto message = new MessageDto("게시글이 저장되었습니다.", "/", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
 
@@ -123,7 +123,7 @@ public class PostController {
         //파일 삭제 (from database)
         fileService.deleteAllFileByIds(editForm.getRemoveFileIds());
 
-        MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/post/list", RequestMethod.GET,null);
+        MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/", RequestMethod.GET,null);
         return showMessageAndRedirect(message, model);
     }
 
@@ -131,7 +131,7 @@ public class PostController {
     @PostMapping("/post/delete")
     public String deletePost(@RequestParam final Long id, final SearchDto queryParams, Model model){
         postService.deletePost(id);
-        MessageDto message = new MessageDto("게시글 삭제가 완료되었습니다.", "/post/list", RequestMethod.GET, queryParamsToMap(queryParams));
+        MessageDto message = new MessageDto("게시글 삭제가 완료되었습니다.", "/", RequestMethod.GET, queryParamsToMap(queryParams));
         return showMessageAndRedirect(message,model);
     }
 

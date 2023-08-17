@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/auth/**", "/post/list")
+                .antMatchers("/", "/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -47,10 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/auth/login")
                 .loginProcessingUrl("/loginProc")
-                .defaultSuccessUrl("/post/list", true)
+                .defaultSuccessUrl("/", true)
                 .and()
                 .logout()
-                .logoutSuccessUrl("/post/list")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true);
     }
 }

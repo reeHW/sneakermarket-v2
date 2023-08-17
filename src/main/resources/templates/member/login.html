@@ -65,6 +65,7 @@
           <td>
             <input type="text" name="nickname" placeholder="닉네임" maxlength="20" style="width: 80%;" />
             <button type="button" id="nicknameCheckBtn" class="btns btn_st5" onclick="checkLoginNickname();" style="width: 20%; float: right;">중복 확인</button>
+            <div><span id="nicknameErrorMessage" class="error-message"></span></div>
           </td>
         </tr>
         <tr>
@@ -142,7 +143,7 @@
 
     const userNameValue = userNameInput.value.trim();
     if (!isValidUsername(userNameValue)) {
-      usernameErrorMessage.textContent = "아이디는 6자 이상, 12자의 영문, 숫자만 가능합니다.";
+      usernameErrorMessage.textContent = "아이디는 특수문자를 제외한 6~12자의 영문, 숫자여야 합니다.";
       usernameErrorMessage.style.color = "red";
     } else {
       usernameErrorMessage.textContent = "올바른 아이디 형식입니다.";
@@ -156,14 +157,47 @@
     checkUserNameFormat();
   });
 
-  // 비밀번호 길이를 체크하는 함수
-  function checkPasswordLength() {
+
+  // 닉네임 형식이 올바른지 확인하는 함수
+  function isValidNickname(nickname) {
+    const nicknamePattern = /^[a-zA-Z0-9가-힣\s]{2,10}$/;
+    return nicknamePattern.test(nickname);
+  }
+
+  // 닉네임 형식 체크를 수행하는 함수
+  function checkNickNameFormat() {
+    const nicknameInput = document.querySelector('#signupForm input[name="nickname"]');
+    const nicknameErrorMessage = document.getElementById("nicknameErrorMessage");
+
+    const nicknameValue = nicknameInput.value.trim();
+    if (!isValidNickname(nicknameValue)) {
+      nicknameErrorMessage.textContent = "닉네임은 특수문자를 제외한 2~10자여야 합니다.";
+      nicknameErrorMessage.style.color = "red";
+    } else {
+      nicknameErrorMessage.textContent = "올바른 닉네임 형식입니다.";
+      nicknameErrorMessage.style.color = "blue";
+    }
+  }
+
+  // 닉네임 입력란에 input 이벤트 리스너 추가
+  document.querySelector('#signupForm input[name="nickname"]').addEventListener("input", function () {
+    checkNickNameFormat();
+  });
+
+
+  function isValidPassword(password) {
+    // 비밀번호는 8자 이상 16자 이하의 영문, 숫자, 특수문자를 포함해야 함
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+    return passwordPattern.test(password);
+  }
+
+  function checkPasswordFormat() {
     const passwordInput = document.querySelector('#signupForm input[name="password"]');
     const passwordErrorMessage = document.getElementById("passwordErrorMessage");
 
     const passwordValue = passwordInput.value.trim();
-    if (passwordValue.length < 4 || passwordValue.length > 16) {
-      passwordErrorMessage.textContent = "비밀번호는 4자 이상, 16자 이하로 입력해주세요.";
+    if (!isValidPassword(passwordValue)) {
+      passwordErrorMessage.textContent = "비밀번호는 8~16자의 영문, 숫자, 특수문자를 포함해야 합니다.";
       passwordErrorMessage.style.color = "red";
     } else {
       passwordErrorMessage.textContent = "올바른 비밀번호 형식입니다.";
@@ -173,7 +207,7 @@
 
   // 비밀번호 입력란에 input 이벤트 리스너 추가
   document.querySelector('#signupForm input[name="password"]').addEventListener("input", function () {
-    checkPasswordLength();
+    checkPasswordFormat();
   });
 
 
@@ -228,14 +262,37 @@
 
     if (form.username.readOnly === false) {
       alert('아이디 중복 체크를 완료해 주세요.');
-      throw new Error();
+      return false;
+    }
+
+    if (!isValidUsername(form.username.value)) {
+      alert('아이디 형식을 확인해주세요.');
+      form.username.readOnly = false;
+      document.getElementById('usernameCheckBtn').disabled = false;
+      form.username.focus();
+      return false;
+    }
+
+    if (!isValidNickname(form.nickname.value)) {
+      alert('닉네임 형식을 확인해주세요.');
+      form.nickname.readOnly = false;
+      document.getElementById('nicknameCheckBtn').disabled = false;
+      form.nickname.focus();
+      return false;
+    }
+    if (!isValidPassword(form.password.value)) {
+      alert('비밀번호 형식을 확인해주세요.');
+      form.password.focus();
+      return false;
     }
 
     if (form.password.value !== form.passwordCheck.value) {
       alert('비밀번호가 일치하지 않습니다.');
       form.passwordCheck.focus();
-      throw new Error();
+      return false;
     }
+
+    return true;
   }
 
 
@@ -244,7 +301,12 @@
 
     // 1. 필드 유효성 검사
     const form = document.getElementById('signupForm');
-    validationMemberInfo(form);
+
+    // 1. 필드 유효성 검사
+    if (!validationMemberInfo(form)) {
+      return; // 유효성 검사 실패 시 함수 종료
+    }
+
 
     // 2. 파라미터 세팅
     const params = {}

@@ -24,11 +24,11 @@ public class MemberDto {
         private String username;
 
         @NotBlank(message = "비밀번호를 입력해주세요!")
-        @Size(min = 4, max = 16, message = "비밀번호는 4자 이상, 16자 이하로 입력해주세요.")
+        @Size(min = 8, max = 16, message = "비밀번호는 8~16자의 영문, 숫자, 특수문자를 포함해야 합니다.")
         private String password;
 
         @NotBlank(message = "닉네임을 입력해주세요!")
-        @Size(min = 2, max = 20, message = "닉네임은 2자 이상, 20자 이하로 입력해주세요.")
+        @Size(min = 2, max = 10, message = "닉네임은 2자 이상, 10자 이하로 입력해주세요.")
         @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_]*$", message = "특수문자는 불가능합니다")
         private String nickname;
 
@@ -78,10 +78,10 @@ public class MemberDto {
         @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣_]*$", message = "특수문자는 불가능합니다")
         private String nickname;
 
-        @Size(min = 4, max = 16, message = "비밀번호는 4자 이상, 16자 이하로 입력해주세요.")
+        @Size(min = 8, max = 16, message = "비밀번호는 8~16자의 영문, 숫자, 특수문자를 포함해야 합니다.")
         private String oldPassword;
 
-        @Size(min = 4, max = 16, message = "비밀번호는 4자 이상, 16자 이하로 입력해주세요.")
+        @Size(min = 8, max = 16, message = "비밀번호는 8~16자의 영문, 숫자, 특수문자를 포함해야 합니다.")
         private String newPassword;
 
 
