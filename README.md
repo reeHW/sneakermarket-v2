@@ -1,3 +1,4 @@
+
 # 중고신발거래사이트 : SneakerMarket
 
 
@@ -11,7 +12,7 @@
 
 - 사용자 - Security 회원가입 및 로그인, 회원가입 시 유효성 검사 및 중복 검사
 - 게시판 - CRUD 기능, 조회수, 페이징 및 검색 처리, 파일 업로드
-- 댓글 - CRUD 기능
+- 댓글 - CRUD 기능, 페이징
 
 ## 3. 사용 기술
 
@@ -228,9 +229,13 @@ searchType = wrtier로 작성자를 검색한다.
 
 ### 3. API 설계
 ![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/a98b769b-0311-4c03-bd8c-56087a34bbdb)
-![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/3e01d44b-77eb-4165-8b65-04e32519c7e6)
-![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/9f7f2043-a10d-49de-8cfb-d7de400ee89f)
-![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/97e75353-935c-4d80-bbc9-5ffb0b919a04)
+
+![크기변환 스크린샷 2023-08-21 114257](https://github.com/reeHW/sneakermarket-v2/assets/68371436/5c7d721a-baa7-4bc9-83b6-520df4611ab2)
+
+![크기변환 스크린샷 2023-08-21 114312](https://github.com/reeHW/sneakermarket-v2/assets/68371436/15a6f5f8-0c98-4f3f-bce8-64999f81f39a)
+
+![크기변환 스크린샷 2023-08-21 114335](https://github.com/reeHW/sneakermarket-v2/assets/68371436/ad3f106a-95f9-4419-afc8-1abf3b907185)
+
 
 
 
