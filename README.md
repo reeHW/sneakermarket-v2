@@ -218,7 +218,8 @@ searchType = wrtier로 작성자를 검색한다.
 
 ### 2. DB 설계
 ![diagram](https://github.com/reeHW/sneakermarket-v2/assets/68371436/e99a4225-531e-43f7-b1e0-fbc7084ad09c)
-![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/5324e6b3-00c8-428e-b1b9-a4d20e6ae83a)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/6147fbac-9552-4e89-ab8d-066cd08b765a)
+
 ![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/e8efc0c2-7ac9-449c-a394-3873f4b4b7b0)
 ![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/d0ab55f0-cfa5-45fc-9786-f5cf3e4ebb27)
 ![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/78677cb2-f793-44bc-a040-aef53e6824a7)
