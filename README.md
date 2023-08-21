@@ -230,11 +230,15 @@ searchType = wrtier로 작성자를 검색한다.
 ### 3. API 설계
 ![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/a98b769b-0311-4c03-bd8c-56087a34bbdb)
 
+![크기변환 스크린샷 2023-08-21 115645](https://github.com/reeHW/sneakermarket-v2/assets/68371436/a4d69cd0-8533-4f07-a2f3-10a103da92fd)
+
 ![크기변환 스크린샷 2023-08-21 114257](https://github.com/reeHW/sneakermarket-v2/assets/68371436/5c7d721a-baa7-4bc9-83b6-520df4611ab2)
 
 ![크기변환 스크린샷 2023-08-21 114312](https://github.com/reeHW/sneakermarket-v2/assets/68371436/15a6f5f8-0c98-4f3f-bce8-64999f81f39a)
 
-![크기변환 스크린샷 2023-08-21 114335](https://github.com/reeHW/sneakermarket-v2/assets/68371436/ad3f106a-95f9-4419-afc8-1abf3b907185)
+
+<br/>
+
 
 
 
