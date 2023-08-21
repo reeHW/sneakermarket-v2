@@ -71,9 +71,9 @@
  #### 3. 게시글 등록
   ![localhost_8088_post_write](https://github.com/reeHW/sneakermarket-v2/assets/68371436/009d011a-664c-47ab-bb01-50af26e84491)
     
-  로그인 한 사용자만 게시글 작성이 가능하다.
-  <br/>게시글 저장 후엔 목록으로 redirect한다.
-   <br/>
+  로그인 한 사용자만 게시글 작성이 가능하다. 게시글 저장 후엔 목록으로 redirect한다.
+  
+  <br/>
     
   ![사본 -localhost_8088_post_write (1)](https://github.com/reeHW/sneakermarket-v2/assets/68371436/fd0c8d1f-cfce-4a12-9c5d-df56f5d7c7ff)
 
@@ -108,7 +108,7 @@
 
 <br/>
     
- * 전체검색 결과
+ * 전체검색 결과<br/>
     
 ![전체 검색](https://github.com/reeHW/sneakermarket-v2/assets/68371436/71504b5a-22e9-4335-bc21-95b6abac5474)
 
@@ -117,7 +117,7 @@
     
 <br/>
 
-* 제목 검색 결과
+* 제목 검색 결과<br/>
 
 ![제목 검색](https://github.com/reeHW/sneakermarket-v2/assets/68371436/d2a7507c-7d89-46f7-8f93-ad228529d603)
 
@@ -126,7 +126,7 @@ searchType = title 로 제목을 검색한다.
     
 <br/>
 
-* 작성자 검색 결과
+* 작성자 검색 결과<br/>
     
 ![작성자 검색](https://github.com/reeHW/sneakermarket-v2/assets/68371436/cbe4ed05-38d6-410b-83d2-47dc2caed520)
 
@@ -135,7 +135,7 @@ searchType = wrtier로 작성자를 검색한다.
 
 <br/>
 
-* 페이지 & 검색조건 유지
+* 페이지 & 검색조건 유지<br/>
 
 ![페이징](https://github.com/reeHW/sneakermarket-v2/assets/68371436/95db0267-fc35-40a2-aea7-39a87c30055c)
 
@@ -143,21 +143,94 @@ searchType = wrtier로 작성자를 검색한다.
 ![스크린샷 2023-08-17 201107](https://github.com/reeHW/sneakermarket-v2/assets/68371436/7a049fc2-5fc1-4be1-a347-a3adafd14482)
 
     
-상세 페이지에서 뒤로 버튼을 클릭하면, 이전의 검색 조건과 페이지 번호가 유지된다.  
-    
+해당 페이지 번호는 활성화해서 보여준다.
+<br/>상세 페이지에서 뒤로 버튼을 클릭하면, 이전의 검색 조건과 페이지 번호가 유지된다.  
 
+<br/>
+
+</div>
+</details>
+
+<br/>
+
+<details>
+<summary>회원</summary>
+<div>
+
+#### 1. 회원가입
+<br/>
+
+![크기변환 회원가입](https://github.com/reeHW/sneakermarket-v2/assets/68371436/c485a3ca-2776-452e-930c-7caf36e288a5)
+![크기변환 회원가입 유효성](https://github.com/reeHW/sneakermarket-v2/assets/68371436/8550e34a-acef-4373-aaf6-932331b3b6d5)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/3a1b8cfb-a697-40ec-84a6-09b3853c8a7b)
+
+
+유효성 검사와 중복을 확인하고 회원 가입이 성공하면 로그인 페이지로 이동한다.
+
+#### 2. 로그인
+
+![로그인](https://github.com/reeHW/sneakermarket-v2/assets/68371436/6b110982-2f6b-4785-adb9-a99b6d617d34)
+
+로그인이 성공하면 리스트 페이지로 redirect한다.
+
+<br/>
+</div>
+</details>
+
+<br/>
+
+<details>
+<summary>댓글</summary>
+<div>
+
+#### 1. 댓글 작성
+
+![댓글 작성](https://github.com/reeHW/sneakermarket-v2/assets/68371436/42c73afb-c897-40ae-9a7a-67c297552b0e)
+
+댓글은 300자까지 작성할 수 있다. 댓글 작성 후에는 현재 페이지를 reload 한다.
+
+![댓글 수정 삭제](https://github.com/reeHW/sneakermarket-v2/assets/68371436/6d79abd1-d9cd-4961-8374-5df76edb5658)
+![댓글수정삭제2](https://github.com/reeHW/sneakermarket-v2/assets/68371436/69d4fbe8-21d4-4a6f-8a6c-dd7735cab543)
+
+해당 댓글 작성자만 수정/삭제가 가능하다.
+
+
+#### 2. 댓글 페이징
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/12378810-c251-4b6d-974b-483e23afb350)
+10 페이지 단위로 보여준다. 해당 페이지 번호를 활성화 해서 보여준다.
+
+
+#### 3. 댓글 수정/삭제
+![스크린샷 2023-08-17 214551](https://github.com/reeHW/sneakermarket-v2/assets/68371436/6db88c9c-fe33-49a3-ad53-7088a1c97a64)
+
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/7dfba29d-9768-4795-9e2a-f1fd1459d8bd)
+
+수정/삭제 후에는 현재 페이지를 reload 한다.
+
+
+
+<br/>
 </div>
 </details>
 
 ## 구조 및 설계
 
-### 1. 패키지 구조
 
 ### 2. DB 설계
+![diagram](https://github.com/reeHW/sneakermarket-v2/assets/68371436/e99a4225-531e-43f7-b1e0-fbc7084ad09c)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/5324e6b3-00c8-428e-b1b9-a4d20e6ae83a)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/e8efc0c2-7ac9-449c-a394-3873f4b4b7b0)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/d0ab55f0-cfa5-45fc-9786-f5cf3e4ebb27)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/78677cb2-f793-44bc-a040-aef53e6824a7)
 
-![market diagram.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0ba4c392-fde2-4b8d-b8bb-68e3b67a768a/market_diagram.png)
 
-### Posts
 
 ### 3. API 설계
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/a98b769b-0311-4c03-bd8c-56087a34bbdb)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/3e01d44b-77eb-4165-8b65-04e32519c7e6)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/9f7f2043-a10d-49de-8cfb-d7de400ee89f)
+![image](https://github.com/reeHW/sneakermarket-v2/assets/68371436/97e75353-935c-4d80-bbc9-5ffb0b919a04)
+
+
+
 
