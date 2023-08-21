@@ -19,18 +19,18 @@ public class CommentServiceTest {
     @Autowired
     CommentMapper commentMapper;
 
-/*    @Test
+    @Test
     void saveByForeach() {
         for (int i = 1; i <= 100; i++) {
             CommentDto.EditForm commentDto = new CommentDto.EditForm();
-            commentDto.setPostId(999L);
-            commentDto.setWriter("테스터" + i);
+            String nickname = "낙타";
+
             commentDto.setContent("테스트" + i);
 
-            commentService.saveComment(commentDto);
+            commentService.saveComment(nickname, 1028L, commentDto);
 
         }
-    }*/
+    }
 
     @Test
     void findAllCommentTest(){

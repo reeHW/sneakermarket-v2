@@ -123,7 +123,7 @@ public class PostController {
         //파일 삭제 (from database)
         fileService.deleteAllFileByIds(editForm.getRemoveFileIds());
 
-        MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/", RequestMethod.GET,null);
+        MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/post/view?id=" + post.getId(), RequestMethod.GET,null);
         return showMessageAndRedirect(message, model);
     }
 
