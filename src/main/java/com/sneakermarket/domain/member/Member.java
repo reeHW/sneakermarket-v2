@@ -23,7 +23,7 @@ public class Member {
     private String nickname;                // 닉네임
     @Column(nullable = false, unique = true, length = 50)
     private String username;                   // 유저 아이디
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String password;                // 비밀번호
 
     @Enumerated(EnumType.STRING)
@@ -40,9 +40,21 @@ public class Member {
         this.password = password;
     }
 
+    public Member update(String nickname){
+        this.nickname = nickname;
+
+        return this;
+    }
+
+    public String getRoleKey(){
+        return this.role.getKey();
+    }
+
     @PrePersist //최초 Persist될 때 수행
     public void setCreateTime() {
         this.createdDate = LocalDateTime.now();
     }
+
+
 
 }

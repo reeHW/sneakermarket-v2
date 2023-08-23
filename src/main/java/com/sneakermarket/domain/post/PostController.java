@@ -7,7 +7,7 @@ import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileService;
 import com.sneakermarket.domain.member.MemberDto;
-import com.sneakermarket.security.auth.LoggedInMember;
+import com.sneakermarket.config.auth.LoggedInMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

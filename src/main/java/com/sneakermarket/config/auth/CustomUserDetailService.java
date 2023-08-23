@@ -1,4 +1,4 @@
-package com.sneakermarket.security.auth;
+package com.sneakermarket.config.auth;
 
 
 import com.sneakermarket.domain.member.Member;

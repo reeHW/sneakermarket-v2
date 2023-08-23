@@ -2,9 +2,8 @@ package com.sneakermarket.domain.comment;
 
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.member.MemberDto;
-import com.sneakermarket.security.auth.LoggedInMember;
+import com.sneakermarket.config.auth.LoggedInMember;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
