@@ -3,6 +3,7 @@ package com.sneakermarket.config.oauth;
 import com.sneakermarket.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import java.util.Map;
  * OAuth DTO
  */
 
+@Slf4j
 @Getter
 public class OAuthAttributes {
 
@@ -26,9 +28,9 @@ public class OAuthAttributes {
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
-        /*if("naver".equals(registrationId)){
+        if("naver".equals(registrationId)){
             return ofNaver("id", attributes);
-        }*/
+        }
         return ofGoogle(userNameAttributeName, attributes);
 
 
@@ -43,18 +45,20 @@ public class OAuthAttributes {
                 .build();
     }
 
-/*
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+
+        /*JSON 형태이므로 Map을 통해 데이터를 가져온다.*/
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        log.info("naver response : " + response);
 
         return OAuthAttributes.builder()
                 .username((String) response.get("email"))
-                .nickname((String) response.get("name"))
+                .nickname((String) response.get("nickname"))
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
-*/
 
     public Member toEntity(){
         return Member.builder()

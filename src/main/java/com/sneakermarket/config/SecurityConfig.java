@@ -3,6 +3,7 @@ package com.sneakermarket.config;
 import com.sneakermarket.config.auth.CustomUserDetailService;
 import com.sneakermarket.config.oauth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -34,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/js/**", "img/**");
+        web.ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Override
@@ -42,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers("/", "/css/**", "/js/**", "/auth/**").permitAll()
+                    .antMatchers("/", "/auth/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -59,4 +61,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .userService(customOAuth2UserService); //서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능 명시
 
     }
+
 }

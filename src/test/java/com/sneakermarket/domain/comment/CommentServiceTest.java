@@ -19,6 +19,7 @@ public class CommentServiceTest {
     @Autowired
     CommentMapper commentMapper;
 
+
     @Test
     void saveByForeach() {
         for (int i = 1; i <= 100; i++) {

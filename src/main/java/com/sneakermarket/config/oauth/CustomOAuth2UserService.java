@@ -27,7 +27,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        //현재 로그인 진행 중인 서비스를 구분하는 코드
+        /*현재 로그인 진행 중인 서비스를 구분하는 코드 - 구글, 네이버*/
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
         /**
