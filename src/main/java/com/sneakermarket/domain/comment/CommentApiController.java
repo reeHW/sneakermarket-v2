@@ -43,9 +43,7 @@ public class CommentApiController {
 
         return commentService.findCommentById(id);
 
-
     }
-
 
     // 댓글 삭제
     @DeleteMapping("/posts/{postId}/comments/{id}")
