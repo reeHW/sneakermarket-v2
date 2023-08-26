@@ -16,11 +16,11 @@
         <div class="top_menu" th:unless="${loggedInMember}">
         <div class="text-right" >
           <a href="/auth/login" class="btns btn_st4 btn_mid"> 로그인</a>
-          <a href="/oauth2/authorization/google">
-            <img th:src="@{images/google/btn_google_signin_light_normal_web.png}" height="40" width="150" alt="구글 로그인"/>
+          <a href="/oauth2/authorization/google" class="button-with-margin">
+            <img th:src="@{images/google/google_icon.svg}" height="20" width="20"/> 로그인
           </a>
-          <a href="/oauth2/authorization/naver">
-            <img th:src="@{images/naver/btnG_official.png}" height="40" width="150"/>
+          <a href="/oauth2/authorization/naver" class="button-with-margin">
+            <img th:src="@{images/naver/btnG_아이콘사각.png}" height="20" width="20"/> 로그인
           </a>
         </div>
         </div>
