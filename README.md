@@ -48,7 +48,7 @@
 <div>
 
 #### 1. 게시글 목록
-  ![리스트 화면](https://github.com/reeHW/sneakermarket-v2/assets/68371436/f8bff4f5-ac52-4271-bbde-f5eeb4231463)
+  ![리스트 화면.png](images%2F%EB%A6%AC%EC%8A%A4%ED%8A%B8%20%ED%99%94%EB%A9%B4.png)
 
     
   전체 목록은 페이징 처리하여 한 페이지에 10개의 게시물을 보여준다. 
@@ -62,7 +62,7 @@
   
   본인이 작성한 게시글이어야 수정, 삭제가 가능하다.     
 
-  ![localhost_8088_post_view_id=1028 (1)](https://github.com/reeHW/sneakermarket-v2/assets/68371436/a104708a-9374-4ab3-bff9-0624944bc21b)
+ ![localhost_8088_post_view_id=1028 (1).png](images%2Flocalhost_8088_post_view_id%3D1028%20%281%29.png)
     
   작성자가 아닐 경우 수정, 삭제 버튼이 보이지 않는다.    
     
