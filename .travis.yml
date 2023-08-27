@@ -18,3 +18,6 @@ notifications:
     recipients:
       - hjkh0107@gmail.com
 
+
+before_install:
+  - chmod +x ./gradlew
