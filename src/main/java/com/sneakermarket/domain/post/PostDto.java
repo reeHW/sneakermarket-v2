@@ -47,7 +47,7 @@ public class PostDto {
         private Member member;
 
         @Builder
-        public EditForm(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus, Member member) {
+        public EditForm(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
             this.id = id;
             this.writer = writer;
             this.title = title;
@@ -97,7 +97,7 @@ public class PostDto {
             this.content = entity.getContent();
             this.price = entity.getPrice();
             this.size = entity.getSize();
-            this.deleteYn = entity.getDeleteYn();
+            //this.deleteYn = entity.getDeleteYn();
             this.createdDate = entity.getCreatedDate();
             this.viewCnt = entity.getViewCnt();
             this.saleStatus = entity.getSaleStatus().getValue();

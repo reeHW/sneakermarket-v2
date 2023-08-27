@@ -95,7 +95,7 @@ public class PostController {
 
         if(member != null){
             List<File> uploadFiles = fileUtils.uploadFiles(editForm.getFiles());
-            postService.save(member.getNickname(),editForm, uploadFiles);
+            postService.save(member, editForm, uploadFiles);
 
 
         }

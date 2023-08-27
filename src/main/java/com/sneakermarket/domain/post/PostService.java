@@ -6,6 +6,7 @@ import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileService;
 import com.sneakermarket.domain.member.Member;
+import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;
 import com.sneakermarket.exception.CustomException;
 import com.sneakermarket.exception.ErrorCode;
@@ -31,9 +32,9 @@ public class PostService {
      * @return Generated PK
      */
     @Transactional
-    public Long save(final String nickname, final PostDto.EditForm editForm, List<File> uploadFiles) {
+    public Long save(final MemberDto.Response memberDto, final PostDto.EditForm editForm, List<File> uploadFiles) {
 
-        Member member = memberRepository.findByNickname(nickname);
+        Member member = memberRepository.findByNickname(memberDto.getNickname());
         editForm.setMember(member);
 
         Post post = editForm.toEntity();

@@ -25,6 +25,9 @@ public class CommentDto {
         private String writer;                 // 작성자
         private Member member;
 
+        public EditForm(String content) {
+            this.content = content;
+        }
 
         public Comment toEntity(){
             return Comment.builder()

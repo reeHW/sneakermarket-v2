@@ -16,6 +16,7 @@ public class MemberDto {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @Builder
     @AllArgsConstructor
     public static class RegisterForm{
 

@@ -18,8 +18,8 @@ public class CommentApiController {
     public CommentDto.Response saveComment(@PathVariable final Long postId
             , @RequestBody final CommentDto.EditForm params, @LoggedInMember MemberDto.Response member){
 
-        Long id = commentService.saveComment(member.getNickname(), postId, params);
-        return commentService.findCommentById(id);
+        CommentDto.Response savedComment = commentService.saveComment(member, postId, params);
+        return commentService.findCommentById(savedComment.getId());
     }
 
 

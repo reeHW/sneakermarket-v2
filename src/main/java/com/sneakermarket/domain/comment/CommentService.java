@@ -34,8 +34,8 @@ public class CommentService {
      * @return
      */
     @Transactional
-    public Long saveComment(String nickname, final Long postId, final CommentDto.EditForm editForm){
-        Member member = memberRepository.findByNickname(nickname);
+    public CommentDto.Response saveComment(MemberDto.Response memberDto, final Long postId, final CommentDto.EditForm editForm){
+        Member member = memberRepository.findByNickname(memberDto.getNickname());
         Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POSTS_NOT_FOUND));
 
         editForm.setMember(member);
@@ -45,7 +45,7 @@ public class CommentService {
         commentRepository.save(entity);
         post.getComments().add(entity);
 
-        return entity.getId();
+        return new CommentDto.Response(entity);
     }
 
     /**
