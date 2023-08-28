@@ -23,7 +23,17 @@ import java.util.UUID;
 @Component
 public class FileUtils {
 
-    private final String uploadPath = Paths.get("C:", "develop", "upload-files").toString();
+    private final String uploadPath;
+
+    public FileUtils() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win")) { // 로컬 실행시 파일 저장 경로(윈도우)
+            this.uploadPath = Paths.get("C:", "develop", "upload-files").toString();
+        } else { // 배포시 저장 경로
+            this.uploadPath = "/var/www/myapp/upload-files";
+        }
+    }
+
 
     /**
      * 다중 파일 업로드
