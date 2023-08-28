@@ -54,10 +54,10 @@ public class MemberDto {
      * */
     @Getter
     public static class Response implements Serializable {
-        private Long id;
-        private String username;
-        private String nickname;
-        private Role role;
+        private final Long id;
+        private final String username;
+        private final String nickname;
+        private final Role role;
 
 
        /* Entity -> Dto*/
