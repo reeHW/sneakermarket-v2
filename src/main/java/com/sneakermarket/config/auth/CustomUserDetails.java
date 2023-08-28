@@ -9,6 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/*
+1. 스프링 시큐리티가 로그인 요청을 가로채 로그인을 진행한다.
+2. 완료 후 UserDetails 타입의 오브젝트를 스프링 시큐리티의 소유한 세션 저장소에 저장해준다.
+*/
 
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {

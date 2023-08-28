@@ -33,10 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(customMemberDetailService).passwordEncoder(encoder());
     }
 
+    /* 정적 리소스 관련 설정은 무시 */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/images/**", "/js/**", "/css/**","/error");
+                .antMatchers("/images/**", "/js/**", "/css/**");
     }
 
     @Override
@@ -49,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin()
                     .loginPage("/auth/login")
-                    .loginProcessingUrl("/loginProc")
+                    .loginProcessingUrl("/auth/loginProc")
                     .defaultSuccessUrl("/", true)
                 .and()
                     .logout()
