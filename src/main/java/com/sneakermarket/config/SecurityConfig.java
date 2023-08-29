@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/auth/login")
                     .loginProcessingUrl("/auth/loginProc")
-                    .defaultSuccessUrl("/", true)
+                    .defaultSuccessUrl("http://ec2-3-34-83-230.ap-northeast-2.compute.amazonaws.com/", true)
                 .and()
                     .logout()
                         .logoutSuccessUrl("/")
