@@ -162,24 +162,23 @@ searchType = wrtier로 작성자를 검색한다.
 
 ![[크기변환]회원가입.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.png)
 ![[크기변환]회원가입 유효성.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EC%9C%A0%ED%9A%A8%EC%84%B1.png)
-
+![userId_duplication.png](images%2FuserId_duplication.png)
 
 유효성 검사와 중복을 확인하고 회원 가입이 성공하면 로그인 페이지로 이동한다.
 
 #### 2-1. 로그인
-![소셜로그인.png](images%2F%BC%D2%BC%C8%B7%CE%B1%D7%C0%CE.png)
 
-![로그인.png](images%2F%EB%A1%9C%EA%B7%B8%EC%9D%B8.png)
+![로그인.png](images%2F%B7%CE%B1%D7%C0%CE.png)
 
 로그인이 성공하면 리스트 페이지로 redirect한다.
 
 #### 2-2. OAuth 2.0 소셜 로그인 
 
 ##### 구글 로그인
-![구글 로그인.png](images%2F%B1%B8%B1%DB%20%B7%CE%B1%D7%C0%CE.png)
+![google_login.png](images%2Fgoogle_login.png)
 
 ##### 네이버 로그인
-![네이버 로그인.png](images%2F%B3%D7%C0%CC%B9%F6%20%B7%CE%B1%D7%C0%CE.png)
+![naver.login.png](images%2Fnaver.login.png)
 
 구글 계정과 네이버 계정으로 로그인한다.
 
