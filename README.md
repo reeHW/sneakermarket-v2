@@ -168,7 +168,7 @@ searchType = wrtier로 작성자를 검색한다.
 
 #### 2-1. 로그인
 
-![로그인.png](images%2F%B7%CE%B1%D7%C0%CE.png)
+![login.png](images%2Flogin.png)
 
 로그인이 성공하면 리스트 페이지로 redirect한다.
 
