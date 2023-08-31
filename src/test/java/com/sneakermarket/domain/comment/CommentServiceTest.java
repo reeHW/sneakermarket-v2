@@ -1,6 +1,5 @@
 package com.sneakermarket.domain.comment;
 
-import com.sneakermarket.common.paging.Pagination;
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
@@ -8,7 +7,6 @@ import com.sneakermarket.domain.member.MemberRepository;
 import com.sneakermarket.domain.post.Post;
 import com.sneakermarket.domain.post.PostRepository;
 import com.sneakermarket.domain.post.SaleStatus;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static com.sneakermarket.domain.comment.CommentDto.CommentListToDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -60,20 +55,6 @@ public class CommentServiceTest {
 
         commentSearchDto = new CommentSearchDto(post.getId());
     }
-
-    /*페이징 테스트용 댓글 생성*/
-/*    @Test
-    void saveByForeach() {
-        for (int i = 1; i <= 100; i++) {
-            CommentDto.EditForm commentDto = new CommentDto.EditForm();
-            String nickname = "낙타";
-
-            commentDto.setContent("테스트" + i);
-
-            commentService.saveComment(nickname, 1028L, commentDto);
-
-        }
-    }*/
 
     @Test
     @DisplayName("댓글 작성 테스트")
@@ -143,5 +124,19 @@ public class CommentServiceTest {
         assertThat(comment.getDeleteYn()).isEqualTo('Y');
 
     }
+
+    /*페이징 테스트용 댓글 생성*/
+/*    @Test
+    void saveByForeach() {
+        for (int i = 1; i <= 100; i++) {
+            CommentDto.EditForm commentDto = new CommentDto.EditForm();
+            String nickname = "낙타";
+
+            commentDto.setContent("테스트" + i);
+
+            commentService.saveComment(nickname, 1028L, commentDto);
+
+        }
+    }*/
 
 }

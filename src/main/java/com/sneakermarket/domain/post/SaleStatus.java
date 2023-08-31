@@ -7,11 +7,12 @@ public enum SaleStatus {
 
     private final String value;
 
-    SaleStatus(String value){
+    SaleStatus(String value) {
         this.value = value;
     }
 
-    public String getValue(){
+    public String getValue() {
         return value;
     }
+
 }

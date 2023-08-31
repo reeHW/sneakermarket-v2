@@ -185,8 +185,8 @@ public class PostServiceTest {
                 .writer(memberDto.getNickname())
                 .build();
 
-        Long savedPostId1 = postService.save(memberDto, postDto1, uploadFiles);
-        Long savedPostId2 = postService.save(memberDto, postDto2, uploadFiles);
+        postService.save(memberDto, postDto1, uploadFiles);
+        postService.save(memberDto, postDto2, uploadFiles);
 
         SearchDto searchDto = new SearchDto();
         searchDto.setSearchType("title");

@@ -18,7 +18,7 @@
 
     <!-- Logger -->
     <logger name="com.sneakermarket" level="DEBUG" appender-ref="console" />
-    <logger name="jdbc.sqlonly" level="INFO" appender-ref="console-infolog" />
+    <logger name="jdbc.sqlonqqly" level="INFO" appender-ref="console-infolog" />
     <logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolog" />
 
     <!-- Root Logger -->
