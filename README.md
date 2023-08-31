@@ -1,6 +1,10 @@
 
 
 # 중고신발거래사이트 : SneakerMarket
+
+## 들어가며
+<hr>
+
 ### 1. 프로젝트 소개
 
 Spring Boot를 이용한 개인 프로젝트 입니다.
@@ -41,6 +45,12 @@ Spring Boot를 이용한 개인 프로젝트 입니다.
 - html/css
 - JavaScript
 - thymeleaf
+
+**3.3 배포**
+
+- AWS EC2
+- AWS RDS
+
 
 ### 4. 실행 화면
 
@@ -222,6 +232,8 @@ searchType = wrtier로 작성자를 검색한다.
 
 ## 구조 및 설계
 
+<hr>
+
 
 ### 2. DB 설계
 ![diagram.png](images%2Fdiagram.png)
@@ -241,6 +253,15 @@ searchType = wrtier로 작성자를 검색한다.
 
 
 <br/>
+
+## 개발 내용
+
+<hr>
+
+## 마치며
+
+<hr>
+
 
 
 
