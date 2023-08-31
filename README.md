@@ -1,15 +1,13 @@
 
 
 # 중고신발거래사이트 : SneakerMarket
-
-
 ### 1. 프로젝트 소개
 
 Spring Boot를 이용한 개인 프로젝트 입니다.
 
 웹 프로그래밍의 기본이라고 할 수 있는 CRUD 게시판을 구현해보고 하나씩 기능을 추가해보면서 웹 어플리케이션의 동작과정 및 흐름을 이해하고자 프로젝트를 시작하게 되었습니다.
 
-스니커마켓 v2는 스니커마켓 v1 (https://github.com/reeHW/sneakermarket-v1)의 개선점을 해결하고, Spring Security와 JPA를 적용합니다.
+스니커마켓 v2는 스니커마켓 v1 (https://github.com/reeHW/sneakermarket-v1) 의 개선점을 해결하고, Spring Security와 JPA를 적용합니다.
 
 ### 2. 프로젝트의 기능
 
