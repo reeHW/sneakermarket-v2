@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sneakermarket.domain.post.PostMapper">
+
+    <!-- SELECT 결과 Map -->
+    <resultMap id="PostResultMap" type="com.sneakermarket.domain.post.PostDto$Response">
+        <result property="id"            column="post_id" />
+        <result property="title"         column="title" />
+        <result property="content"       column="content" />
+        <result property="writer"        column="writer" />
+        <result property="price"        column="price" />
+        <result property="size"        column="size" />
+        <result property="viewCnt"          column="view_cnt" />
+        <result property="deleteYn"      column="delete_yn" />
+        <result property="createdDate"   column="created_date" />
+        <result property="saleStatus"  column="sale_status" />
+        <result property="memberId"    column="member_id"/>
+    </resultMap>
+
+    <!-- WHERE 조건 -->
+    <sql id="conditions">
+        <where>
+            delete_yn = 'N'
+            <if test="keyword != null and keyword.equals('') == false">
+                <choose>
+                    <when test="searchType == null or searchType.equals('')">
+                        AND (
+                        title LIKE CONCAT('%', #{keyword}, '%')
+                        OR content LIKE CONCAT('%', #{keyword}, '%')
+                        OR writer LIKE CONCAT('%', #{keyword}, '%')
+                        )
+                    </when>
+                    <otherwise>
+                        <choose>
+                            <when test="searchType.equals('title')">
+                                AND title LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+
+                            <when test="searchType.equals('content')">
+                                AND content LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+
+                            <when test="searchType.equals('writer')">
+                                AND writer LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                        </choose>
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+    <!-- 게시글 수 조회 -->
+    <select id="count" parameterType="com.sneakermarket.common.dto.SearchDto" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        post
+        <include refid="conditions" />
+    </select>
+
+    <!-- 게시글 리스트 조회 -->
+    <select id="findAll" parameterType="com.sneakermarket.common.dto.SearchDto" resultMap="PostResultMap">
+        SELECT
+        post_id
+        , title
+        , content
+        , writer
+        , view_cnt
+        , size
+        , price
+        , delete_yn
+        , created_date
+        , modified_date
+        , sale_status
+        FROM
+        post
+        <include refid="conditions" />
+        ORDER BY
+        post_id DESC, created_date DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
+    </select>
+
+</mapper>
