@@ -106,7 +106,17 @@
 <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
 <script th:src="@{/js/common.js}"></script>
 <script src="https://kit.fontawesome.com/79613ae794.js" crossorigin="anonymous"></script>
-<script>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+
+  const error = [[${error}]]
+  const exception = [[${exception}]]
+
+
+  if(error){
+    alert(exception)
+  }
+
 
   document.getElementById('loginForm').addEventListener('submit', function (event) {
     event.preventDefault(); // 기본 폼 제출 동작을 막음
@@ -329,6 +339,8 @@
     alert('가입을 축하드립니다!\n로그인 후 서비스를 이용해 주세요.');
     closeSignupPopup();
   }
+
+  /*]]>*/
 
 </script>
 </body>

@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @RequiredArgsConstructor
 @Configuration
@@ -21,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailService customMemberDetailService;
     private final CustomOAuth2UserService customOAuth2UserService;
+
+    private final AuthenticationFailureHandler loginFailHandler;
 
     @Bean
     public BCryptPasswordEncoder encoder() {
@@ -51,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/auth/login")
                     .loginProcessingUrl("/auth/loginProc")
                     .defaultSuccessUrl("/", true)
+                    .failureHandler(loginFailHandler)
                 .and()
                     .logout()
                         .logoutSuccessUrl("/")
