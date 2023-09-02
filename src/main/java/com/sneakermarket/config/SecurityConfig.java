@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @RequiredArgsConstructor
 @Configuration
@@ -22,9 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailService customMemberDetailService;
     private final CustomOAuth2UserService customOAuth2UserService;
-
-    /* 로그인 실패 핸들러 의존성 주입 */
-    private final AuthenticationFailureHandler loginFailHandler;
 
     @Bean
     public BCryptPasswordEncoder encoder() {
@@ -55,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/auth/login")
                     .loginProcessingUrl("/auth/loginProc")
                     .defaultSuccessUrl("/", true)
-                    .failureHandler(loginFailHandler)
                 .and()
                     .logout()
                         .logoutSuccessUrl("/")
@@ -66,6 +61,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .userService(customOAuth2UserService); //서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능 명시
 
     }
-
 
 }
