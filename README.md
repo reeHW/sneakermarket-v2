@@ -3,7 +3,6 @@
 # 중고신발거래사이트 : SneakerMarket
 
 ## 들어가며
-<hr/>
 
 ### 1. 프로젝트 소개
 
@@ -12,8 +11,10 @@ Spring Boot를 이용한 개인 프로젝트 입니다.
 웹 프로그래밍의 기본이라고 할 수 있는 CRUD 게시판을 구현해보고 하나씩 기능을 추가해보면서 웹 어플리케이션의 동작과정 및 흐름을 이해하고자 프로젝트를 시작하게 되었습니다.
 
 스니커마켓 v2는 스니커마켓 v1 (https://github.com/reeHW/sneakermarket-v1) 의 개선점을 해결하고, Spring Security와 JPA를 적용합니다.
-- mybatis와 session을 이용한 단순 로그인 프로젝트에 Security, JPA를 적용해보면서 기본적인 보안, ORM에 대해 알게 되었습니다.
+- session을 이용한 로그인 기능에 Spring Security 적용해보면서 사용자 인증과 권한에 대해 학습했습니다.
+- ver.1에서는 SQL Mapper를 이용해서 데이터베이스의 쿼리를 작성해보았습니다. 기존에 MyBatis로 작업했던 영역에 JPA 기술을 적용해보면서 ORM에 대해 알게 되고, SQL에 종속되지 않는 보다 더 객체지향적인 개발을 할 수 있었습니다.
 - AWS의 EC2, RDS를 통한 배포를 통해 DevOps를 경험해보면서 실제 운영환경 구성에 대해 학습할 수 있었습니다.
+
 
 
 
@@ -236,7 +237,6 @@ searchType = wrtier로 작성자를 검색한다.
 
 ## 구조 및 설계
 
-<hr/>
 
 
 ### 2. DB 설계
@@ -249,8 +249,7 @@ searchType = wrtier로 작성자를 검색한다.
 
 
 ### 3. API 설계
-
-![스크린샷 2023-08-21 114119.png](images%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-08-21%20114119.png)
+![postAPI.png](images%2FpostAPI.png)
 ![[크기변환]스크린샷 2023-08-21 115645.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-08-21%20115645.png)
 ![[크기변환]스크린샷 2023-08-21 114312.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-08-21%20114312.png)
 ![[크기변환]스크린샷 2023-08-21 114257.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-08-21%20114257.png)
@@ -259,30 +258,32 @@ searchType = wrtier로 작성자를 검색한다.
 <br/>
 
 ## 개발 내용
-
-<hr/>
+- [DTO ↔ Entity 간 변환, 어느 Layer에서 해야할까?](https://somethingabout.notion.site/DTO-Entity-Layer-fd7ef68fe5244e3a8cc7a0c1d209adac?pvs=4)
+- [글 작성자만 수정, 삭제 가능하게 하기 : JPA 연관관계 매핑](https://somethingabout.notion.site/JPA-c83d0d0e4bdc4a118a180904c798d3f9?pvs=4)
+- [회원가입 유효성 검사 : Validation & BindingResult](https://somethingabout.notion.site/Validation-BindingResult-ce47399db71a4f90b554d801729eb656?pvs=4)
+- [Spring Security 적용](https://somethingabout.notion.site/Spring-Security-3e4098e571a5451a97d5ccf0f16e145d?pvs=4)
+- [로그인 실패시 메시지 출력하기: Spring Security - LoginFailuerHandler](https://somethingabout.notion.site/Spring-Security-LoginFailuerHandler-6a2397786b2a497fb2025693f5fbd857?pvs=4)
 
 ## 마치며
 
-<hr/>
 
 ### 1.프로젝트 보완사항
 - 채팅 기능 추가
 - 좋아요 기능 추가
-- 세션을 이용한 조회수 중복 카운트 방지
 - CI/CD 툴을 이용한 무중단 자동 배포
 
 ### 2.후기
 Spring Framework를 공부해보면서 왜 편리한 것인지, 무슨 기능을 가지고 있는지 알겠으나, 어느 상황에 적용해야 하는지는 잘 실감이 나지 않았습니다.
-직접 기능에 대한 구현 방법에 대해 고민하고, 여러 자료를 찾아보며 적용해보고 싶어 프로젝트를 시작하였습니다.
 
-책과 강의로 공부한 예제에 대해서 납득했던 부분들은 실제 코드를 짜면서 다양한 애로 사항을 마주하게 되었습니다.
-'DTO 변환은 어느 레이어에서 하는 것이 적절한가', 'JPA를 '
-작성한 코드에 대한 근거를 나의 생각으로 잘 이야기할 수 있을까 생각을 많이 하게 되었습니다.
+개인 프로젝트를 진행하며 직접 기능에 대한 구현 방법에 대해 고민하고, 여러 자료를 찾아보며 적용해보니 실제로 공부할 수 있었던 부분이 많았던 것 같습니다.
 
-웹 개발 프로젝트 중 가장 단순하고 기본적인 게시판임에도 신경쓸 것이 너무나도 많다는 것을 느꼈습니다.
-이 프로젝트를 통해 해당 기능을 구현하는 것에서 멈추지 않고 스스로 의심하고 더 나은 방법에 대해 고민하는 습관을 가지게 되었습니다.
-부족한 부분에 대해 인지할 수 있는 경험이 되었고, 더 공부하고 싶은 방향이 무엇인지 알게되었습니다.
+‘이 로직은 어느 레이어에서 처리하는 것이 가장 적절할까?’, ‘이것을 구현하는데 최선의 방법은 무엇일까?’ 등 웹 개발 프로젝트 중 가장 기본적인 게시판임에도 신경쓸 것이 너무나도 많다는 것을 느꼈습니다.
+
+프로젝트를 통해 해당 기능을 구현하는 것에서 멈추지 않고 스스로 의심하고 더 나은 방법에 대해 고민하는 습관을 가지게 되었습니다.
+
+더불어, 더 나은 웹 어플리케이션을 만들 수 있을 것 같다는 자신감도 생겼습니다.
+
+
 
 
 
