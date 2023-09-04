@@ -6,6 +6,8 @@
 
 ### 1. 프로젝트 소개
 
+- 접속 URL : https://github.com/reeHW/sneakermarket-v2
+
 Spring Boot를 이용한 개인 프로젝트 입니다.
 
 웹 프로그래밍의 기본이라고 할 수 있는 CRUD 게시판을 구현해보고 하나씩 기능을 추가해보면서 웹 어플리케이션의 동작과정 및 흐름을 이해하고자 프로젝트를 시작하게 되었습니다.
@@ -13,7 +15,7 @@ Spring Boot를 이용한 개인 프로젝트 입니다.
 스니커마켓 v2는 스니커마켓 v1 (https://github.com/reeHW/sneakermarket-v1) 의 개선점을 해결하고, Spring Security와 JPA를 적용합니다.
 - session을 이용한 로그인 기능에 Spring Security 적용해보면서 사용자 인증과 권한에 대해 학습했습니다.
 - ver.1에서는 SQL Mapper를 이용해서 데이터베이스의 쿼리를 작성해보았습니다. 기존에 MyBatis로 작업했던 영역에 JPA 기술을 적용해보면서 ORM에 대해 알게 되고, SQL에 종속되지 않는 보다 더 객체지향적인 개발을 할 수 있었습니다.
-- AWS의 EC2, RDS를 통한 배포를 통해 DevOps를 경험해보면서 실제 운영환경 구성에 대해 학습할 수 있었습니다.
+- AWS의 EC2, RDS를 이용하여 배포를 경험했습니다.
 
 
 
