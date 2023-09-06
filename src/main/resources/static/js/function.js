@@ -50,6 +50,7 @@ function callApi(uri, method, params) {
         error : function (request, status, error) {
             console.log(error)
         }
+
     })
 
     return json;

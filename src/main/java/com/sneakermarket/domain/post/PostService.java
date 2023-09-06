@@ -8,8 +8,8 @@ import com.sneakermarket.domain.file.FileService;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;
-import com.sneakermarket.exception.CustomException;
-import com.sneakermarket.exception.ErrorCode;
+import com.sneakermarket.util.exception.CustomException;
+import com.sneakermarket.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,8 @@ public class PostService {
 
     /**
      * 게시글 저장
-     * @param params
+     * @param memberDto 로그인한 사용자
+     * @param editForm 게시글 정보
      * @return Generated PK
      */
     @Transactional
@@ -47,27 +48,26 @@ public class PostService {
 
     /**
      * 게시글 수정
-     * @param params - 게시글 정보
+     * @param editForm 게시글 정보
      * @return PK
      */
     @Transactional
     public Post update(final PostDto.EditForm editForm) {
 
-        Post entity = postRepository.findById(editForm.getId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        Post entity = postRepository.findById(editForm.getId()).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
         entity.update(editForm);
         return entity;
     }
 
     /**
      * 게시글 삭제
+     *
      * @param id - PK
-     * @return PK
      */
     @Transactional
-    public Long deletePost(final Long id){
-        Post entity = postRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+    public void deletePost(final Long id){
+        Post entity = postRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
         entity.delete();
-        return id;
     }
 
     /**
@@ -78,7 +78,7 @@ public class PostService {
 
     @Transactional
     public PostDto.Response findPostById(final Long id) {
-        Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.ID_NOT_FOUND));
 
         return new PostDto.Response(entity);
     }
@@ -89,14 +89,14 @@ public class PostService {
 
     @Transactional
     public void updateView(Long id){
-        Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.ID_NOT_FOUND));
         entity.increaseViewCnt();
     }
 
     /**
      * 게시글 리스트 조회
-     * @param params - search conditions
-     * @return list & pagination information
+     * @param params - 검색조건
+     * @return list & 페이징
      */
 
     public PagingResponse<PostDto.Response> findAll(final SearchDto params){

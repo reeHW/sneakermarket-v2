@@ -1,8 +1,8 @@
 package com.sneakermarket.domain.file;
 
 import com.sneakermarket.domain.post.Post;
-import com.sneakermarket.exception.CustomException;
-import com.sneakermarket.exception.ErrorCode;
+import com.sneakermarket.util.exception.CustomException;
+import com.sneakermarket.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -74,7 +74,7 @@ public class FileService {
      * @return 파일 상세정보
      */
     public File findFileById(final Long id) {
-        return fileRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.FILE_NOT_FOUND));
+        return fileRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.ID_NOT_FOUND));
     }
 
     /**

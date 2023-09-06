@@ -1,5 +1,7 @@
 package com.sneakermarket.domain.member;
 
+import com.sneakermarket.util.exception.CustomException;
+import com.sneakermarket.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,10 +32,13 @@ public class MemberService {
     /**
      * username(id) 중복 체크
      * @param  username - id
-     * @return 회원 수
+     * exception : 존재하는 아이디라면 ErrorCode.USERNAME_DUPLICATED
      */
     public boolean existsByUsername(final String username) {
-        return memberRepository.existsByUsername(username);
+        memberRepository.findByUsername(username).ifPresent(m -> {
+            throw new CustomException(ErrorCode.USERNAME_DUPLICATED);
+        });
+        return true;
     }
 
     /**

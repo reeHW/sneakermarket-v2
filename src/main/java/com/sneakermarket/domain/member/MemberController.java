@@ -11,6 +11,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,19 +28,13 @@ public class MemberController {
     public ResponseEntity join(@Valid @RequestBody final MemberDto.RegisterForm params, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()){
-            StringBuilder sb = new StringBuilder();
+            Map<String, String> errors = new HashMap<>();
             bindingResult.getAllErrors().forEach(objectError -> {
-                FieldError fieldError = (FieldError) objectError;
-                String message = objectError.getDefaultMessage();
+                errors.put(((FieldError) objectError).getField(), objectError.getDefaultMessage());
 
-                System.out.println("field : "+ fieldError.getField()+ ", ");
-                System.out.println("message : " + message);
-
-                sb.append("field : ").append(fieldError.getField());
-                sb.append("message : ").append(message);
             });
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(sb.toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
         }
         memberService.memberJoin(params);
         return ResponseEntity.ok(params);
@@ -55,14 +51,14 @@ public class MemberController {
     }
 
 
-    // 아이디 중복 체크
-    @GetMapping("auth/member-username-check")
+   /* 회원가입 - 아이디 중복체크*/
+    @GetMapping("auth/username/check/{username}")
     @ResponseBody
-    public boolean existsByUsername(@RequestParam final String username) {
+    public boolean existsByUsername(@PathVariable final String username) {
         return memberService.existsByUsername(username);
     }
 
-    // 닉네임 중복 체크
+    /* 회원가입 - 닉네임 중복체크*/
     @GetMapping("auth/member-nickname-check")
     @ResponseBody
     public boolean existsByNickname(@RequestParam final String nickname) {

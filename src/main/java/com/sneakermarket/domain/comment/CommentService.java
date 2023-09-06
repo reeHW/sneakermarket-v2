@@ -7,8 +7,8 @@ import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;
 import com.sneakermarket.domain.post.Post;
 import com.sneakermarket.domain.post.PostRepository;
-import com.sneakermarket.exception.CustomException;
-import com.sneakermarket.exception.ErrorCode;
+import com.sneakermarket.util.exception.CustomException;
+import com.sneakermarket.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +36,7 @@ public class CommentService {
     @Transactional
     public CommentDto.Response saveComment(MemberDto.Response memberDto, final Long postId, final CommentDto.EditForm editForm){
         Member member = memberRepository.findByNickname(memberDto.getNickname());
-        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.ID_NOT_FOUND));
 
         editForm.setMember(member);
         editForm.setPost(post);
@@ -81,7 +81,7 @@ public class CommentService {
      */
 
     public CommentDto.Response findCommentById(final Long id){
-        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENTS_NOT_FOUND));
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
         return new CommentDto.Response(entity);
     }
 
@@ -94,7 +94,7 @@ public class CommentService {
      */
     @Transactional
     public Long updateComment(final Long id, final CommentDto.EditForm editForm){
-        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENTS_NOT_FOUND));
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
         entity.update(editForm);
         return entity.getId();
     }
@@ -106,7 +106,7 @@ public class CommentService {
      */
     @Transactional
     public Long deleteComment(final Long id){
-        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENTS_NOT_FOUND));
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
         entity.delete();
         return id;
     }
