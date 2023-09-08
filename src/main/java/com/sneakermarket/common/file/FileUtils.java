@@ -159,7 +159,7 @@ public class FileUtils {
     }
 
     /**
-     * 다운로드할 첨부파일(리소스) 조회 (as Resource)
+     * 첨부파일(리소스) 조회 (as Resource)
      * @param file - 첨부파일 상세정보
      * @return 첨부파일(리소스)
      */

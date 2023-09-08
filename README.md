@@ -253,8 +253,8 @@ searchType = wrtier로 작성자를 검색한다.
 ### 3. API 설계
 ![postAPI.png](images%2FpostAPI.png)
 ![[크기변환]스크린샷 2023-08-21 115645.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-08-21%20115645.png)
-![[크기변환]스크린샷 2023-08-21 114312.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-08-21%20114312.png)
-![[크기변환]스크린샷 2023-08-21 114257.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-08-21%20114257.png)
+![img_1.png](images%2Fimg_1.png)
+![img.png](images%2Fimg.png)
 
 
 <br/>
@@ -262,7 +262,7 @@ searchType = wrtier로 작성자를 검색한다.
 ## 개발 내용
 - [DTO ↔ Entity 간 변환, 어느 Layer에서 해야할까?](https://somethingabout.notion.site/DTO-Entity-Layer-fd7ef68fe5244e3a8cc7a0c1d209adac?pvs=4)
 - [글 작성자만 수정, 삭제 가능하게 하기 : JPA 연관관계 매핑](https://somethingabout.notion.site/JPA-c83d0d0e4bdc4a118a180904c798d3f9?pvs=4)
-- [회원가입 유효성 검사 : Validation & BindingResult](https://somethingabout.notion.site/Validation-BindingResult-ce47399db71a4f90b554d801729eb656?pvs=4)
+- [회원가입 유효성 검사 : Validation](https://somethingabout.notion.site/Validation-BindingResult-ce47399db71a4f90b554d801729eb656?pvs=4)
 - [Spring Security 적용](https://somethingabout.notion.site/Spring-Security-3e4098e571a5451a97d5ccf0f16e145d?pvs=4)
 - [로그인 실패시 메시지 출력하기: Spring Security - LoginFailuerHandler](https://somethingabout.notion.site/Spring-Security-LoginFailuerHandler-6a2397786b2a497fb2025693f5fbd857?pvs=4)
 
@@ -270,9 +270,10 @@ searchType = wrtier로 작성자를 검색한다.
 
 
 ### 1.프로젝트 보완사항
-- 채팅 기능 추가
-- 좋아요 기능 추가
-- CI/CD 툴을 이용한 무중단 자동 배포
+- @ExceptionHandler를 통해 전체적인 예외 처리를 리팩토링.
+- 좋아요 기능을 추가하고, 좋아요한 게시글을 모아볼 수 있도록 하면 좋을 것 같다.
+- 채팅 기능 추가.
+- CI/CD 툴을 이용한 무중단 자동 배포.
 
 ### 2.후기
 Spring Framework를 공부해보면서 왜 편리한 것인지, 무슨 기능을 가지고 있는지 알겠으나, 어느 상황에 적용해야 하는지는 잘 실감이 나지 않았습니다.

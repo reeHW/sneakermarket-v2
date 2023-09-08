@@ -122,7 +122,7 @@
 
       // 1. API 호출
       const postId = [[ ${post.id}]];
-      const response = getJson(`/posts/${postId}/files`);
+      const response = getJson(`/api/posts/${postId}/files`);
 
       // 2. 로직 종료
       if ( !response.length ) {
@@ -132,7 +132,7 @@
       // 3. 파일 영역 추가
       let fileHtml = '<div class="file_img"><div class="cont">';
       response.forEach(row => {
-        fileHtml += `<img src="/posts/${postId}/files/${row.id}/img" alt="이미지" width="300px"/>`
+        fileHtml += `<img src="/api/posts/${postId}/files/${row.id}/img" alt="이미지" width="300px"/>`
       })
       fileHtml += '</div></div>';
 
@@ -148,7 +148,7 @@
       page = (page) ? page : (uriPage ? Number(uriPage) : 1);
 
       const postId = [[ ${post.id}]];
-      const uri = `/posts/${postId}/comments`;
+      const uri = `/api/posts/${postId}/comments`;
       const params = {
         page : page,
         recordSize : 5,
@@ -218,7 +218,7 @@
       isValid(content, '댓글');
 
       const postId = [[ ${post.id} ]];
-      const uri = `/posts/${postId}/comments`;
+      const uri = `/api/posts/${postId}/comments`;
       const params = {
         postId : postId,
         content : content.value
@@ -235,7 +235,7 @@
     function openCommentUpdatePopup(id) {
 
       const postId = [[ ${post.id} ]];
-      const uri = `/posts/${postId}/comments/${id}`;
+      const uri = `/api/posts/${postId}/comments/${id}`;
       const response = getJson(uri);
       document.getElementById('modalWriter').value = response.writer;
       document.getElementById('modalContent').value = response.content;
@@ -260,7 +260,7 @@
       isValid(content, '수정할 내용');
 
       const postId = [[ ${post.id} ]];
-      const uri = `/posts/${postId}/comments/${id}`;
+      const uri = `/api/posts/${postId}/comments/${id}`;
       const params = {
         id : id,
         postId : postId,
@@ -282,7 +282,7 @@
       }
 
       const postId = [[ ${post.id} ]];
-      const uri = `/posts/${postId}/comments/${id}`;
+      const uri = `/api/posts/${postId}/comments/${id}`;
       callApi(uri, 'delete');
       alert('삭제되었습니다.')
       findAllComment();

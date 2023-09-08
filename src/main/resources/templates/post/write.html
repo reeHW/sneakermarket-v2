@@ -113,7 +113,7 @@
             }
 
             // 2. API 호출
-            const response = getJson(`/posts/${post.id}/files`);
+            const response = getJson(`/api/posts/${post.id}/files`);
 
             // 3. 로직 종료
             if ( !response.length ) {
