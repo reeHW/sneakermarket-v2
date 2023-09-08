@@ -60,7 +60,7 @@ public class CommentServiceTest {
     @DisplayName("댓글 작성 테스트")
     void create(){
         //given
-        CommentDto.EditForm dto = new CommentDto.EditForm("댓글 테스트");
+        CommentDto.WriteForm dto = new CommentDto.WriteForm("댓글 테스트");
 
         //when
         CommentDto.Response savedComment = commentService.saveComment(memberDto, post.getId(), dto);
@@ -75,8 +75,8 @@ public class CommentServiceTest {
     @DisplayName("댓글 리스트 조회 테스트")
     void list(){
         //given
-        CommentDto.EditForm dto1 = new CommentDto.EditForm("댓글내용1");
-        CommentDto.EditForm dto2 = new CommentDto.EditForm("댓글내용2");
+        CommentDto.WriteForm dto1 = new CommentDto.WriteForm("댓글내용1");
+        CommentDto.WriteForm dto2 = new CommentDto.WriteForm("댓글내용2");
         commentService.saveComment(memberDto, post.getId(), dto1);
         commentService.saveComment(memberDto, post.getId(), dto2);
 
@@ -94,11 +94,11 @@ public class CommentServiceTest {
     @DisplayName("댓글 수정 테스트")
     void update(){
         //given
-        CommentDto.EditForm dto = new CommentDto.EditForm("댓글 테스트");
+        CommentDto.WriteForm dto = new CommentDto.WriteForm("댓글 테스트");
         CommentDto.Response savedComment = commentService.saveComment(memberDto, post.getId(), dto);
 
         //when
-        CommentDto.EditForm updateDto = new CommentDto.EditForm("댓글 테스트 수정");
+        CommentDto.WriteForm updateDto = new CommentDto.WriteForm("댓글 테스트 수정");
         commentService.updateComment(savedComment.getId(), updateDto);
 
         //then
@@ -113,7 +113,7 @@ public class CommentServiceTest {
     @DisplayName("댓글 삭제 테스트")
     void delete(){
         //given
-        CommentDto.EditForm dto = new CommentDto.EditForm("댓글 테스트");
+        CommentDto.WriteForm dto = new CommentDto.WriteForm("댓글 테스트");
         CommentDto.Response savedComment = commentService.saveComment(memberDto, post.getId(), dto);
 
         //when

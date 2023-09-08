@@ -91,11 +91,11 @@ public class PostController {
 
     //신규 게시글 생성
     @PostMapping("/post/save")
-    public String savePost(final PostDto.EditForm editForm, @LoggedInMember MemberDto.Response member, Model model){
+    public String savePost(final PostDto.WriteForm writeForm, @LoggedInMember MemberDto.Response member, Model model){
 
         if(member != null){
-            List<File> uploadFiles = fileUtils.uploadFiles(editForm.getFiles());
-            postService.save(member, editForm, uploadFiles);
+            List<File> uploadFiles = fileUtils.uploadFiles(writeForm.getFiles());
+            postService.save(member, writeForm, uploadFiles);
 
 
         }
@@ -106,22 +106,22 @@ public class PostController {
 
     //기존 게시글 수정
     @PostMapping("/post/update")
-    public String updatePost(final PostDto.EditForm editForm, Model model) {
-        Post post = postService.update(editForm);
+    public String updatePost(final PostDto.WriteForm writeForm, Model model) {
+        Post post = postService.update(writeForm);
         // 파일 업로드
-        List<File> uploadFiles = fileUtils.uploadFiles(editForm.getFiles());
+        List<File> uploadFiles = fileUtils.uploadFiles(writeForm.getFiles());
 
         // 파일 정보 저장 (to database)
         fileService.saveFile(uploadFiles, post);
 
         // 삭제할 파일 정보 조회 (from database)
-        List<File> deleteFiles = fileService.findAllFileByIds(editForm.getRemoveFileIds());
+        List<File> deleteFiles = fileService.findAllFileByIds(writeForm.getRemoveFileIds());
 
         //파일 삭제 (from disk)
         fileUtils.deleteFiles(deleteFiles);
 
         //파일 삭제 (from database)
-        fileService.deleteAllFileByIds(editForm.getRemoveFileIds());
+        fileService.deleteAllFileByIds(writeForm.getRemoveFileIds());
 
         MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/post/view?id=" + post.getId(), RequestMethod.GET,null);
         return showMessageAndRedirect(message, model);

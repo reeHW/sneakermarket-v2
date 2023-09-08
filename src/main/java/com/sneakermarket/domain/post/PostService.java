@@ -29,16 +29,16 @@ public class PostService {
     /**
      * 게시글 저장
      * @param memberDto 로그인한 사용자
-     * @param editForm 게시글 정보
+     * @param writeForm 게시글 정보
      * @return Generated PK
      */
     @Transactional
-    public Long save(final MemberDto.Response memberDto, final PostDto.EditForm editForm, List<File> uploadFiles) {
+    public Long save(final MemberDto.Response memberDto, final PostDto.WriteForm writeForm, List<File> uploadFiles) {
 
         Member member = memberRepository.findByNickname(memberDto.getNickname());
-        editForm.setMember(member);
+        writeForm.setMember(member);
 
-        Post post = editForm.toEntity();
+        Post post = writeForm.toEntity();
         postRepository.save(post);
 
         fileService.saveFile(uploadFiles, post);
@@ -52,10 +52,10 @@ public class PostService {
      * @return PK
      */
     @Transactional
-    public Post update(final PostDto.EditForm editForm) {
+    public Post update(final PostDto.WriteForm writeForm) {
 
-        Post entity = postRepository.findById(editForm.getId()).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        entity.update(editForm);
+        Post entity = postRepository.findById(writeForm.getId()).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+        entity.update(writeForm);
         return entity;
     }
 

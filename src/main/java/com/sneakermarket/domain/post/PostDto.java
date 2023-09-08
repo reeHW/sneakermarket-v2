@@ -19,7 +19,7 @@ public class PostDto {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class EditForm{
+    public static class WriteForm{
 
         private Long id;
 
@@ -47,7 +47,7 @@ public class PostDto {
         private Member member;
 
         @Builder
-        public EditForm(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
+        public WriteForm(Long id, String writer, String title, String content, int price, int size, SaleStatus saleStatus) {
             this.id = id;
             this.writer = writer;
             this.title = title;

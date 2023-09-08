@@ -62,7 +62,7 @@ public class PostServiceTest {
     @DisplayName("게시글 저장 테스트")
     void save(){
         //given
-        PostDto.EditForm postDto = PostDto.EditForm.builder()
+        PostDto.WriteForm postDto = PostDto.WriteForm.builder()
                 .price(200000)
                 .saleStatus(SaleStatus.판매중)
                 .content("내용")
@@ -85,7 +85,7 @@ public class PostServiceTest {
     @DisplayName("게시글 상세보기 테스트")
     void view() {
         //given
-        PostDto.EditForm postDto = PostDto.EditForm.builder()
+        PostDto.WriteForm postDto = PostDto.WriteForm.builder()
                 .price(200000)
                 .saleStatus(SaleStatus.판매중)
                 .content("내용")
@@ -109,7 +109,7 @@ public class PostServiceTest {
     @DisplayName("게시글 수정 테스트")
     void update(){
         //given
-        PostDto.EditForm postDto = PostDto.EditForm.builder()
+        PostDto.WriteForm postDto = PostDto.WriteForm.builder()
                 .price(200000)
                 .saleStatus(SaleStatus.판매중)
                 .content("내용")
@@ -121,7 +121,7 @@ public class PostServiceTest {
         Long postId = postService.save(memberDto, postDto, uploadFiles);
 
         //when
-        PostDto.EditForm updateDto = PostDto.EditForm.builder()
+        PostDto.WriteForm updateDto = PostDto.WriteForm.builder()
                 .id(postId)
                 .price(200000)
                 .saleStatus(SaleStatus.예약중)
@@ -145,7 +145,7 @@ public class PostServiceTest {
     @DisplayName("게시글 삭제 테스트")
     void delete(){
         //given
-        PostDto.EditForm postDto = PostDto.EditForm.builder()
+        PostDto.WriteForm postDto = PostDto.WriteForm.builder()
                 .price(200000)
                 .saleStatus(SaleStatus.판매중)
                 .content("내용")
@@ -167,7 +167,7 @@ public class PostServiceTest {
     @DisplayName("상품 리스트 조회 테스트")
     void list(){
         //given
-        PostDto.EditForm postDto1 = PostDto.EditForm.builder()
+        PostDto.WriteForm postDto1 = PostDto.WriteForm.builder()
                 .price(200000)
                 .saleStatus(SaleStatus.판매중)
                 .content("내용1")
@@ -176,7 +176,7 @@ public class PostServiceTest {
                 .writer(memberDto.getNickname())
                 .build();
 
-        PostDto.EditForm postDto2 = PostDto.EditForm.builder()
+        PostDto.WriteForm postDto2 = PostDto.WriteForm.builder()
                 .price(200000)
                 .saleStatus(SaleStatus.판매중)
                 .content("내용2")

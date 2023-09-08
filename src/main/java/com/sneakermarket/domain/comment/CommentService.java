@@ -28,20 +28,26 @@ public class CommentService {
 
 
     /**
-     *
+     * 댓글 생성
      * @param postId - post PK
-     * @param editForm - 댓글 정보
-     * @return
+     * @param writeForm - 댓글 정보
+     *
      */
     @Transactional
-    public CommentDto.Response saveComment(MemberDto.Response memberDto, final Long postId, final CommentDto.EditForm editForm){
+    public CommentDto.Response saveComment(MemberDto.Response memberDto, final Long postId, final CommentDto.WriteForm writeForm){
+
+        if(memberDto == null){
+            throw new CustomException(ErrorCode.ONLY_MEMBER);
+        }
+
         Member member = memberRepository.findByNickname(memberDto.getNickname());
+
         Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.ID_NOT_FOUND));
 
-        editForm.setMember(member);
-        editForm.setPost(post);
+        writeForm.setMember(member);
+        writeForm.setPost(post);
 
-        Comment entity = editForm.toEntity();
+        Comment entity = writeForm.toEntity();
         commentRepository.save(entity);
         post.getComments().add(entity);
 
@@ -89,13 +95,13 @@ public class CommentService {
 
     /**
      * 댓글 수정
-     * @param editForm - 댓글 form
+     * @param writeForm - 댓글 form
      * @return PK
      */
     @Transactional
-    public Long updateComment(final Long id, final CommentDto.EditForm editForm){
+    public Long updateComment(final Long id, final CommentDto.WriteForm writeForm){
         Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        entity.update(editForm);
+        entity.update(writeForm);
         return entity.getId();
     }
 

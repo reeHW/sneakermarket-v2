@@ -16,7 +16,7 @@ public class CommentDto {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class EditForm{
+    public static class WriteForm{
 
         private Long id;                       // 댓글 번호 (PK)
         private Post post;                   // 게시글 번호 (FK)
@@ -25,7 +25,7 @@ public class CommentDto {
         private String writer;                 // 작성자
         private Member member;
 
-        public EditForm(String content) {
+        public WriteForm(String content) {
             this.content = content;
         }
 
