@@ -3,6 +3,8 @@ package com.sneakermarket.domain.comment;
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.config.auth.LoggedInMember;
+import com.sneakermarket.util.exception.CustomException;
+import com.sneakermarket.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class CommentApiController {
     //신규 댓글 생성
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity saveComment(@PathVariable final Long postId
-            , @RequestBody final CommentDto.EditForm params, @LoggedInMember MemberDto.Response member){
+            , @RequestBody final CommentDto.WriteForm params, @LoggedInMember MemberDto.Response member){
 
         CommentDto.Response savedComment = commentService.saveComment(member, postId, params);
         return ResponseEntity.status(HttpStatus.OK).body(savedComment);
@@ -27,8 +29,7 @@ public class CommentApiController {
 
     // 기존 댓글 수정
     @PatchMapping("/posts/{postId}/comments/{id}")
-    public ResponseEntity updateComment(@PathVariable final Long postId, @PathVariable final Long id, @RequestBody final CommentDto.EditForm params) {
-
+    public ResponseEntity updateComment(@PathVariable final Long postId, @PathVariable final Long id, @RequestBody final CommentDto.WriteForm params) {
         commentService.updateComment(id, params);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }

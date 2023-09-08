@@ -73,14 +73,14 @@ public class Post {
 
     /**
      * 게시글 수정
-     * @param editForm
+     * @param writeForm
      */
-    public void update(PostDto.EditForm editForm) {
-        this.title = editForm.getTitle();
-        this.size = editForm.getSize();
-        this.content = editForm.getContent();
-        this.price = editForm.getPrice();
-        this.saleStatus = editForm.getSaleStatus();
+    public void update(PostDto.WriteForm writeForm) {
+        this.title = writeForm.getTitle();
+        this.size = writeForm.getSize();
+        this.content = writeForm.getContent();
+        this.price = writeForm.getPrice();
+        this.saleStatus = writeForm.getSaleStatus();
         this.modifiedDate = LocalDateTime.now();
     }
 

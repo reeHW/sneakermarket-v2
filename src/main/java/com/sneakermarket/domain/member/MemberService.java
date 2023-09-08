@@ -32,13 +32,10 @@ public class MemberService {
     /**
      * username(id) 중복 체크
      * @param  username - id
-     * exception : 존재하는 아이디라면 ErrorCode.USERNAME_DUPLICATED
+     *
      */
     public boolean existsByUsername(final String username) {
-        memberRepository.findByUsername(username).ifPresent(m -> {
-            throw new CustomException(ErrorCode.USERNAME_DUPLICATED);
-        });
-        return true;
+        return memberRepository.existsByUsername(username);
     }
 
     /**

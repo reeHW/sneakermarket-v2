@@ -2,17 +2,12 @@ package com.sneakermarket.domain.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,17 +20,8 @@ public class MemberController {
     // 회원 정보 저장 (회원가입)
     @PostMapping("/auth/joinProc")
     @ResponseBody
-    public ResponseEntity join(@Valid @RequestBody final MemberDto.RegisterForm params, BindingResult bindingResult) {
+    public ResponseEntity join(@Valid @RequestBody final MemberDto.RegisterForm params) {
 
-        if(bindingResult.hasErrors()){
-            Map<String, String> errors = new HashMap<>();
-            bindingResult.getAllErrors().forEach(objectError -> {
-                errors.put(((FieldError) objectError).getField(), objectError.getDefaultMessage());
-
-            });
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
-        }
         memberService.memberJoin(params);
         return ResponseEntity.ok(params);
 
@@ -52,9 +38,9 @@ public class MemberController {
 
 
    /* 회원가입 - 아이디 중복체크*/
-    @GetMapping("auth/username/check/{username}")
+    @GetMapping("auth/member-username-check")
     @ResponseBody
-    public boolean existsByUsername(@PathVariable final String username) {
+    public boolean existsByUsername(@RequestParam final String username) {
         return memberService.existsByUsername(username);
     }
 

@@ -50,7 +50,7 @@ public class Comment {
      * 댓글 수정
      * @param editForm
      */
-    public void update(CommentDto.EditForm editForm){
+    public void update(CommentDto.WriteForm editForm){
         this.content = editForm.getContent();
         this.modifiedDate = LocalDateTime.now();
     }
