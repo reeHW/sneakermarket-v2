@@ -42,11 +42,11 @@ public class Post {
     private SaleStatus saleStatus;
 
     // 단순히 읽어옴, post의 외래키는 comment가 관리함.
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     // 단순히 읽어옴, post의 외래키는 file이 관리함.
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<File> files = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

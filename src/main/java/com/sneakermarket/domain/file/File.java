@@ -28,6 +28,7 @@ public class File {
     private String filePath; // 파일 경로
     private LocalDateTime createdDate; //생성 일시
 
+
     @Builder
     public File(Post post, String originalName, String saveName, Long size, String filePath) {
         this.post = post;
