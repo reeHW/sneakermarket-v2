@@ -20,28 +20,6 @@ import static com.sneakermarket.domain.file.FileDto.Response.entityListToDtoList
 public class FileService {
     private final FileRepository fileRepository;
 
-    @Transactional
-    public void saveFile(final List<File> uploadFiles, final Post post){
-
-        if(CollectionUtils.isEmpty(uploadFiles)){
-            return;
-        }
-
-        // setPost를 위한 dto 변환
-        List<FileDto.Attachment> dtos = FileDto.Attachment.entityListToDto(uploadFiles);
-
-        for(FileDto.Attachment dto : dtos) {
-            dto.setPost(post);
-        }
-
-        List<File> entity = FileDto.Attachment.toEntityList(dtos);
-
-        fileRepository.saveAll(entity);
-        post.getFiles().addAll(entity);
-
-
-    }
-
     /**
      * 파일 리스트 조회
      * @param postId - 게시글 번호 (FK)

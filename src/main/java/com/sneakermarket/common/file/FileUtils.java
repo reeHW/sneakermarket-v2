@@ -1,11 +1,10 @@
 package com.sneakermarket.common.file;
 
 import com.sneakermarket.domain.file.File;
-import com.sneakermarket.domain.post.Post;
+import com.sneakermarket.domain.file.FileDto;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,8 +39,8 @@ public class FileUtils {
      * @param multipartFiles - 파일 객체 List
      * @return DB에 저장할 파일 정보 List
      */
-    public List<File> uploadFiles(final List<MultipartFile> multipartFiles) {
-        List<File> files = new ArrayList<>();
+    public List<FileDto.Attachment> uploadFiles(final List<MultipartFile> multipartFiles) {
+        List<FileDto.Attachment> files = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (multipartFile.isEmpty()) {
                 continue;
@@ -57,7 +56,7 @@ public class FileUtils {
      * @param multipartFile - 파일 객체
      * @return DB에 저장할 파일 정보
      */
-    public File uploadFile(final MultipartFile multipartFile) {
+    public FileDto.Attachment uploadFile(final MultipartFile multipartFile) {
 
         if (multipartFile.isEmpty()) {
             return null;
@@ -74,7 +73,7 @@ public class FileUtils {
             throw new RuntimeException(e);
         }
 
-        return File.builder()
+        return FileDto.Attachment.builder()
                 .originalName(multipartFile.getOriginalFilename())
                 .saveName(saveName)
                 .size(multipartFile.getSize())

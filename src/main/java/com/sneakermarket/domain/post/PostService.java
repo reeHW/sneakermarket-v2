@@ -4,6 +4,8 @@ import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.paging.Pagination;
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.file.FileDto;
+import com.sneakermarket.domain.file.FileRepository;
 import com.sneakermarket.domain.file.FileService;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
@@ -24,7 +26,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
     private final MemberRepository memberRepository;
-    private final FileService fileService;
+    private final FileRepository fileRepository;
 
     /**
      * 게시글 저장
@@ -33,29 +35,32 @@ public class PostService {
      * @return Generated PK
      */
     @Transactional
-    public Long save(final MemberDto.Response memberDto, final PostDto.WriteForm writeForm, List<File> uploadFiles) {
+    public Long save(final MemberDto.Response memberDto, final PostDto.WriteForm writeForm, List<FileDto.Attachment> uploadFiles) {
 
         Member member = memberRepository.findByNickname(memberDto.getNickname());
         writeForm.setMember(member);
 
-        Post post = writeForm.toEntity();
-        postRepository.save(post);
+        Post entity = writeForm.toEntity();
+        postRepository.save(entity);
 
-        fileService.saveFile(uploadFiles, post);
-
-        return post.getId();
+        fileSave(entity, uploadFiles);
+        return entity.getId();
     }
+
 
     /**
      * 게시글 수정
-     * @param editForm 게시글 정보
+     * @param writeForm 게시글 정보
      * @return PK
      */
     @Transactional
-    public Post update(final PostDto.WriteForm writeForm) {
+    public Post update(final PostDto.WriteForm writeForm, List<FileDto.Attachment> uploadFiles) {
 
         Post entity = postRepository.findById(writeForm.getId()).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
         entity.update(writeForm);
+
+        fileSave(entity, uploadFiles);
+
         return entity;
     }
 
@@ -116,6 +121,17 @@ public class PostService {
         List<PostDto.Response> list = postMapper.findAll(params);
 
         return new PagingResponse<>(list, pagination);
+
+    }
+
+    private void fileSave(Post post, List<FileDto.Attachment> uploadFiles) {
+        for(FileDto.Attachment uploadFile : uploadFiles) {
+            uploadFile.setPost(post);
+        }
+
+        List<File> postFile = FileDto.Attachment.toEntityList(uploadFiles);
+        post.getFiles().addAll(postFile);
+        fileRepository.saveAll(postFile);
 
     }
 

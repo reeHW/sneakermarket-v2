@@ -5,6 +5,7 @@ import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.file.FileUtils;
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.file.FileService;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.config.auth.LoggedInMember;
@@ -94,9 +95,8 @@ public class PostController {
     public String savePost(final PostDto.WriteForm writeForm, @LoggedInMember MemberDto.Response member, Model model){
 
         if(member != null){
-            List<File> uploadFiles = fileUtils.uploadFiles(writeForm.getFiles());
+            List<FileDto.Attachment> uploadFiles = fileUtils.uploadFiles(writeForm.getFiles());
             postService.save(member, writeForm, uploadFiles);
-
 
         }
 
@@ -107,12 +107,10 @@ public class PostController {
     //기존 게시글 수정
     @PostMapping("/post/update")
     public String updatePost(final PostDto.WriteForm writeForm, Model model) {
-        Post post = postService.update(writeForm);
         // 파일 업로드
-        List<File> uploadFiles = fileUtils.uploadFiles(writeForm.getFiles());
+        List<FileDto.Attachment> uploadFiles = fileUtils.uploadFiles(writeForm.getFiles());
 
-        // 파일 정보 저장 (to database)
-        fileService.saveFile(uploadFiles, post);
+        Post post = postService.update(writeForm, uploadFiles);
 
         // 삭제할 파일 정보 조회 (from database)
         List<File> deleteFiles = fileService.findAllFileByIds(writeForm.getRemoveFileIds());
