@@ -6,7 +6,7 @@
 
 ### 1. 프로젝트 소개
 
-- 접속 URL : https://github.com/reeHW/sneakermarket-v2
+- 접속 URL : http://ec2-3-34-83-230.ap-northeast-2.compute.amazonaws.com/
 
 Spring Boot를 이용한 개인 프로젝트 입니다.
 
@@ -270,8 +270,8 @@ searchType = wrtier로 작성자를 검색한다.
 
 
 ### 1.프로젝트 보완사항
-- @ExceptionHandler를 통해 전체적인 예외 처리를 리팩토링.
-- 좋아요 기능을 추가하고, 좋아요한 게시글을 모아볼 수 있도록 하면 좋을 것 같다.
+- @ExceptionHandler를 통해 전체적인 예외 처리를 리팩토링. 
+- '관심 상품' 기능을 추가하고, 사용자가 관심상품을 모아볼 수 있도록 하면 좋을 것 같다.
 - 채팅 기능 추가.
 - CI/CD 툴을 이용한 무중단 자동 배포.
 
