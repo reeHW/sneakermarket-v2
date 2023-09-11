@@ -254,8 +254,7 @@ searchType = wrtier로 작성자를 검색한다.
 ![postAPI.png](images%2FpostAPI.png)
 ![[크기변환]스크린샷 2023-08-21 115645.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-08-21%20115645.png)
 ![img_1.png](images%2Fimg_1.png)
-![img.png](images%2Fimg.png)
-
+![img](https://github.com/reeHW/sneakermarket-v2/assets/68371436/5e5d1207-6521-48f0-ba67-ee018cca89ec)
 
 <br/>
 
