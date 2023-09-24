@@ -31,15 +31,15 @@ public class CommentApiController {
     // 기존 댓글 수정
     @PatchMapping("/posts/{postId}/comments/{id}")
     public ResponseEntity updateComment(@PathVariable final Long postId, @PathVariable final Long id, @RequestBody final CommentDto.WriteForm params) {
-        commentService.updateComment(id, params);
+        commentService.updateComment(postId, id, params);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     // 댓글 리스트 조회
     @GetMapping("/posts/{postId}/comments")
-    public ResponseEntity findAllComment(@PathVariable final long postId, final CommentSearchDto params, @LoggedInMember MemberDto.Response member){
+    public ResponseEntity findAllComment(@PathVariable final Long postId, final CommentSearchDto params, @LoggedInMember MemberDto.Response member){
 
-        PagingResponse<CommentDto.Response> list = commentService.findAllComment(params, member);
+        PagingResponse<CommentDto.Response> list = commentService.findAllComment(postId, params, member);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
@@ -47,7 +47,7 @@ public class CommentApiController {
     @GetMapping("/posts/{postId}/comments/{id}")
     public ResponseEntity findCommentById(@PathVariable final Long postId, @PathVariable final Long id) {
 
-        CommentDto.Response comment = commentService.findCommentById(id);
+        CommentDto.Response comment = commentService.findCommentById(postId, id);
         return ResponseEntity.status(HttpStatus.OK).body(comment);
 
     }
@@ -55,7 +55,7 @@ public class CommentApiController {
     // 댓글 삭제
     @DeleteMapping("/posts/{postId}/comments/{id}")
     public ResponseEntity ResponseEntity(@PathVariable final Long postId, @PathVariable final Long id) {
-        commentService.deleteComment(id);
+        commentService.deleteComment(postId, id);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }

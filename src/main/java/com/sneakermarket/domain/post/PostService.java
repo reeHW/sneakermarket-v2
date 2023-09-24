@@ -26,7 +26,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
     private final MemberRepository memberRepository;
-    private final FileRepository fileRepository;
+    private final FileService fileService;
 
     /**
      * 게시글 저장
@@ -56,7 +56,7 @@ public class PostService {
     @Transactional
     public Post update(final PostDto.WriteForm writeForm, List<FileDto.Attachment> uploadFiles) {
 
-        Post entity = postRepository.findById(writeForm.getId()).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+        Post entity = postRepository.findById(writeForm.getId()).orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_FOUND));
         entity.update(writeForm);
 
         fileSave(entity, uploadFiles);
@@ -71,7 +71,7 @@ public class PostService {
      */
     @Transactional
     public void deletePost(final Long id){
-        Post entity = postRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+        Post entity = postRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POST_ID_NOT_FOUND));
         entity.delete();
     }
 
@@ -83,7 +83,7 @@ public class PostService {
 
     @Transactional
     public PostDto.Response findPostById(final Long id) {
-        Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.ID_NOT_FOUND));
+        Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.POST_ID_NOT_FOUND));
 
         return new PostDto.Response(entity);
     }
@@ -94,7 +94,7 @@ public class PostService {
 
     @Transactional
     public void updateView(Long id){
-        Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.ID_NOT_FOUND));
+        Post entity = postRepository.findById(id).orElseThrow(() ->new CustomException(ErrorCode.POST_ID_NOT_FOUND));
         entity.increaseViewCnt();
     }
 
@@ -131,12 +131,9 @@ public class PostService {
 
         List<File> postFile = FileDto.Attachment.toEntityList(uploadFiles);
         post.getFiles().addAll(postFile);
-        fileRepository.saveAll(postFile);
+        fileService.saveFile(postFile);
 
     }
-
-
-
 
 }
 

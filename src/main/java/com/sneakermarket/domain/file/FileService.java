@@ -20,6 +20,12 @@ import static com.sneakermarket.domain.file.FileDto.Response.entityListToDtoList
 public class FileService {
     private final FileRepository fileRepository;
 
+
+    public void saveFile(List<File> file) {
+        fileRepository.saveAll(file);
+    }
+
+
     /**
      * 파일 리스트 조회
      * @param postId - 게시글 번호 (FK)
@@ -52,7 +58,7 @@ public class FileService {
      * @return 파일 상세정보
      */
     public File findFileById(final Long id) {
-        return fileRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.ID_NOT_FOUND));
+        return fileRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.FILE_ID_NOT_FOUND));
     }
 
     /**
@@ -66,4 +72,6 @@ public class FileService {
         }
         fileRepository.deleteAllById(ids);
     }
+
+
 }

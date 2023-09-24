@@ -283,6 +283,11 @@ input[readonly], select[readonly], textarea[readonly], .readonly, input[disabled
 .file_preview > a {display:block;}
 .file_preview .thumb_wrap {border:1px solid #eee; background:#fff; background-size:cover; border-radius:50px;}
 .file_preview .thumb_wrap > p {padding-top:100%;}
+
+.file_img .cont img {
+    display: block; /* 이미지를 블록 요소로 설정 */
+    margin-bottom: 10px; /* 이미지 아래에 여백 추가 */
+}
 /* 달력 */
 .icon_cal {display:inline-block; position:relative; width:46%; max-width:120px; box-sizing:border-box;}
 .icon_cal input {width:100%; padding-left:3px; padding-right:30px;}

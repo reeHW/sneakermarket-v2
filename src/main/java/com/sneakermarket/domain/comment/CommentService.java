@@ -42,7 +42,7 @@ public class CommentService {
 
         Member member = memberRepository.findByNickname(memberDto.getNickname());
 
-        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.ID_NOT_FOUND));
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POST_ID_NOT_FOUND));
 
         writeForm.setMember(member);
         writeForm.setPost(post);
@@ -60,7 +60,8 @@ public class CommentService {
      * @return 특정 게시글에 등록된 댓글 리스트
      */
 
-    public PagingResponse<CommentDto.Response> findAllComment(final CommentSearchDto params, MemberDto.Response member){
+    public PagingResponse<CommentDto.Response> findAllComment(final Long postId, final CommentSearchDto params, MemberDto.Response member){
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POST_ID_NOT_FOUND));
         int count = commentMapper.count(params);
         if(count < 1){
             return new PagingResponse<>(Collections.emptyList(), null);
@@ -86,8 +87,9 @@ public class CommentService {
      * @return 댓글 상세정보
      */
 
-    public CommentDto.Response findCommentById(final Long id){
-        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+    public CommentDto.Response findCommentById(final Long postId, final Long id){
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POST_ID_NOT_FOUND));
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_FOUND));
         return new CommentDto.Response(entity);
     }
 
@@ -99,8 +101,9 @@ public class CommentService {
      * @return PK
      */
     @Transactional
-    public Long updateComment(final Long id, final CommentDto.WriteForm writeForm){
-        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+    public Long updateComment(final Long postId, final Long id, final CommentDto.WriteForm writeForm){
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POST_ID_NOT_FOUND));
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_FOUND));
         entity.update(writeForm);
         return entity.getId();
     }
@@ -111,8 +114,9 @@ public class CommentService {
      * @return PK
      */
     @Transactional
-    public Long deleteComment(final Long id){
-        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+    public Long deleteComment(final Long postId, final Long id){
+        Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POST_ID_NOT_FOUND));
+        Comment entity = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.COMMENT_ID_NOT_FOUND));
         entity.delete();
         return id;
     }
