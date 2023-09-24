@@ -9,7 +9,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    ID_NOT_FOUND("id", "id.notfound", "해당 id를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST),
+    POST_ID_NOT_FOUND("postId", "postId.notfound", "해당 게시글을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST),
+    COMMENT_ID_NOT_FOUND("commentId", "commentId.notfound", "해당 댓글을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST),
+    FILE_ID_NOT_FOUND("fileId", "fileId.notfound", "해당 파일을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST),
     ONLY_MEMBER("access", "access.denied", "회원만 기능을 이용할 수 있습니다.", HttpStatus.BAD_REQUEST),
 
     //member

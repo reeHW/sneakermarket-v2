@@ -1,4 +1,4 @@
-package com.sneakermarket.util.error;
+package com.sneakermarket.util.exception;
 
 import com.sneakermarket.util.exception.ErrorCode;
 import lombok.Builder;
@@ -22,6 +22,12 @@ public class ErrorResponse {
         this.code = code;
         this.message = message;
         this.httpStatus = httpStatus;
+    }
+    public ErrorResponse(ErrorCode errorCode){
+        this.cause = errorCode.getCause();
+        this.code = errorCode.getCode();
+        this.message = errorCode.getMessage();
+        this.httpStatus = errorCode.getHttpStatus();
     }
 
 }
