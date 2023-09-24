@@ -82,7 +82,7 @@ public class CommentServiceTest {
 
 
         //when
-        PagingResponse<CommentDto.Response> commentList = commentService.findAllComment(commentSearchDto, memberDto);
+        PagingResponse<CommentDto.Response> commentList = commentService.findAllComment(post.getId(),commentSearchDto, memberDto);
 
         //then
         assertThat(commentList.getList().size()).isEqualTo(post.getComments().size());
@@ -99,7 +99,7 @@ public class CommentServiceTest {
 
         //when
         CommentDto.WriteForm updateDto = new CommentDto.WriteForm("댓글 테스트 수정");
-        commentService.updateComment(savedComment.getId(), updateDto);
+        commentService.updateComment(post.getId(), savedComment.getId(), updateDto);
 
         //then
         Comment comment = commentRepository.findById(savedComment.getId()).orElse(null);
@@ -117,13 +117,14 @@ public class CommentServiceTest {
         CommentDto.Response savedComment = commentService.saveComment(memberDto, post.getId(), dto);
 
         //when
-        commentService.deleteComment(savedComment.getId());
+        commentService.deleteComment(post.getId(), savedComment.getId());
 
         //then
         Comment comment = commentRepository.findById(savedComment.getId()).orElse(null);
         assertThat(comment.getDeleteYn()).isEqualTo('Y');
 
     }
+
 
     /*페이징 테스트용 댓글 생성*/
 /*    @Test
