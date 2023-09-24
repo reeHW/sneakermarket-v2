@@ -3,6 +3,7 @@ package com.sneakermarket.domain.post;
 import com.sneakermarket.common.dto.SearchDto;
 import com.sneakermarket.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;
@@ -31,7 +32,7 @@ public class PostServiceTest {
     private PostRepository postRepository;
 
     private MemberDto.Response memberDto;
-    private List<File> uploadFiles =new ArrayList<>();
+    private List<FileDto.Attachment> uploadFiles =new ArrayList<>();
 
     @BeforeEach
     void before(){
@@ -42,13 +43,13 @@ public class PostServiceTest {
                 .build());
 
         memberDto = new MemberDto.Response(member);
-        uploadFiles.add(File.builder()
+        uploadFiles.add(FileDto.Attachment.builder()
                         .originalName("image1")
                         .saveName("image2023")
                         .size(3000L)
                         .filePath("2025image2023")
                 .build());
-        uploadFiles.add(File.builder()
+        uploadFiles.add(FileDto.Attachment.builder()
                 .originalName("image2")
                 .saveName("image22023")
                 .size(3000L)
@@ -131,7 +132,7 @@ public class PostServiceTest {
                 .writer(memberDto.getNickname())
                 .build();
 
-        postService.update(updateDto);
+        postService.update(updateDto, uploadFiles);
 
         //then
         PostDto.Response postById = postService.findPostById(updateDto.getId());
