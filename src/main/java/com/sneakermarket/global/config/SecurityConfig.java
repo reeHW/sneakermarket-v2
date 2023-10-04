@@ -1,7 +1,7 @@
-package com.sneakermarket.config;
+package com.sneakermarket.global.config;
 
-import com.sneakermarket.config.auth.CustomUserDetailService;
-import com.sneakermarket.config.oauth.CustomOAuth2UserService;
+import com.sneakermarket.global.config.auth.CustomUserDetailService;
+import com.sneakermarket.global.config.oauth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
