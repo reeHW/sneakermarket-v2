@@ -1,4 +1,4 @@
-package com.sneakermarket.util.exception;
+package com.sneakermarket.global.util.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

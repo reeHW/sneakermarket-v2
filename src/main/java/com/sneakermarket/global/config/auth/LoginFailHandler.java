@@ -1,4 +1,4 @@
-package com.sneakermarket.config.auth;
+package com.sneakermarket.global.config.auth;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;

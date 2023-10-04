@@ -1,7 +1,7 @@
-package com.sneakermarket.config;
+package com.sneakermarket.global.config;
 
-import com.sneakermarket.interceptor.LoggerInterceptor;
-import com.sneakermarket.config.auth.LoggedInMemberArgumentResolver;
+import com.sneakermarket.global.config.auth.LoggedInMemberArgumentResolver;
+import com.sneakermarket.global.interceptor.LoggerInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

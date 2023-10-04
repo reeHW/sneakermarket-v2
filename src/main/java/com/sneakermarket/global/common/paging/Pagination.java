@@ -1,7 +1,7 @@
-package com.sneakermarket.common.paging;
+package com.sneakermarket.global.common.paging;
 
 
-import com.sneakermarket.common.dto.SearchDto;
+import com.sneakermarket.global.common.dto.SearchDto;
 import lombok.Getter;
 
 @Getter

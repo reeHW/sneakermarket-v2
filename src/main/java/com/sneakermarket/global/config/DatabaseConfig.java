@@ -1,4 +1,4 @@
-package com.sneakermarket.config;
+package com.sneakermarket.global.config;
 
 import javax.sql.DataSource;
 

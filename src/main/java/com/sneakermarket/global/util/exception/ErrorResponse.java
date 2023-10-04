@@ -1,11 +1,9 @@
-package com.sneakermarket.util.exception;
+package com.sneakermarket.global.util.exception;
 
-import com.sneakermarket.util.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 
 @Getter

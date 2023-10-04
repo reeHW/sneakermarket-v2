@@ -1,4 +1,4 @@
-package com.sneakermarket.common.paging;
+package com.sneakermarket.global.common.paging;
 
 import lombok.Getter;
 

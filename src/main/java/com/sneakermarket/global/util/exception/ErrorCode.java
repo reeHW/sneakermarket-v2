@@ -1,4 +1,4 @@
-package com.sneakermarket.util.exception;
+package com.sneakermarket.global.util.exception;
 
 import org.springframework.http.HttpStatus;
 
@@ -13,6 +13,7 @@ public enum ErrorCode {
     COMMENT_ID_NOT_FOUND("commentId", "commentId.notfound", "해당 댓글을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST),
     FILE_ID_NOT_FOUND("fileId", "fileId.notfound", "해당 파일을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST),
     ONLY_MEMBER("access", "access.denied", "회원만 기능을 이용할 수 있습니다.", HttpStatus.BAD_REQUEST),
+    HISTORY_ALREADY_EXISTS("like", "like.exists", "이미 좋아요한 게시글입니다.", HttpStatus.BAD_REQUEST),
 
     //member
     USERNAME_DUPLICATED("username", "username.duplicated", "이미 존재하는 아이디입니다.", HttpStatus.BAD_REQUEST),

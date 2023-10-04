@@ -1,4 +1,4 @@
-package com.sneakermarket.util.exception;
+package com.sneakermarket.global.util.exception;
 
 public class CustomException extends RuntimeException{
     private ErrorCode errorCode;

@@ -1,7 +1,5 @@
 package com.sneakermarket.domain.member;
 
-import com.sneakermarket.util.exception.CustomException;
-import com.sneakermarket.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

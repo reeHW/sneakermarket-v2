@@ -1,4 +1,4 @@
-package com.sneakermarket.config.oauth;
+package com.sneakermarket.global.config.oauth;
 
 import com.sneakermarket.domain.member.Member;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.sneakermarket.common.dto;
+package com.sneakermarket.global.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

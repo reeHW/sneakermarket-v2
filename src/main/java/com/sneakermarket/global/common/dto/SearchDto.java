@@ -1,8 +1,7 @@
-package com.sneakermarket.common.dto;
+package com.sneakermarket.global.common.dto;
 
 
-import com.sneakermarket.common.paging.Pagination;
-import com.sneakermarket.domain.post.SaleStatus;
+import com.sneakermarket.global.common.paging.Pagination;
 import lombok.Getter;
 import lombok.Setter;
 

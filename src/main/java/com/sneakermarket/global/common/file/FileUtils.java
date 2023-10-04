@@ -1,4 +1,4 @@
-package com.sneakermarket.common.file;
+package com.sneakermarket.global.common.file;
 
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileDto;
