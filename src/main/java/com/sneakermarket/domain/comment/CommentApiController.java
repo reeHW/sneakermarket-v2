@@ -1,10 +1,8 @@
 package com.sneakermarket.domain.comment;
 
-import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.global.common.paging.PagingResponse;
 import com.sneakermarket.domain.member.MemberDto;
-import com.sneakermarket.config.auth.LoggedInMember;
-import com.sneakermarket.util.exception.CustomException;
-import com.sneakermarket.util.exception.ErrorCode;
+import com.sneakermarket.global.config.auth.LoggedInMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

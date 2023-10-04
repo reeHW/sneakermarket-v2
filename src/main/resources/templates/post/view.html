@@ -55,12 +55,23 @@
           <button th:if="${writer}" type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>
         <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">뒤로</button>
       </p>
+
+      <div th:unless="${writer}">
+        <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
+        <input type="hidden" id="like_check" th:value="${like}">
+        <img th:id="${loggedInMember != null ? 'likeImg' : 'loginCheck'}" src="/images/like_empty.png" alt="찜" width="30px" height="30px">
+        <span id = "like_count" th:text="${post.likeCount}"></span>
+      </div>
+
+
       <!--/* 댓글 작성 */-->
       <div class="cm_write">
         <fieldset>
           <legend class="skipinfo">댓글 입력</legend>
           <div class="cm_input">
-            <p><textarea id="content" name="content" onkeyup="countingLength(this);" cols="90" rows="4" placeholder="댓글을 입력해 주세요."></textarea></p>
+            <p>
+              <textarea id="content" name="content" onkeyup="countingLength(this);" cols="90" rows="4" th:attr="placeholder=${loggedInMember != null ? '댓글을 입력해 주세요.' : '로그인 후 댓글 작성이 가능합니다.'}"></textarea>
+            </p>
             <span><button type="button" class="btns" onclick="saveComment();">등 록</button> <i id="counter">0/300자</i></span>
           </div>
         </fieldset>
@@ -112,9 +123,74 @@
 
     window.onload = () => {
       findAllFile();
-
       findAllComment();
+
     }
+
+    $(document).ready(function () {
+
+      const clickLikeUrl = "/images/like_click.png";
+      const emptyLikeUrl = "/images/like_empty.png";
+
+      // 현재 로그인한 유저가 해당 게시물을 좋아요 했다면 likeVal = true,
+      // 좋아요하지 않았다면 false
+      let likeVal = $('#like_check').val();
+
+      console.log("likeVal : " + likeVal);
+
+      if (likeVal === 'true') {
+        // 데이터가 존재하면 화면에 채워진 하트 보여줌
+        $('#likeImg').attr("src", clickLikeUrl);
+      } else if (likeVal === 'false') {
+        // 데이터가 없으면 화면에 빈 하트 보여줌
+        $('#likeImg').attr("src", emptyLikeUrl);
+      }
+
+      /** 좋아요 클릭 시 실행 **/
+      $('#likeImg').click(function () {
+        const postId = [[${post.id}]];
+        if (likeVal === 'true') {
+          //좋아요 취소
+          $.ajax({
+            url: '/api/likepost/' + postId,
+            type: 'DELETE',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function (data) {
+            $('#likeImg').attr("src", emptyLikeUrl);
+            // 서버로부터 likeCount 값 가져와서 업데이트
+            $('#like_count').text(data);
+
+            likeVal = 'false'; // 좋아요 상태 변경
+            console.log(likeVal);
+          }).fail(function (error) {
+            alert(JSON.stringify(error));
+          });
+        } else if (likeVal === 'false') {
+          //좋아요
+          $.ajax({
+            url: '/api/likepost/' + postId,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function (data) {
+            $('#likeImg').attr("src", clickLikeUrl);
+            // 서버로부터 likeCount 값 가져와서 업데이트
+            $('#like_count').text(data);
+
+            likeVal = 'true'; // 좋아요 상태 변경
+            console.log(likeVal);
+          }).fail(function (error) {
+            alert(JSON.stringify(error));
+          });
+        }
+      });
+
+      /** 로그인하지 않은 유저가 좋아요 누를 때 **/
+      $('#loginCheck').click(function () {
+        alert("로그인 후 이용할 수 있습니다.");
+      });
+
+
+    });
 
 
     // 전체 파일 조회
@@ -200,6 +276,7 @@
       location.href = '/' + '?' + queryString.toString();
     }
 
+
     // 댓글 길이 카운팅
     function countingLength(content) {
       if (content.value.length > 300) {
@@ -213,22 +290,27 @@
 
     // 댓글 저장
     function saveComment() {
+      const loggedInMember = [[${loggedInMember}]];
+      if(loggedInMember) {
+        const content = document.getElementById('content');
+        isValid(content, '댓글');
 
-      const content = document.getElementById('content');
-      isValid(content, '댓글');
+        const postId = [[ ${post.id}]];
+        const uri = `/api/posts/${postId}/comments`;
+        const params = {
+          postId: postId,
+          content: content.value
+        }
 
-      const postId = [[ ${post.id} ]];
-      const uri = `/api/posts/${postId}/comments`;
-      const params = {
-        postId : postId,
-        content : content.value
+        callApi(uri, 'post', params)
+        alert(`저장되었습니다.`);
+        content.value = '';
+        document.getElementById('counter').innerText = '0/300자';
+        findAllComment(1);
+      }else{
+        alert('로그인 후 이용해주세요.');
       }
 
-      callApi(uri, 'post', params)
-      alert(`저장되었습니다.`);
-      content.value = '';
-      document.getElementById('counter').innerText = '0/300자';
-      findAllComment(1);
     }
 
     // 댓글 수정 팝업 open

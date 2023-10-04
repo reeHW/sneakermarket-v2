@@ -1,6 +1,6 @@
 package com.sneakermarket.domain.comment;
 
-import com.sneakermarket.common.dto.SearchDto;
+import com.sneakermarket.global.common.dto.SearchDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

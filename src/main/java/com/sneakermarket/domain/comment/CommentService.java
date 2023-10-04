@@ -1,14 +1,14 @@
 package com.sneakermarket.domain.comment;
 
-import com.sneakermarket.common.paging.Pagination;
-import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.global.common.paging.Pagination;
+import com.sneakermarket.global.common.paging.PagingResponse;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;
 import com.sneakermarket.domain.post.Post;
 import com.sneakermarket.domain.post.PostRepository;
-import com.sneakermarket.util.exception.CustomException;
-import com.sneakermarket.util.exception.ErrorCode;
+import com.sneakermarket.global.util.exception.CustomException;
+import com.sneakermarket.global.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,11 +70,13 @@ public class CommentService {
         Pagination pagination = new Pagination(count, params);
         List<CommentDto.Response> list = commentMapper.findAll(params);
 
-        // 작성자 본인인지 확인하여, 댓글 작성자면 isWriter = true
-        list.forEach(comment -> {
-            boolean isWriter = Objects.equals(comment.getMemberId(), member.getId());
-            comment.setIsWriter(isWriter);
-        });
+        if(member != null) {
+            // 작성자 본인인지 확인하여, 댓글 작성자면 isWriter = true
+            list.forEach(comment -> {
+                boolean isWriter = Objects.equals(comment.getMemberId(), member.getId());
+                comment.setIsWriter(isWriter);
+            });
+        }
 
 
         return new PagingResponse<>(list, pagination);

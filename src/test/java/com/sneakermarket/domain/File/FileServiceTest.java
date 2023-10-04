@@ -1,10 +1,9 @@
 package com.sneakermarket.domain.File;
 
-import com.sneakermarket.common.file.FileUtils;
+import com.sneakermarket.global.common.file.FileUtils;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.file.FileRepository;
-import com.sneakermarket.domain.file.FileService;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;

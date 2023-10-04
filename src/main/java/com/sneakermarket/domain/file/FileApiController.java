@@ -1,6 +1,6 @@
 package com.sneakermarket.domain.file;
 
-import com.sneakermarket.common.file.FileUtils;
+import com.sneakermarket.global.common.file.FileUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;

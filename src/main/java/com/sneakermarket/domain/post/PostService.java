@@ -1,17 +1,17 @@
 package com.sneakermarket.domain.post;
 
-import com.sneakermarket.common.dto.SearchDto;
-import com.sneakermarket.common.paging.Pagination;
-import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.global.common.dto.SearchDto;
+import com.sneakermarket.global.common.paging.Pagination;
+import com.sneakermarket.global.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileDto;
-import com.sneakermarket.domain.file.FileRepository;
 import com.sneakermarket.domain.file.FileService;
+import com.sneakermarket.domain.likes.LikePostRepository;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;
-import com.sneakermarket.util.exception.CustomException;
-import com.sneakermarket.util.exception.ErrorCode;
+import com.sneakermarket.global.util.exception.CustomException;
+import com.sneakermarket.global.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +26,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
     private final MemberRepository memberRepository;
+    private final LikePostRepository likePostRepository;
     private final FileService fileService;
 
     /**
@@ -33,6 +34,7 @@ public class PostService {
      * @param memberDto 로그인한 사용자
      * @param writeForm 게시글 정보
      * @return Generated PK
+     * 스프링 시큐리티로 회원만 접근 가능
      */
     @Transactional
     public Long save(final MemberDto.Response memberDto, final PostDto.WriteForm writeForm, List<FileDto.Attachment> uploadFiles) {
@@ -43,7 +45,9 @@ public class PostService {
         Post entity = writeForm.toEntity();
         postRepository.save(entity);
 
-        fileSave(entity, uploadFiles);
+        if(uploadFiles != null) {
+            fileSave(entity, uploadFiles);
+        }
         return entity.getId();
     }
 
@@ -124,6 +128,11 @@ public class PostService {
 
     }
 
+    /**
+     * 파일 저장
+     * @param post
+     * @param uploadFiles
+     */
     private void fileSave(Post post, List<FileDto.Attachment> uploadFiles) {
         for(FileDto.Attachment uploadFile : uploadFiles) {
             uploadFile.setPost(post);

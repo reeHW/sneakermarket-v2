@@ -52,7 +52,7 @@
     </sql>
 
     <!-- 게시글 수 조회 -->
-    <select id="count" parameterType="com.sneakermarket.common.dto.SearchDto" resultType="int">
+    <select id="count" parameterType="com.sneakermarket.global.common.dto.SearchDto" resultType="int">
         SELECT
         COUNT(*)
         FROM
@@ -61,7 +61,7 @@
     </select>
 
     <!-- 게시글 리스트 조회 -->
-    <select id="findAll" parameterType="com.sneakermarket.common.dto.SearchDto" resultMap="PostResultMap">
+    <select id="findAll" parameterType="com.sneakermarket.global.common.dto.SearchDto" resultMap="PostResultMap">
         SELECT
         post_id
         , title

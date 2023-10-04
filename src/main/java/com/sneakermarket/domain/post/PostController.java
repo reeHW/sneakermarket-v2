@@ -1,14 +1,15 @@
 package com.sneakermarket.domain.post;
 
-import com.sneakermarket.common.dto.MessageDto;
-import com.sneakermarket.common.dto.SearchDto;
-import com.sneakermarket.common.file.FileUtils;
-import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.global.common.dto.MessageDto;
+import com.sneakermarket.global.common.dto.SearchDto;
+import com.sneakermarket.global.common.file.FileUtils;
+import com.sneakermarket.global.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.file.FileService;
+import com.sneakermarket.domain.likes.LikePostService;
 import com.sneakermarket.domain.member.MemberDto;
-import com.sneakermarket.config.auth.LoggedInMember;
+import com.sneakermarket.global.config.auth.LoggedInMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ public class PostController {
 
     private final PostService postService;
     private final FileService fileService;
+    private final LikePostService likePostService;
     private final FileUtils fileUtils;
 
     //사용자에게 메시지 전달하고, 페이지를 리다이렉트함.
@@ -82,6 +84,10 @@ public class PostController {
             /*작성자 본인인지 확인*/
             boolean isWriter = post.getMemberId().equals(member.getId());
             model.addAttribute("writer", isWriter);
+
+            /* 현재 로그인한 유저가 이 게시물을 좋아요 했는지 안 했는지 여부 확인 */
+            boolean isLike = likePostService.isLiked(member.getId(), id);
+            model.addAttribute("like", isLike);
         }
 
         postService.updateView(id);

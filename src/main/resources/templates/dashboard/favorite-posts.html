@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+    <title>관심 게시물 페이지</title>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="page_tits">
+        <h3>관심 게시물</h3>
+        <p class="path"><strong>현재 위치 :</strong> <span>관심 게시물</span> <span>리스트형</span> <span>리스트</span></p>
+    </div>
+
+    <div class="content">
+        <section>
+            <!--/* 리스트 */-->
+            <table class="tb tb_col">
+                <colgroup>
+                    <col style="width:7.5%;"/><col style="width:auto;"/><col style="width:10%;"/><col style="width:10%;"/><col style="width:15%;"/><col style="width:5%;"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">판매상태</th>
+                    <th scope="col">등록일</th>
+                    <th scope="col">조회</th>
+                </tr>
+                </thead>
+
+                <!--/* 리스트 데이터 렌더링 영역 */-->
+                <tbody id ="list">
+                <!--                <tr th:if="${not #lists.isEmpty( posts )}" th:each="row, status : ${posts}">
+                                    <td><input type="checkbox"/></td>
+                                    <td th:text="${status.size - status.index}"></td>
+                                    <td class="tl"><a th:href="@{/post/view.do( id=${row.id} )}" th:text="${row.title}"></a></td>
+                                    <td th:text="${row.writer}"></td>
+                                    <td th:text="${#temporals.format( row.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
+                                    <td th:text="${row.viewCnt}"></td>
+                                </tr>
+
+                                <tr th:unless="${not #lists.isEmpty( posts )}">
+                                    <td colspan="5">
+                                        <div class="no_data_msg">검색된 결과가 없습니다.</div>
+                                    </td>
+                                </tr>-->
+                </tbody>
+            </table>
+
+            <!--/* 페이지네이션 렌더링 영역*/-->
+            <div class="paging">
+                <!--                <a href="#" class="page_bt first">첫 페이지</a><a href="#" class="page_bt prev">이전 페이지 그룹</a>
+                                <p><span class="on">1</span><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">9</a><a href="#">10</a></p>
+                                <a href="#" class="page_bt next">다음 페이지 그룹</a><a href="#" class="page_bt last">마지막 페이지</a>-->
+            </div>
+        </section>
+    </div> <!--/* .content */-->
+</th:block>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+
+        function fetchData() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/likepost/list',
+                success: function(data) {
+                    // 리스트 데이터 렌더링
+                    renderData(data.content, data.empty, data.totalElements);
+                    // 페이지 번호 렌더링
+                    drawPage(data);
+                },
+                error: function(error) {
+                    console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
+                }
+            });
+
+
+        }
+
+        // 데이터를 받아와서 템플릿에 렌더링하는 함수
+        function renderData(list, isEmpty, num) {
+
+            if (isEmpty) {
+                document.getElementById('list').innerHTML = '<td colspan="6"><div className="no_data_msg">아직 관심 게시물이 없어요!</div></td>';
+            }else {
+                //  렌더링 할 HTML을 저장할 변수
+                let html = '';
+                list.forEach(response => {
+                    html += `
+            }
+                <tr>
+                    <td>${num--}</td>
+                    <td class="tl"><a href="javascript:void(0);" onClick="goViewPage(${response.id});">${response.title}</a>
+                    </td>
+                    <td>${response.writer}</td>
+                    <td>${response.saleStatus}</td>
+                    <td>${dayjs(response.createdDate).format('YYYY-MM-DD HH:mm')}</td>
+                    <td>${response.viewCnt}</td>
+                </tr>
+                `;
+                })
+
+                // 생성한 HTML을 해당 테이블의 tbody에 삽입
+                $('#list').html(html);
+            }
+
+        }
+
+
+
+        // 페이지 HTML draw
+        function drawPage(data) {
+
+            // 1. 필수 파라미터가 없는 경우, 페이지 번호(페이지네이션) HTML을 제거(초기화)한 후 로직 종료
+            if (!data) {
+                document.querySelector('.paging').innerHTML = '';
+                throw new Error('Missing required parameters...');
+            }
+
+            // 2. 렌더링 할 HTML을 저장할 변수
+            let html = '';
+
+            // 3. 이전 페이지가 있는 경우, 즉 시작 페이지(startPage)가 1이 아닌 경우 첫 페이지 버튼과 이전 페이지 버튼을 HTML에 추가
+            if (!data.first) {
+                html += `
+                        <a href="javascript:void(0);" onclick="movePage(1)" class="page_bt first">첫 페이지</a>
+                        <a href="javascript:void(0);" onclick="movePage(${data.number - 1})" class="page_bt prev">이전 페이지</a>
+                    `;
+            }
+
+            /*
+             * 4. 시작 페이지(startPage)와 끝 페이지(endPage) 사이의 페이지 번호(i)를 넘버링 하는 로직
+             *    페이지 번호(i)와 현재 페이지 번호가 동일한 경우, 페이지 번호(i)를 활성화(on) 처리
+             */
+            html += '<p>';
+            for (let i = 1; i <= data.totalPages; i++) {
+                html += (i !== data.number+1)
+                    ? `<a href="javascript:void(0);" onclick="movePage(${i});">${i}</a>`
+                    : `<span class="on">${i}</span>`
+            }
+            html += '</p>';
+
+            // 5. 현재 위치한 페이지 뒤에 데이터가 더 있는 경우, 다음 페이지 버튼과 끝 페이지 버튼을 HTML에 추가
+            if (!data.last) {
+                html += `
+                        <a href="javascript:void(0);" onclick="movePage(${data.number + 1});" class="page_bt next">다음 페이지</a>
+                        <a href="javascript:void(0);" onclick="movePage(${data.totalPages});" class="page_bt last">마지막 페이지</a>
+                    `;
+            }
+
+            // 6. class가 "paging"인 요소를 찾아 HTML을 렌더링
+            document.querySelector('.paging').innerHTML = html;
+        }
+
+        // 페이지 이동
+        function movePage(page) {
+
+            /*
+             *    location.pathname : 리스트 페이지의 URI("/dashboard/favorite")를 의미
+             */
+            location.href = location.pathname + '?page=' + page;
+        }
+
+        // 게시글 상세 페이지로 이동
+        function goViewPage(id) {
+            const queryString = (location.search) ? location.search + `&id=${id}` : `?id=${id}`;
+            location.href = '/post/view' + queryString;
+        }
+
+        // 페이지 로드 시 데이터를 초기화
+        $(document).ready(function() {
+            fetchData();
+        });
+        /*]]>*/
+    </script>
+</th:block>
+</html>

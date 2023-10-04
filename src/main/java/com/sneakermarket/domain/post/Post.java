@@ -2,6 +2,7 @@ package com.sneakermarket.domain.post;
 
 import com.sneakermarket.domain.comment.Comment;
 import com.sneakermarket.domain.file.File;
+import com.sneakermarket.domain.likes.LikePost;
 import com.sneakermarket.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,8 @@ public class Post {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private int viewCnt;
+    private int likeCount;
+
 
     @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus;
@@ -48,6 +52,10 @@ public class Post {
     // 단순히 읽어옴, post의 외래키는 file이 관리함.
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<File> files = new ArrayList<>();
+
+    // 단순히 읽어옴, post의 외래키는 like_post가 관리함.
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<LikePost> likePosts = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -84,6 +92,13 @@ public class Post {
         this.modifiedDate = LocalDateTime.now();
     }
 
+    public void addLikeCount(int likeCount) {
+        this.likeCount = likeCount + 1;
+    }
+    public void removeLikeCount(int likeCount){
+        this.likeCount = likeCount - 1;
+    }
+
     /**
      * 조회수 증가
      */
@@ -99,5 +114,6 @@ public class Post {
     public void delete(){
         this.deleteYn = 'Y';
     }
+
 
 }

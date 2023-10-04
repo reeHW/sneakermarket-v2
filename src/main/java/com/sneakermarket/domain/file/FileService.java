@@ -1,8 +1,7 @@
 package com.sneakermarket.domain.file;
 
-import com.sneakermarket.domain.post.Post;
-import com.sneakermarket.util.exception.CustomException;
-import com.sneakermarket.util.exception.ErrorCode;
+import com.sneakermarket.global.util.exception.CustomException;
+import com.sneakermarket.global.util.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

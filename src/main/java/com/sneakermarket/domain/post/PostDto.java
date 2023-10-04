@@ -1,6 +1,7 @@
 package com.sneakermarket.domain.post;
 
 
+import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.member.Member;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 
 public class PostDto {
+
 
     @Getter
     @Setter
@@ -87,12 +89,14 @@ public class PostDto {
         private char deleteYn;
         private LocalDateTime createdDate;
         private int viewCnt;
+        private int likeCount;
         private String saleStatus;
         private Long memberId;
 
+
         public Response(Post entity) {
             this.id = entity.getId();
-            this.writer = entity.getWriter();
+            this.writer = entity.getMember().getNickname();
             this.title = entity.getTitle();
             this.content = entity.getContent();
             this.price = entity.getPrice();
@@ -100,10 +104,28 @@ public class PostDto {
             //this.deleteYn = entity.getDeleteYn();
             this.createdDate = entity.getCreatedDate();
             this.viewCnt = entity.getViewCnt();
+            this.likeCount = entity.getLikeCount();
             this.saleStatus = entity.getSaleStatus().getValue();
             this.memberId = entity.getMember().getId();
         }
 
+    }
+
+    public static Response entityToDto(Post post) {
+        PostDto.Response response = new Response();
+        response.id = post.getId();
+        response.writer = post.getMember().getNickname();
+        response.title = post.getTitle();
+        response.content = post.getContent();
+        response.price = post.getPrice();;
+        response.size = post.getSize();
+        response.createdDate = post.getCreatedDate();
+        response.saleStatus = post.getSaleStatus().getValue();
+        response.viewCnt = post.getViewCnt();
+        response.likeCount = post.getLikeCount();
+        response.memberId = post.getMember().getId();
+
+        return response;
 
     }
 

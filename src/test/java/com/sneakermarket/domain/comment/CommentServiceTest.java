@@ -1,6 +1,6 @@
 package com.sneakermarket.domain.comment;
 
-import com.sneakermarket.common.paging.PagingResponse;
+import com.sneakermarket.global.common.paging.PagingResponse;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;

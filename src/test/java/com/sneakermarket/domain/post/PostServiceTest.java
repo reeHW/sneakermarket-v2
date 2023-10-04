@@ -1,8 +1,7 @@
 package com.sneakermarket.domain.post;
 
-import com.sneakermarket.common.dto.SearchDto;
-import com.sneakermarket.common.paging.PagingResponse;
-import com.sneakermarket.domain.file.File;
+import com.sneakermarket.global.common.dto.SearchDto;
+import com.sneakermarket.global.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
@@ -194,33 +193,31 @@ public class PostServiceTest {
         searchDto.setKeyword("제목1");
 
         //when
-        PagingResponse<PostDto.Response> respons = postService.findAll(searchDto);
+        PagingResponse<PostDto.Response> response = postService.findAll(searchDto);
 
-        assertThat(respons.getList().size()).isEqualTo(1);
-        assertThat(respons.getList().get(0).getTitle()).isEqualTo(postDto1.getTitle());
+        assertThat(response.getList().size()).isEqualTo(1);
+        assertThat(response.getList().get(0).getTitle()).isEqualTo(postDto1.getTitle());
 
 
     }
 
 
     /*페이징 테스트용 게시글 생성*/
-/*
-    @Test
+/*    @Test
     void saveByForeach() {
         for (int i = 1; i <= 1000; i++) {
-            PostDto.EditForm postDto = new PostDto.EditForm().builder()
+            PostDto.WriteForm postDto = new PostDto.WriteForm().builder()
                     .title(i + "번 게시글 제목")
                     .content(i + "번 게시글 내용")
-                    .writer("테스터1")
+                    .writer(memberDto.getNickname())
                     .size(270)
                     .price(300000)
                     .saleStatus(SaleStatus.판매중)
                     .build();
 
-            postService.save("테스터2", postDto, null);
+            postService.save(memberDto, postDto, null);
 
         }
-    }
-*/
+    }*/
 
 }

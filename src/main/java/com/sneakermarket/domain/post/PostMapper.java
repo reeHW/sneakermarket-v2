@@ -1,6 +1,6 @@
 package com.sneakermarket.domain.post;
 
-import com.sneakermarket.common.dto.SearchDto;
+import com.sneakermarket.global.common.dto.SearchDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
