@@ -10,6 +10,6 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Override
-    @Query("select c from Comment c join fetch c.post")
+    @Query("select distinct c from Comment c join fetch c.post")
     List<Comment> findAll();
 }

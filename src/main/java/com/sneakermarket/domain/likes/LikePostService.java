@@ -41,6 +41,7 @@ public class LikePostService {
         Post post = postRepository.findById(postId).orElseThrow(()-> new CustomException(ErrorCode.POST_ID_NOT_FOUND));
         Member member = memberRepository.findById(memberDto.getId()).orElseThrow(()-> new CustomException(ErrorCode.ONLY_MEMBER));
 
+
         //좋아요 중복 방지
         if(likePostRepository.findByMemberIdAndPostId(member.getId(), postId).isPresent()){
             throw new CustomException(ErrorCode.HISTORY_ALREADY_EXISTS);
@@ -89,8 +90,7 @@ public class LikePostService {
             throw new CustomException(ErrorCode.ONLY_MEMBER);
         }
 
-        Member member = memberRepository.findById(memberDto.getId()).orElseThrow(()-> new CustomException(ErrorCode.ONLY_MEMBER));
-        Page<LikePost> byMemberId = likePostRepository.findByMemberId(member.getId(), pageable);
+        Page<LikePost> byMemberId = likePostRepository.findByMemberId(memberDto.getId(), pageable);
         List<PostDto.Response> list = byMemberId.getContent().stream()
                 .map(likePost -> LikePostDto.entityToDto(likePost))
                 .collect(Collectors.toList());

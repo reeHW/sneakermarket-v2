@@ -7,12 +7,15 @@ import com.sneakermarket.domain.member.MemberRepository;
 import com.sneakermarket.domain.post.Post;
 import com.sneakermarket.domain.post.PostRepository;
 import com.sneakermarket.domain.post.SaleStatus;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,9 +40,9 @@ public class CommentServiceTest {
     @BeforeEach
     void before(){
         Member member = memberRepository.save(new Member().builder()
-                .username("test1")
+                .username("commentTest")
                 .password("test123@")
-                .nickname("테스터")
+                .nickname("commentTest")
                 .build());
         post = postRepository.save(new Post().builder()
                 .title("제목")
@@ -54,6 +57,12 @@ public class CommentServiceTest {
         memberDto = new MemberDto.Response(member);
 
         commentSearchDto = new CommentSearchDto(post.getId());
+    }
+
+    @AfterEach
+    void after(){
+        postRepository.delete(post);
+        memberRepository.deleteById(memberDto.getId());
     }
 
     @Test
@@ -77,8 +86,10 @@ public class CommentServiceTest {
         //given
         CommentDto.WriteForm dto1 = new CommentDto.WriteForm("댓글내용1");
         CommentDto.WriteForm dto2 = new CommentDto.WriteForm("댓글내용2");
+        CommentDto.WriteForm dto3 = new CommentDto.WriteForm("댓글내용2");
         commentService.saveComment(memberDto, post.getId(), dto1);
         commentService.saveComment(memberDto, post.getId(), dto2);
+        commentService.saveComment(memberDto, post.getId(), dto3);
 
 
         //when

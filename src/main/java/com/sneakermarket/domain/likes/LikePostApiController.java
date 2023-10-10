@@ -23,7 +23,10 @@ public class LikePostApiController {
      */
     @PostMapping("/{postId}")
     public ResponseEntity<?> like(@PathVariable Long postId, @LoggedInMember MemberDto.Response member){
-        int likeCnt = likePostService.like(member, postId);
+        int likeCnt = 0;
+        if(member!=null) {
+            likeCnt = likePostService.like(member, postId);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(likeCnt);
     }
 

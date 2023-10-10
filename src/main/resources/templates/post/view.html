@@ -56,9 +56,9 @@
         <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">뒤로</button>
       </p>
 
-      <div th:unless="${writer}">
-        <!-- 로그인 유저와 작성자가 동일하지 않다면 -->
+      <div>
         <input type="hidden" id="like_check" th:value="${like}">
+        <!-- 로그인하지 않은 유저는 따로 처리 -->
         <img th:id="${loggedInMember != null ? 'likeImg' : 'loginCheck'}" src="/images/like_empty.png" alt="찜" width="30px" height="30px">
         <span id = "like_count" th:text="${post.likeCount}"></span>
       </div>

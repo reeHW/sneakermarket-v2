@@ -109,7 +109,6 @@
         }
 
 
-
         // 페이지 HTML draw
         function drawPage(data) {
 
@@ -145,7 +144,7 @@
             // 5. 현재 위치한 페이지 뒤에 데이터가 더 있는 경우, 다음 페이지 버튼과 끝 페이지 버튼을 HTML에 추가
             if (!data.last) {
                 html += `
-                        <a href="javascript:void(0);" onclick="movePage(${data.number + 1});" class="page_bt next">다음 페이지</a>
+                        <a href="javascript:void(0);" onclick="movePage(${data.number});" class="page_bt next">다음 페이지</a>
                         <a href="javascript:void(0);" onclick="movePage(${data.totalPages});" class="page_bt last">마지막 페이지</a>
                     `;
             }
@@ -156,10 +155,7 @@
 
         // 페이지 이동
         function movePage(page) {
-
-            /*
-             *    location.pathname : 리스트 페이지의 URI("/dashboard/favorite")를 의미
-             */
+            /* location.pathname : 리스트 페이지의 URI("/dashboard/favorite")를 의미 */
             location.href = location.pathname + '?page=' + page;
         }
 

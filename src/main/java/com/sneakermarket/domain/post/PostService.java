@@ -6,7 +6,6 @@ import com.sneakermarket.global.common.paging.PagingResponse;
 import com.sneakermarket.domain.file.File;
 import com.sneakermarket.domain.file.FileDto;
 import com.sneakermarket.domain.file.FileService;
-import com.sneakermarket.domain.likes.LikePostRepository;
 import com.sneakermarket.domain.member.Member;
 import com.sneakermarket.domain.member.MemberDto;
 import com.sneakermarket.domain.member.MemberRepository;
@@ -26,7 +25,6 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
     private final MemberRepository memberRepository;
-    private final LikePostRepository likePostRepository;
     private final FileService fileService;
 
     /**
