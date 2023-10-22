@@ -44,7 +44,7 @@ public class JpaTest {
 
     @BeforeEach
     void before() {
-        member = memberRepository.save(new Member("test01", "test01","1234"));
+        member = memberRepository.save(new Member("LOCALTEST", "LOCALTEST","1234"));
         post = postRepository.save(Post.builder()
                 .size(270)
                 .content("테스트")

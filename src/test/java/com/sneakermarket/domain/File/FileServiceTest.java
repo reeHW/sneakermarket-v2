@@ -42,9 +42,9 @@ public class FileServiceTest {
     public void before(){
 
         Member member = memberRepository.save(new Member().builder()
-                .username("test1")
+                .username("LOCALTEST")
                 .password("test123@")
-                .nickname("테스터")
+                .nickname("LOCALTEST")
                 .build());
 
         memberDto = new MemberDto.Response(member);
