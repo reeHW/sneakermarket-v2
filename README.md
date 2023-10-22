@@ -62,10 +62,6 @@ Spring Boot를 이용한 개인 프로젝트 입니다.
 
 ### 4. 실행 화면
 
-<details>
-<summary>게시글</summary>
-<div>
-
 #### 1. 게시글 목록
   <img src="./images/리스트 화면.png">
 
@@ -177,14 +173,9 @@ searchType = wrtier로 작성자를 검색한다.
 
 <br/>
 
-</div>
-</details>
 
 <br/>
 
-<details>
-<summary>회원</summary>
-<div>
 
 #### 1. 회원가입
 <br/>
@@ -212,14 +203,9 @@ searchType = wrtier로 작성자를 검색한다.
 구글 계정과 네이버 계정으로 로그인한다.
 
 <br/>
-</div>
-</details>
 
 <br/>
 
-<details>
-<summary>댓글</summary>
-<div>
 
 #### 1. 댓글 작성
 
@@ -246,12 +232,86 @@ searchType = wrtier로 작성자를 검색한다.
 
 
 <br/>
-</div>
-</details>
 
 ## 구조 및 설계
 
+### 1. 패키지 구조
 
+```
+└── com
+└── sneakermarket
+├── domain
+│   ├── comment
+│   │   ├── CommentApiController.java
+│   │   ├── CommentDto.java
+│   │   ├── Comment.java
+│   │   ├── CommentMapper.java
+│   │   ├── CommentRepository.java
+│   │   ├── CommentSearchDto.java
+│   │   └── CommentService.java
+│   ├── file
+│   │   ├── FileApiController.java
+│   │   ├── FileDto.java
+│   │   ├── File.java
+│   │   ├── FileRepository.java
+│   │   └── FileService.java
+│   ├── likes
+│   │   ├── LikePostApiController.java
+│   │   ├── LikePostController.java
+│   │   ├── LikePostDto.java
+│   │   ├── LikePost.java
+│   │   ├── LikePostRepository.java
+│   │   └── LikePostService.java
+│   ├── member
+│   │   ├── MemberController.java
+│   │   ├── MemberDto.java
+│   │   ├── Member.java
+│   │   ├── MemberRepository.java
+│   │   ├── MemberService.java
+│   │   └── Role.java
+│   └── post
+│       ├── PostController.java
+│       ├── PostDto.java
+│       ├── Post.java
+│       ├── PostMapper.java
+│       ├── PostRepository.java
+│       ├── PostService.java
+│       └── SaleStatus.java
+├── global
+│   ├── common
+│   │   ├── dto
+│   │   │   ├── MessageDto.java
+│   │   │   └── SearchDto.java
+│   │   ├── file
+│   │   │   └── FileUtils.java
+│   │   └── paging
+│   │       ├── Pagination.java
+│   │       └── PagingResponse.java
+│   ├── config
+│   │   ├── auth
+│   │   │   ├── CustomUserDetailService.java
+│   │   │   ├── CustomUserDetails.java
+│   │   │   ├── LoggedInMemberArgumentResolver.java
+│   │   │   ├── LoggedInMember.java
+│   │   │   └── LoginFailHandler.java
+│   │   ├── DatabaseConfig.java
+│   │   ├── oauth
+│   │   │   ├── CustomOAuth2UserService.java
+│   │   │   └── OAuthAttributes.java
+│   │   ├── SecurityConfig.java
+│   │   └── WebMvcConfig.java
+│   ├── interceptor
+│   │   └── LoggerInterceptor.java
+│   └── util
+│       ├── aop
+│       │   └── LoggerAspect.java
+│       └── exception
+│           ├── CustomException.java
+│           ├── ErrorCode.java
+│           ├── ErrorResponse.java
+│           └── ExceptionController.java
+└── MarketApplication.java
+```
 
 ### 2. DB 설계
 
