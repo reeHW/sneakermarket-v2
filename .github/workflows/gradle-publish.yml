@@ -15,7 +15,7 @@ on:
   release:
     types: [push] # push시 자동으로 실행.
   push:
-    branches: [main] # main 브랜치에서 동작.
+    branches: [master] # master 브랜치에서 동작.
   workflow_dispatch: # 수동으로도 실행이 가능.
   
 jobs:
