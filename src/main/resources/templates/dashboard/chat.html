@@ -4,9 +4,10 @@
     <title>채팅</title>
 </th:block>
 <th:block layout:fragment="add-css">
-    <link rel="stylesheet" href="/css/myChat.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" th:href="@{/css/chat.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.css}" />
 </th:block>
-
 <th:block layout:fragment="content">
 <div class="content">
     <div id="myChats">
@@ -16,7 +17,7 @@
                 <div class="inbox_people">
                     <div class="headind_srch">
                         <div class="recent_heading">
-                            <h4>채팅목록</h4>
+                            <h3>채팅목록</h3>
                         </div>
                         <div class="srch_bar">
                             <div class="stylish-input-group">
@@ -114,7 +115,6 @@
 
 <th:block layout:fragment="script">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
