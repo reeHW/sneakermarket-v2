@@ -16,9 +16,9 @@ Spring Boot를 이용한 개인 프로젝트 입니다.
 - 로그인 기능에 Spring Security 적용해보면서 사용자 인증과 권한에 대해 학습했습니다.
 - ver.1에서는 SQL Mapper를 이용해서 데이터베이스의 쿼리를 작성해보았습니다. 기존 MyBatis로 작업했던 영역에 JPA 기술을 적용해보면서 ORM에 대해 알게 되고, SQL에 종속되지 않는 보다 더 객체지향적인 개발을 할 수 있었습니다.
 - 관심 게시물 기능을 추가했습니다.
+- STOMP, WebSocket을 활용한 실시간 채팅 기능을 추가했습니다.
 - AWS의 EC2, RDS를 이용하여 배포를 경험했습니다.
-
-
+- Github Action과 AWS S3을 연동하여 CI/CD 파이프라인을 구축하였습니다.
 
 
 ### 2. 프로젝트의 기능
@@ -61,6 +61,8 @@ Spring Boot를 이용한 개인 프로젝트 입니다.
 
 
 ### 4. 실행 화면
+
+### 게시글
 
 #### 1. 게시글 목록
   <img src="./images/리스트 화면.png">
@@ -177,22 +179,20 @@ searchType = wrtier로 작성자를 검색한다.
 <br/>
 
 
-#### 1. 회원가입
-<br/>
-
+### 회원가입
 ![[크기변환]회원가입.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.png)
 ![[크기변환]회원가입 유효성.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5D%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EC%9C%A0%ED%9A%A8%EC%84%B1.png)
 ![userId_duplication.png](images%2FuserId_duplication.png)
 
 유효성 검사와 중복을 확인하고 회원 가입이 성공하면 로그인 페이지로 이동한다.
 
-#### 2-1. 로그인
+### 로그인
 
 ![login.png](images%2Flogin.png)
 
 로그인이 성공하면 리스트 페이지로 redirect한다.
 
-#### 2-2. OAuth 2.0 소셜 로그인 
+### OAuth 2.0 소셜 로그인 
 
 ##### 구글 로그인
 ![google_login.png](images%2Fgoogle_login.png)
@@ -204,9 +204,7 @@ searchType = wrtier로 작성자를 검색한다.
 
 <br/>
 
-<br/>
-
-
+### 댓글
 #### 1. 댓글 작성
 
 ![댓글 작성.png](images%2F%EB%8C%93%EA%B8%80%20%EC%9E%91%EC%84%B1.png)
@@ -229,18 +227,31 @@ searchType = wrtier로 작성자를 검색한다.
 
 수정/삭제 후에 메시지를 닫으면, 즉시 댓글에 반영된다.
 
-
-
 <br/>
+
+### 채팅
+![sneakermarket-chat.gif](images%2Fsneakermarket-chat.gif)
+
+게시판 이용자들 간의 1:1 실시간 채팅이 가능하다.
+
 
 ## 구조 및 설계
 
 ### 1. 패키지 구조
 
 ```
-└── com
+── com
     └── sneakermarket
         ├── domain
+        │   ├── chat
+        │   │   ├── ChatApiController.java
+        │   │   ├── ChatController.java
+        │   │   ├── ChatDto.java
+        │   │   ├── Chat.java
+        │   │   ├── ChatRepository.java
+        │   │   ├── ChatRoom.java
+        │   │   ├── ChatRoomRepository.java
+        │   │   └── ChatService.java
         │   ├── comment
         │   │   ├── CommentApiController.java
         │   │   ├── CommentDto.java
@@ -270,6 +281,7 @@ searchType = wrtier로 작성자를 검색한다.
         │   │   ├── MemberService.java
         │   │   └── Role.java
         │   └── post
+        │       ├── PostApiController.java
         │       ├── PostController.java
         │       ├── PostDto.java
         │       ├── Post.java
@@ -299,6 +311,7 @@ searchType = wrtier로 작성자를 검색한다.
         │   │   │   ├── CustomOAuth2UserService.java
         │   │   │   └── OAuthAttributes.java
         │   │   ├── SecurityConfig.java
+        │   │   ├── StompConfig.java
         │   │   └── WebMvcConfig.java
         │   ├── interceptor
         │   │   └── LoggerInterceptor.java
@@ -311,11 +324,12 @@ searchType = wrtier로 작성자를 검색한다.
         │           ├── ErrorResponse.java
         │           └── ExceptionController.java
         └── MarketApplication.java
+
 ```
 
 ### 2. DB 설계
 
-![sneakermarket_erd.png](images%2Fsneakermarket_erd.png)
+![sneakermarket_diagram.png](images%2Fsneakermarket_diagram.png)
 ![[크기변환]post.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5Dpost.png)
 ![[크기변환]member.png](images%2F%5B%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98%5Dmember.png)
 ![like_post db.png](images%2Flike_post%20db.png)
@@ -330,6 +344,9 @@ searchType = wrtier로 작성자를 검색한다.
 ![like_post api.png](images%2Flike_post%20api.png)
 ![img](https://github.com/reeHW/sneakermarket-v2/assets/68371436/5e5d1207-6521-48f0-ba67-ee018cca89ec)
 
+
+### 4. 배포 과정
+![deploy.png](images%2Fdeploy.png)
 <br/>
 
 ## 개발 내용
@@ -347,7 +364,6 @@ searchType = wrtier로 작성자를 검색한다.
 
 ### 1.개선할 내용
 - JPA를 적용해보면서 의도하지 않은 쿼리문이 나갈 때가 꽤 있는데, JPA를 이론적으로 더 공부해야할 것 같습니다.
-- CI/CD 툴을 이용한 무중단 자동 배포.
 
 ### 2.후기
 Spring Framework를 공부해보면서 왜 편리한 것인지, 무슨 기능을 가지고 있는지 알겠으나, 어느 상황에 적용해야 하는지는 잘 실감이 나지 않았습니다.
