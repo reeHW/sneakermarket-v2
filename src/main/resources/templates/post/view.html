@@ -283,9 +283,10 @@
 
     // 채팅 페이지로 이동
     function goChat() {
-      let nickname = [[${post.writer}]];
+      const loggedInMember = [[${loggedInMember}]];
 
-      if (nickname) {
+      if (loggedInMember) {
+        const nickname = [[${post.writer}]];
         const encodedMember = encodeURIComponent(nickname);
         let roomId = 0;
         fetch("/api/chat/" + encodedMember, {
