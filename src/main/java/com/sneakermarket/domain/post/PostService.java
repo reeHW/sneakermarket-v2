@@ -132,6 +132,15 @@ public class PostService {
      * @param uploadFiles
      */
     private void fileSave(Post post, List<FileDto.Attachment> uploadFiles) {
+        // 최대 첨부 파일 개수
+        int maxFileCount = 5;
+        // 현재 포스트에 이미 첨부된 파일 개수
+        int currentFileCount = post.getFiles().size();
+        // 추가하려는 파일이 최대 허용 파일 개수보다 많으면 예외 처리
+        if (currentFileCount + uploadFiles.size() > maxFileCount) {
+            throw new RuntimeException("첨부 파일은 최대 " + maxFileCount + "개까지만 허용됩니다.");
+        }
+
         for(FileDto.Attachment uploadFile : uploadFiles) {
             uploadFile.setPost(post);
         }

@@ -233,16 +233,26 @@
 
         // 파일 추가
         function addFile() {
+            // 현재 추가된 파일의 수를 확인
+            const currentFileCount = document.querySelectorAll('.file_input').length;
+
+            // 5개 이상인 경우 alert 메시지
+            if (currentFileCount >= 5) {
+                alert('첨부파일은 5개까지 등록 가능합니다.');
+                return;
+            }
+
+            // 파일 추가
             const fileDiv = document.createElement('div');
-            fileDiv.innerHTML =`
-            <div class="file_input">
-                <input type="text" readonly />
-                <label> 첨부파일
-                    <input type="file" name="files" onchange="selectFile(this);" />
-                </label>
-            </div>
-            <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
-        `;
+            fileDiv.innerHTML = `
+        <div class="file_input">
+            <input type="text" readonly />
+            <label> 첨부파일
+                <input type="file" name="files" onchange="selectFile(this);" />
+            </label>
+        </div>
+        <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+    `;
             document.querySelector('.file_list').appendChild(fileDiv);
         }
 
