@@ -31,7 +31,7 @@ public class ChatDto {
         receive.receiverNickname = chat.getReceiver().getNickname();
         receive.senderNickname = chat.getSender().getNickname();
         receive.message = chat.getMessage();
-        receive.sendTime = chat.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        receive.sendTime = chat.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         return receive;
     }
 
@@ -53,7 +53,7 @@ public class ChatDto {
             list.otherNickname = chat.getSender().getNickname();
         }
         list.recentMessage = chat.getMessage();
-        list.recentTime = chat.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        list.recentTime = chat.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         return list;
     }
 }

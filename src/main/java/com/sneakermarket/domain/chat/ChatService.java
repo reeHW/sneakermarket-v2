@@ -53,7 +53,7 @@ public class ChatService {
         Chat chat = chatRepository.findByReceiverAndSender(member.getId(), otherMember.getId()).orElse(null);
 
         if(chat == null){
-            ChatRoom chatRoom = new ChatRoom();
+            ChatRoom chatRoom = new ChatRoom(member);
             ChatRoom save = chatRoomRepository.save(chatRoom);
             return save.getId();
         }else{
@@ -67,8 +67,8 @@ public class ChatService {
      */
     public List<ChatDto.List> list(MemberDto.Response memberDto) {
         Member member =  memberRepository.findByNickname(memberDto.getNickname());
-        List<Chat> charList = chatRepository.findByReceiverMemberId(member.getId());
-        List<ChatDto.List> list = charList.stream()
+        List<Chat> chatList = chatRepository.findByMemberId(member.getId());
+        List<ChatDto.List> list = chatList.stream()
                 .map(chat -> ChatDto.entityToDTOList(chat, member))
                 .collect(Collectors.toList());
         return list;

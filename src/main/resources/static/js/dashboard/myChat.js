@@ -74,6 +74,10 @@
 
     function send(){
     let message = $("input.write_msg").val();
+    if (!message) {
+        alert('메시지를 입력해 주세요.');
+        return;
+    }
     client.send("/api/chat/send/room/"+roomId+"/"+yourNickname, {}, JSON.stringify({
     "senderNickname" : myNickname,
     "message" : message

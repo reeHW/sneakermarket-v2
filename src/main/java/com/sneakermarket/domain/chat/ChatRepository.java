@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface ChatRepository extends JpaRepository<Chat, Long> {
     @Query(nativeQuery = true, value =
             "SELECT * " +
-                    "FROM (SELECT * FROM chat where receiver_member_id = :memberId ORDER BY create_time DESC LIMIT 100) temp " +
+                    "FROM (SELECT * FROM chat WHERE receiver_member_id = :memberId OR sender_member_id = :memberId ORDER BY created_time DESC LIMIT 100) temp " +
                     "GROUP BY chatroom_id")
-    List<Chat> findByReceiverMemberId(@Param("memberId") Long memberId);
+    List<Chat> findByMemberId(@Param("memberId") Long memberId);
 
     @Query("select c from Chat c join fetch c.receiver rm join fetch c.sender sm join fetch c.chatRoom cr " +
             "where (rm.id = :receiverId and sm.id = :senderId) or " +

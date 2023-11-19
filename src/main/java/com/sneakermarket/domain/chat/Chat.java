@@ -35,7 +35,7 @@ public class Chat {
 
     private String message;
 
-    private LocalDateTime createTime = LocalDateTime.now();
+    private LocalDateTime createdTime = LocalDateTime.now();
 
     @Builder
 
